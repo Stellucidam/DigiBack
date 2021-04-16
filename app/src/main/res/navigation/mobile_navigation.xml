@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_accueil">
+
+    <fragment
+        android:id="@+id/nav_accueil"
+        android:name="ch.heigvd.digiback.ui.accueil.AccueilFragment"
+        android:label="@string/menu_accueil"
+        tools:layout="@layout/fragment_accueil" />
+
+    <fragment
+        android:id="@+id/nav_activite"
+        android:name="ch.heigvd.digiback.ui.activite.ActiviteFragment"
+        android:label="@string/menu_activite"
+        tools:layout="@layout/fragment_activite" />
+
+    <fragment
+        android:id="@+id/nav_conseils"
+        android:name="ch.heigvd.digiback.ui.conseils.ConseilsFragment"
+        android:label="@string/menu_conseils"
+        tools:layout="@layout/fragment_conseils" />
+
+    <fragment
+        android:id="@+id/nav_exercice"
+        android:name="ch.heigvd.digiback.ui.exercice.ExerciceFragment"
+        android:label="@string/menu_exercice"
+        tools:layout="@layout/fragment_exercice" />
+
+    <fragment
+        android:id="@+id/nav_quiz"
+        android:name="ch.heigvd.digiback.ui.quiz.QuizFragment"
+        android:label="@string/menu_quiz"
+        tools:layout="@layout/fragment_quiz" />
+
+    <fragment
+        android:id="@+id/nav_etat"
+        android:name="ch.heigvd.digiback.ui.etat.EtatFragment"
+        android:label="@string/menu_etat"
+        tools:layout="@layout/fragment_etat" />
+
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="ch.heigvd.digiback.ui.info.InfoFragment"
+        android:label="@string/menu_info"
+        tools:layout="@layout/fragment_quiz" />
+</navigation>
