@@ -1,5 +1,8 @@
 package ch.heigvd.digiback;
 
+import ch.heigvd.digiback.ui.login.LoginActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private PopupWindow deconnexionPopup;
-    private PopupWindow settingsPopup;
+    //private PopupWindow settingsPopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         deconnexionPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_deconnexion, null, false),100,100, true);
-        settingsPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_settings, null, false),100,100, true);
+        //settingsPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_settings, null, false),100,100, true);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,22 +70,22 @@ public class MainActivity extends AppCompatActivity {
         deconnexion.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
-                deconnexionPopup.showAtLocation(getCurrentFocus(), Gravity.CENTER, 0, 0);
+                logout();
                 return true;
             }
         });
 
+        /* TODO
         MenuItem settings = menu.findItem(R.id.action_settings);
         settings.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                System.out.println("Settings");
-                return false;
+                settings();
             }
         });
-
+        */
         return true;
+
     }
 
     @Override
@@ -90,5 +93,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void logout() {
+        // Go to LoginActivity
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
