@@ -36,6 +36,6 @@ jobs:
         - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" && "$TRAVIS_REPO_SLUG" == "Stellucidam/DigiBack" ]];
             then bash ./.travis/deploy.sh;
               cd app/build/outputs/apk/debug/;
-              curl -F document=@*debug.apk https://api.telegram.org/bot${TL_TOKEN}/sendDocument?chat_id=@DigiBackApp;
+              curl -F document=@*debug.apk https://api.telegram.org/bot{TL_TOKEN}/sendDocument?chat_id=@DigiBackApp;
           fi
-  
+
