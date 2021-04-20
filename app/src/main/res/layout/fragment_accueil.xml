@@ -1,23 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.accueil.AccueilFragment">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".ui.accueil.AccueilFragment"
+                                                   android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text_accueil"
-        android:text="@string/text_accueil"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteY="39dp"
+            tools:layout_editor_absoluteX="5dp">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <!-- Random fact -->
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view_fact"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    app:cardBackgroundColor="@color/colorSecondaryTransparent"
+                    app:contentPadding="8dp"
+                    app:cardElevation="0dp">
+
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    <TextView
+                            android:id="@+id/fact_text"
+                            android:text="LE SAVIEZ-VOUS ?"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/card_view_fact"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:contentPadding="4dp"
+                            app:cardElevation="0dp">
+
+                        <TextView
+                                android:id="@+id/fact_text"
+                                android:text="Avoir un épisode de mal de dos est courant et peut guérir spontanément dans la majorité des situations."
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Suivi du dos -->
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    app:cardBackgroundColor="@color/colorSecondaryTransparent"
+                    app:contentPadding="8dp"
+                    app:cardElevation="0dp">
+
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    <TextView
+                            android:id="@+id/info_text"
+                            android:text="SUIVI DU DOS"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/card_view"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:contentPadding="4dp"
+                            app:cardElevation="0dp">
+
+                        <TextView
+                                android:id="@+id/info_text"
+                                android:text="Vous allez plutot bien aujourd'hui.\nVous avez ici un graph représentant le suivi de l'état de votre dos."
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Conseils -->
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    app:cardBackgroundColor="@color/colorSecondaryTransparent"
+                    app:contentPadding="8dp"
+                    app:cardElevation="0dp">
+
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    <TextView
+                            android:id="@+id/conseil_text"
+                            android:text="CONSEILS"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/card_view_conseil"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:contentPadding="4dp"
+                            app:cardElevation="0dp">
+
+                        <TextView
+                                android:id="@+id/conseil_content"
+                                android:text="Vous devrier faire une petite promenade."
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,7 @@
         tools:context=".ui.login.LoginActivity">
 
     <ImageView
-            android:id="@+id/logo_digiback"
+            android:id="@+id/logo_hesav"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/logo_hesav_white"/>
     <ImageView
-            android:id="@+id/logo_digiback"
+            android:id="@+id/logo_heig"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentLeft="false"
@@ -50,8 +50,9 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="@string/text_welcome"
-            android:textColor="@color/textColorInPrimary"
+            android:textColor="@color/white"
             android:textSize="32dp"
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/logo_digiback"
@@ -72,8 +73,8 @@
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
-            android:backgroundTint="@color/textColorInPrimary"
-            android:textColor="@color/textColorInPrimary"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="408dp"
@@ -90,8 +91,8 @@
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:selectAllOnFocus="true"
-            android:backgroundTint="@color/textColorInPrimary"
-            android:textColor="@color/textColorInPrimary"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username"/>

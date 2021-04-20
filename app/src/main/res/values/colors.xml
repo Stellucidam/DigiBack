@@ -2,8 +2,9 @@
 <resources>
     <color name="colorPrimary">#376A7D</color>
     <color name="colorSecondary">#53A962</color>
+    <color name="colorSecondaryTransparent">#BA53A962</color>
     <color name="colorAccent">#EEC584</color>
-    <color name="textColorInPrimary">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="light_blue_900">#376A7D</color>
     <color name="light_blue_A400">#FFFFFF</color>

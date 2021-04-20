@@ -27,7 +27,7 @@
     <style name="AppTheme.NoTitleBar" >
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:textColor">@color/textColorInPrimary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
@@ -40,7 +40,6 @@
 
     <style name="Widget.AppTheme.ButtonBar.Fullscreen" parent="">
         <item name="android:background">@color/black_overlay</item>
-        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
 </resources>

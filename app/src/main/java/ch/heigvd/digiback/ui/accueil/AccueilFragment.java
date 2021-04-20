@@ -23,6 +23,7 @@ public class AccueilFragment extends Fragment {
         accueilViewModel =
                 ViewModelProviders.of(this).get(AccueilViewModel.class);
         View root = inflater.inflate(R.layout.fragment_accueil, container, false);
+        /*
         final TextView textView = root.findViewById(R.id.text_accueil);
         accueilViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -30,6 +31,7 @@ public class AccueilFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        */
         return root;
     }
 }
