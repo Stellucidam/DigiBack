@@ -4,18 +4,24 @@
 La lombalgie (douleur au bas du dos) est un symptôme très fréquent et est la première cause d’invalidité dans le monde
 [1]. Plus de 80% des personnes seront affectées par cette problématique au moins une fois au cours de leur vie [2]. 
 En Suisse, la lombalgie est reconnue comme un problème de santé majeur avec 6% du total des dépenses de santé qui sont
-attribués à ses coûts médicaux directs [3]. En 2018, une série d’articles sur la lombalgie publiés dans la revue The
+attribués à ses coûts médicaux directs [3].
+
+En 2018, une série d’articles sur la lombalgie publiés dans la revue The
 Lancet lombalgie préconisent comme urgent de changer les croyances et les connaissances de la population générale, des
 patients et des professionnels de santé afin de combler la divergence entre les pratiques et les connaissances actuelles
 [1, 4–6]. Dès lors, fournir des informations issues des dernières recherches de manière individualisée est une des
 priorités actuelles. Dans cette idée, un site internet d’information (http://www.infomaldedos.ch) a été créé récemment 
-et testé auprès d’experts, de physiothérapeutes et de patients [7]. Des nombreuses études ont également mis en évidence
+et testé auprès d’experts, de physiothérapeutes et de patients [7].
+
+De nombreuses études ont également mis en évidence
 que la manière de bouger des personnes ayant des douleurs de dos pouvait participer aux symptômes. Par exemples, les
 patients ont tendance à bouger avec moins d’amplitude et moins rapidement [8–11]. Cette manière de bouger peut être liés
 aux croyances des patients. Par exemple, des connaissances erronées sur le dos peuvent amener les personnes atteintes de
 douleurs de dos à penser que le dos est fragile et qu’il doit être protégé, et donc à diminuer les mouvements [5, 12].
 Cela peut conduire à un cercle vicieux qui conduit à l’évitement et la sédentarité [13]. Dès lors, des exercices
-associés à des conseils ciblés, visant à améliorer la confiance et le mouvement sont recommandés [6]. Des applications
+associés à des conseils ciblés, visant à améliorer la confiance et le mouvement sont recommandés [6].
+
+Des applications
 smartphones pourraient être un outil idéal afin de fournir des exercices et des informations ciblées aux utilisateurs en
 fonction de leur besoin. En effet, le développement d’outils favorisant le self-management est fortement recommandé [6].
 
