@@ -1,4 +1,5 @@
 # DigiBack
+[![Build Status](https://travis-ci.com/Stellucidam/DigiBack.svg?branch=main)](https://travis-ci.com/Stellucidam/DigiBack)
 
 ## Introduction
 La lombalgie (douleur au bas du dos) est un symptôme très fréquent et est la première cause d’invalidité dans le monde
