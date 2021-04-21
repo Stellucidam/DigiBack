@@ -50,7 +50,7 @@
                             android:layout_height="match_parent"/>
 
                     <androidx.cardview.widget.CardView
-                            android:id="@+id/card_view_fact"
+                            android:id="@+id/card_view_fact_text"
                             android:layout_gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                             app:cardElevation="0dp">
 
                         <TextView
-                                android:id="@+id/fact_text"
+                                android:id="@+id/fact_text_content"
                                 android:text="Avoir un épisode de mal de dos est courant et peut guérir spontanément dans la majorité des situations."
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"/>
@@ -98,7 +98,7 @@
                             android:layout_height="match_parent"/>
 
                     <androidx.cardview.widget.CardView
-                            android:id="@+id/card_view"
+                            android:id="@+id/card_view_content"
                             android:layout_gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
