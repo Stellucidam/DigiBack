@@ -21,6 +21,7 @@ android:
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
+    - extra-android-support
 
   licenses:
     # Accept all Android licenses.
@@ -33,6 +34,7 @@ jobs:
     - script:
         - touch emptyFileForRelease
         - ./gradlew clean assembleDebug # testProductionAPIDebugUnitTest
+        - ./gradlew build # testProductionAPIDebugUnitTest
         # - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" && "$TRAVIS_REPO_SLUG" == "heig-PRO-b04/android-frontend" ]];
         #   then bash ./.travis/deploy.sh;
         #   cd app/build/outputs/apk/productionAPI/debug/;
