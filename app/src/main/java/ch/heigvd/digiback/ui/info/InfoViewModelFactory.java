@@ -1,22 +1,30 @@
 package ch.heigvd.digiback.ui.info;
 
 import android.app.Application;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider.Factory;
 
-public class InfoViewModelFactory {
+import ch.heigvd.digiback.business.model.info.Article;
+import ch.heigvd.digiback.business.model.info.ArticleType;
+import org.jetbrains.annotations.NotNull;
 
-    public InfoViewModelFactory(Application application, Article article, String token) {
+public class InfoViewModelFactory implements Factory {
+    private final Article article;
 
+    private InfoViewModelFactory(Article article) {
+        this.article = article;
     }
-}
 
-class QuestionViewModelFactory(
-        private val application: Application,
-        private val question : Question,
-        private val token : String
-) : ViewModelProvider.Factory {
-
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val constructors = modelClass.declaredConstructors
-        return constructors[0].newInstance(application, question, token) as T
+    @NonNull
+    @NotNull
+    @Override
+    public <T extends ViewModel> T create(@NonNull @NotNull Class<T> modelClass) {
+        try {
+            return (T)modelClass.getDeclaredConstructors()[0].newInstance(article);
+        } catch (Exception e) {
+            System.out.println("An error occured : " + e);
+        }
+        return null;
     }
 }
