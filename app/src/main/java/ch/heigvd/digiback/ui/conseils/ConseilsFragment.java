@@ -23,13 +23,14 @@ public class ConseilsFragment extends Fragment {
         conseilsViewModel =
                 ViewModelProviders.of(this).get(ConseilsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_conseils, container, false);
+        /*
         final TextView textView = root.findViewById(R.id.text_conseils);
         conseilsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
         return root;
     }
 }
