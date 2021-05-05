@@ -13,9 +13,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import ch.heigvd.digiback.R;
+import ch.heigvd.digiback.business.model.info.Article;
 
-public class InfoFragment extends Fragment {
+import java.util.LinkedList;
+import java.util.List;
 
+public class AllInfoFragment extends Fragment {
+    private List<Article> articles = new LinkedList<>();
     private InfoViewModel infoViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -33,5 +37,4 @@ public class InfoFragment extends Fragment {
         */
         return root;
     }
-
 }

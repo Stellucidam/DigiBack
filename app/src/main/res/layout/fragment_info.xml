@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.info.InfoFragment">
+    tools:context=".ui.info.AllInfoFragment">
 
     <TextView android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:text="Informations"/>
-
+              android:layout_margin="8dp"
+              android:text="@string/information_text"/>
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
