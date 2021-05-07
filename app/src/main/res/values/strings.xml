@@ -6,6 +6,10 @@
     <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
     <string name="nav_header_desc">Entête de navigation</string>
 
+    <!-- Buttons -->
+    <string name="change_date">Changer la date</string>
+    <string name="add_pain">Ajouter un niveau de douleur</string>
+
     <!-- Actions -->
     <string name="action_settings">Parametres</string>
     <string name="action_deconnexion">Deconnexion</string>

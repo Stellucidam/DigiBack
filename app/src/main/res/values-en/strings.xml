@@ -29,4 +29,6 @@
     <string name="text_accueil">This is the home screen</string>
     <string name="menu_accueil">Home</string>
     <string name="text_welcome">Welcome to DigiBack</string>
+    <string name="change_date">Change the date</string>
+    <string name="add_pain">Add a new pain level</string>
 </resources>
