@@ -31,4 +31,5 @@
     <string name="text_welcome">Welcome to DigiBack</string>
     <string name="change_date">Change the date</string>
     <string name="add_pain">Add a new pain level</string>
+    <string name="basic_article_txt">This is an Article</string>
 </resources>

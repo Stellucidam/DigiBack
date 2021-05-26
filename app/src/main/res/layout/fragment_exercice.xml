@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.exercice.ExerciceFragment">
+    <!--
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -13,4 +14,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
     </ScrollView>
+    -->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,5 +53,6 @@
 
     <string name="information_text">Voici une liste d\'article qui peut vous interesser.</string>
     <string name="login_failed">Connection echouée</string>
+    <string name="basic_article_txt">Ceci est un article</string>
 
 </resources>
