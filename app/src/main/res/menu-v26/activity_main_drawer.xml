@@ -31,7 +31,7 @@
             android:title="@string/menu_etat" />
         <item
             android:id="@+id/nav_info"
-            android:icon="@drawable/ic_menu_info"
+            android:icon="@drawable/ic_menu_article"
             android:title="@string/menu_info" />
     </group>
 

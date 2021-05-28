@@ -19,7 +19,7 @@ public class ArticleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_info, container, false);
+        View root = inflater.inflate(R.layout.fragment_article, container, false);
 
         state = new ViewModelProvider(this, new ArticleViewModelFactory()).get(ArticleViewModel.class);
 

@@ -80,7 +80,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         private ArticleViewHolder(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
             super(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.fragment_info_element, parent, false));
+                    .inflate(R.layout.fragment_article_element, parent, false));
 
             articleCard = itemView.findViewById(R.id.article_card);
             articleTitle = itemView.findViewById(R.id.info_title);
