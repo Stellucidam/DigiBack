@@ -1,16 +1,19 @@
 package ch.heigvd.digiback.business.api.article;
 
-import ch.heigvd.digiback.business.model.info.Article;
-import ch.heigvd.digiback.business.model.info.ArticleType;
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.LinkedList;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import ch.heigvd.digiback.business.model.article.Article;
 
 
 public class GetArticles extends ArticleClient {
@@ -23,8 +26,8 @@ public class GetArticles extends ArticleClient {
     @Override
     public LinkedList<Article> call() throws Exception {
         LinkedList<Article> returnedArticles = new LinkedList<>();
-        URL myUrl = new URL(baseUrl);
-        HttpsURLConnection conn = (HttpsURLConnection)myUrl.openConnection();
+        URL articlesUrl = new URL(postsUrl);
+        HttpsURLConnection conn = (HttpsURLConnection)articlesUrl.openConnection();
         InputStream is = conn.getInputStream();
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);
@@ -43,14 +46,21 @@ public class GetArticles extends ArticleClient {
 
             int id = c.getInt("id");
             int imageId = c.getInt("featured_media");
-            String title = c.getJSONObject("title").getString("rendered");
-            //int category = c.getInt("categories");
-            String content = c.getJSONObject("content").getString("rendered");
-            ArticleType type = ArticleType.COMPREHENSION;
+            String imageURL = mediaUrl + imageId;
 
-            returnedArticles.add(new Article(id, imageId, title, content, type));
+            String link = c.getString("link");
+            String title = c.getJSONObject("title").getString("rendered");
+            int category = -1;
+            try {
+                category = (int) c.getJSONArray("categories").get(0);
+            } catch (Exception e) {
+                Log.w("GET Articles", "No category found");
+            }
+
+            returnedArticles.add(new Article(id, imageURL, title, category, link));
         }
 
+        isr.close();
         br.close();
         return returnedArticles; // result;
     }

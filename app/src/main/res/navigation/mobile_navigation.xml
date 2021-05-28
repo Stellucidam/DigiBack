@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/nav_info"
-        android:name="ch.heigvd.digiback.ui.info.InfoFragment"
+        android:name="ch.heigvd.digiback.ui.article.ArticleFragment"
         android:label="@string/menu_info"
         tools:layout="@layout/fragment_info" />
 </navigation>

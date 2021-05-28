@@ -32,7 +32,7 @@
     <string name="menu_etat">Etat du dos</string>
     <string name="text_etat">Ouvrir le tiroire de navigation</string>
 
-    <string name="menu_info" translatable="false">Informations</string>
+    <string name="menu_info" translatable="false">Articles</string>
     <string name="text_info">Voici des articles pour approfondir vos connaissances</string>
 
     <string name="text_deconnexion">Voulez-vous vraiment nous quitter ?</string>

@@ -1,11 +1,12 @@
 package ch.heigvd.digiback.business.api.article;
 
-import ch.heigvd.digiback.business.model.info.Article;
-
 import java.util.LinkedList;
 
+import ch.heigvd.digiback.business.model.article.Article;
+
 public abstract class ArticleClient extends ArticleCallable {
-    protected final String baseUrl = "https://infomaldedos.ch/wp-json/wp/v2/posts";
+    protected final String postsUrl = "https://infomaldedos.ch/wp-json/wp/v2/posts";
+    protected final String mediaUrl = "https://infomaldedos.ch/wp-json/wp/v2/media/";
 
     @Override
     public void setUiForLoading() {
