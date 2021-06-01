@@ -32,4 +32,6 @@
     <string name="change_date">Change the date</string>
     <string name="add_pain">Add a new pain level</string>
     <string name="basic_article_txt">This is an Article</string>
+    <string name="default_day">Friday 12 March 2021</string>
+    <string name="steps_title">Number of steps</string>
 </resources>

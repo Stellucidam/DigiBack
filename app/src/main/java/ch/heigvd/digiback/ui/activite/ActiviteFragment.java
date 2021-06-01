@@ -50,7 +50,7 @@ public class ActiviteFragment extends Fragment implements SensorEventListener {
 
         sensorManager = (SensorManager) getActivity().getSystemService(getContext().SENSOR_SERVICE);
 
-        stepCountTextView = root.findViewById(R.id.accomplishment_text);
+        stepCountTextView = root.findViewById(R.id.steps_total);
         currentDate = root.findViewById(R.id.text_date);
 
         table = root.findViewById(R.id.calendar_table);
@@ -66,7 +66,7 @@ public class ActiviteFragment extends Fragment implements SensorEventListener {
             totalSteps = sensorEvent.values[0];
             float current = totalSteps - previousStepCount;
 
-            stepCountTextView.setText("Steps : " + current);
+            stepCountTextView.setText("" + current);
         }
     }
 
