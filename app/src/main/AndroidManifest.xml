@@ -7,6 +7,9 @@
             android:usesCleartextTraffic="true"
             android:name="android.permission.INTERNET"
             tools:targetApi="m" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+
+    <uses-feature android:name="android.hardware.sensor.stepcounter"/>
 
     <application
             android:usesCleartextTraffic="true"
