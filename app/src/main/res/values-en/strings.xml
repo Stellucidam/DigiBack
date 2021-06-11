@@ -35,4 +35,7 @@
     <string name="default_day">Friday 12 March 2021</string>
     <string name="steps_title">Number of steps</string>
     <string name="exercise_title">Exercises</string>
+    <string name="pain_0">"0 -  No pain "</string>
+    <string name="pain_5">5 - Moderate</string>
+    <string name="pain_10">10 - Worst possible pain</string>
 </resources>

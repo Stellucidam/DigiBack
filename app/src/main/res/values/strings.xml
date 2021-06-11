@@ -59,4 +59,16 @@
     <string name="exercise_title">Exercices</string>
     <string name="quiz_title" translatable="false">Quiz</string>
 
+    <string name="pain_0">0 - Aucune douleur</string>
+    <string name="pain_1" translatable="false">1</string>
+    <string name="pain_2" translatable="false">2</string>
+    <string name="pain_3" translatable="false">3</string>
+    <string name="pain_4" translatable="false">4</string>
+    <string name="pain_5">5 - Modérée</string>
+    <string name="pain_6" translatable="false">6</string>
+    <string name="pain_7" translatable="false">7</string>
+    <string name="pain_8" translatable="false">8</string>
+    <string name="pain_9" translatable="false">9</string>
+    <string name="pain_10">10 - Pire douleur imaginable</string>
+
 </resources>
