@@ -1,16 +1,14 @@
-package ch.heigvd.digiback.ui.conseils;
+package ch.heigvd.digiback.ui.fragment.activite;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import ch.heigvd.digiback.R;
-
-public class ConseilsViewModel extends ViewModel {
+public class ActiviteViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ConseilsViewModel() {
+    public ActiviteViewModel() {
         mText = new MutableLiveData<>();
     }
 

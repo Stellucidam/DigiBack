@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.login;
+package ch.heigvd.digiback.ui.activity.login;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;

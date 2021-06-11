@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.activite;
+package ch.heigvd.digiback.ui.fragment.activite;
 
 import android.content.Context;
 import android.content.SharedPreferences;

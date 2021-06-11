@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.login;
+package ch.heigvd.digiback.ui.activity.login;
 
 /**
  * Class exposing authenticated user details to the UI.

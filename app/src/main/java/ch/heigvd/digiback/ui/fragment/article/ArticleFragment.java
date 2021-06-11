@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.article;
+package ch.heigvd.digiback.ui.fragment.article;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ public class ArticleFragment extends Fragment {
 
         state = new ViewModelProvider(this, new ArticleViewModelFactory()).get(ArticleViewModel.class);
 
-        ArticleAdapter articleAdapter = new ArticleAdapter(state, this);
+        ArticleAdapter articleAdapter = new ArticleAdapter(state, this, this);
 
         // LinearLayoutManager manager = new LinearLayoutManager(getContext());
         // RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();

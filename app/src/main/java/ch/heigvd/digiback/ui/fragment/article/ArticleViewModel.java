@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.article;
+package ch.heigvd.digiback.ui.fragment.article;
 
 import android.graphics.Bitmap;
 

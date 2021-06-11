@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.login;
+package ch.heigvd.digiback.ui.activity.login;
 
 import android.app.Activity;
 import android.content.Intent;

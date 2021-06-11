@@ -1,7 +1,8 @@
-package ch.heigvd.digiback.ui.article;
+package ch.heigvd.digiback.ui.fragment.article;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,9 +28,12 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private List<Article> articles = new LinkedList<>();
 
-    public ArticleAdapter(ArticleViewModel state, LifecycleOwner lifecycleOwner) {
+    private ArticleFragment articleFragment;
+
+    public ArticleAdapter(ArticleViewModel state, LifecycleOwner lifecycleOwner, ArticleFragment articleFragment) {
         this.state = state;
         this.lifecycleOwner = lifecycleOwner;
+        this.articleFragment = articleFragment;
         setHasStableIds(true);
 
         state.getArticles().observe(lifecycleOwner, newArticles -> {
@@ -50,7 +54,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_ARTICLE:
-                return new ArticleViewHolder(parent, lifecycleOwner);
+                return new ArticleViewHolder(parent, lifecycleOwner, articleFragment);
             default:
                 throw new IllegalStateException("Unknown view type.");
         }
@@ -77,11 +81,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private final TextView articleCategory;
         private final ImageView articleImage;
         private final LifecycleOwner lifecycleOwner;
+        private final ArticleFragment articleFragment;
 
-        private ArticleViewHolder(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner) {
+        private ArticleViewHolder(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner, ArticleFragment articleFragment) {
             super(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.fragment_article_element, parent, false));
 
+            this.articleFragment = articleFragment;
             articleCard = itemView.findViewById(R.id.article_card);
             articleTitle = itemView.findViewById(R.id.info_title);
             articleImage = itemView.findViewById(R.id.info_image);
@@ -90,12 +96,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         private void bindArticle(Article article) {
-            articleCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // TODO : go to browser
-                    // Context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(article.getLink())));
-                }
+            articleCard.setOnClickListener(view -> {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(article.getLink()));
+                articleFragment.getActivity().startActivity(i);
             });
             articleTitle.setText(article.getTitle());
             article.getImageBM().observe(lifecycleOwner, articleImage::setImageBitmap);

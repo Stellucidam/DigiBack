@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.etat;
+package ch.heigvd.digiback.ui.fragment.etat;
 
 import android.graphics.Color;
 import android.os.Bundle;
