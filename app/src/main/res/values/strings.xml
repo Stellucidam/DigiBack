@@ -56,5 +56,7 @@
     <string name="basic_article_txt">Ceci est un article</string>
     <string name="default_day">Vendredi 12 Mars 2021</string>
     <string name="steps_title" >Nombre de pas</string>
+    <string name="exercise_title">Exercices</string>
+    <string name="quiz_title" translatable="false">Quiz</string>
 
 </resources>

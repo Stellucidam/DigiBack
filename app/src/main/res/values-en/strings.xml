@@ -34,4 +34,5 @@
     <string name="basic_article_txt">This is an Article</string>
     <string name="default_day">Friday 12 March 2021</string>
     <string name="steps_title">Number of steps</string>
+    <string name="exercise_title">Exercises</string>
 </resources>

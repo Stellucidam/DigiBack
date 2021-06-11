@@ -66,6 +66,7 @@
                 android:orientation="vertical"
                 android:background="@color/colorPrimaryLight">
 
+                <!-- PEDOMETER -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/activity_card_steps"
                     android:layout_gravity="center"
@@ -96,8 +97,8 @@
                             android:layout_alignParentStart="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="8dp"
                             app:srcCompat="@drawable/steps" />
 
@@ -111,7 +112,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginStart="16dp"
                             android:layout_marginLeft="16dp"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="5dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_toEndOf="@+id/steps_image"
@@ -135,14 +136,14 @@
                             android:layout_marginRight="16dp"
                             android:layout_toEndOf="@+id/steps_image"
                             android:layout_toRightOf="@+id/steps_image"
-                            android:text="This is an accomplishment"
                             android:textColor="@color/white"
                             android:textSize="15sp" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- EXERCISES -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/activity_card_steps2"
+                    android:id="@+id/activity_card_exercise"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
                     android:layout_marginStart="16dp"
@@ -171,10 +172,10 @@
                             android:layout_alignParentStart="true"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="8dp"
-                            app:srcCompat="@drawable/steps" />
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="0dp"
+                            app:srcCompat="@drawable/exercise" />
 
                         <TextView
                             android:gravity="right"
@@ -186,12 +187,69 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginStart="16dp"
                             android:layout_marginLeft="16dp"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="5dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
                             android:layout_toEndOf="@+id/exercise_image"
                             android:layout_toRightOf="@+id/exercise_image"
-                            android:text="This is an accomplishment"
+                            android:text="@string/exercise_title"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- QUIZ -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/activity_card_quiz"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="0dp"
+                    app:cardBackgroundColor="@color/colorPrimaryLight"
+                    app:contentPadding="0dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/activity_card_exercise"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/quiz_content"
+                        android:background="@drawable/activity_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/quiz_image"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="0dp"
+                            app:srcCompat="@drawable/quiz" />
+
+                        <TextView
+                            android:gravity="right"
+                            android:id="@+id/quiz_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_toEndOf="@+id/quiz_image"
+                            android:layout_toRightOf="@+id/quiz_image"
+                            android:text="@string/quiz_title"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
                     </RelativeLayout>

@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import ch.heigvd.digiback.R;
@@ -31,7 +32,7 @@ import ch.heigvd.digiback.business.utils.Month;
 public class ActiviteFragment extends Fragment implements SensorEventListener {
     private static final String TAG = "ActiviteFragment";
     private TextView stepCountTextView;
-    private int selectedDay;
+    private Date selectedDay;
     private TextView currentDate;
 
     private TableLayout table;
@@ -55,7 +56,9 @@ public class ActiviteFragment extends Fragment implements SensorEventListener {
 
         table = root.findViewById(R.id.calendar_table);
 
-        setCalendar();
+        Calendar calendar = Calendar.getInstance();
+        selectedDay = calendar.getTime();
+        setCalendar(calendar);
 
         return root;
     }
@@ -66,7 +69,7 @@ public class ActiviteFragment extends Fragment implements SensorEventListener {
             totalSteps = sensorEvent.values[0];
             float current = totalSteps - previousStepCount;
 
-            stepCountTextView.setText("" + current);
+            stepCountTextView.setText((int)current + "");
         }
     }
 
@@ -102,19 +105,18 @@ public class ActiviteFragment extends Fragment implements SensorEventListener {
         previousStepCount = savedNumber;
     }
 
-    private void setCalendar() {
+    private void setCalendar(Calendar calendar) {
         // set the current date on top of the calendar
-        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDay);
         String language = Locale.getDefault().getDisplayLanguage();
-        selectedDay = calendar.getTime().getDate();
         if (language.equals("français")) {
-            currentDate.setText(Day.getDay(calendar.getTime().getDay()).french() + " " +
-                    calendar.getTime().getDate() + " " +
-                    Month.getMonth(calendar.getTime().getMonth()).french());
+            currentDate.setText(Day.getDay(selectedDay.getDay()).french() + " " +
+                    selectedDay.getDate() + " " +
+                    Month.getMonth(selectedDay.getMonth()).french());
         } else {
-            currentDate.setText(Day.getDay(calendar.getTime().getDay()).english() + " " +
-                    calendar.getTime().getDate() + " " +
-                    Month.getMonth(calendar.getTime().getMonth()).english());
+            currentDate.setText(Day.getDay(selectedDay.getDay()).english() + " " +
+                    selectedDay.getDate() + " " +
+                    Month.getMonth(selectedDay.getMonth()).english());
         }
 
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
@@ -123,8 +125,10 @@ public class ActiviteFragment extends Fragment implements SensorEventListener {
         TableRow rowDay = new TableRow(getContext());
 
         for (int i = 0; i < 7; i++) {
+            Date dateTime = calendar.getTime();
+
             TextView date = new TextView(getContext());
-            date.setText("" + calendar.getTime().getDate());
+            date.setText("" + dateTime.getDate());
             date.setGravity(Gravity.CENTER);
             date.setLayoutParams(new TableRow.LayoutParams(i));
             date.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
@@ -139,11 +143,27 @@ public class ActiviteFragment extends Fragment implements SensorEventListener {
                 day.setText(Day.getDay(calendar.getTime().getDay()).englishAbbreviation());
             }
 
-            if (calendar.getTime().getDate() == selectedDay) {
+            if (calendar.getTime().getDay() == selectedDay.getDay()) {
                 day.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 date.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             }
 
+            date.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    selectedDay = dateTime;
+                    table.removeAllViews();
+                    setCalendar(calendar);
+                }
+            });
+            day.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    selectedDay = dateTime;
+                    table.removeAllViews();
+                    setCalendar(calendar);
+                }
+            });
 
             rowDay.addView(day);
             rowDate.addView(date);
