@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.fragment.activite;
+package ch.heigvd.digiback.ui.fragment.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -29,7 +29,7 @@ import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.utils.Day;
 import ch.heigvd.digiback.business.utils.Month;
 
-public class ActiviteFragment extends Fragment implements SensorEventListener {
+public class ActivityFragment extends Fragment implements SensorEventListener {
     private static final String TAG = "ActiviteFragment";
     private TextView stepCountTextView;
     private Date selectedDay;
@@ -47,7 +47,7 @@ public class ActiviteFragment extends Fragment implements SensorEventListener {
         saveData();
         loadData();
 
-        View root = inflater.inflate(R.layout.fragment_activite, container, false);
+        View root = inflater.inflate(R.layout.fragment_activity, container, false);
 
         sensorManager = (SensorManager) getActivity().getSystemService(getContext().SENSOR_SERVICE);
 

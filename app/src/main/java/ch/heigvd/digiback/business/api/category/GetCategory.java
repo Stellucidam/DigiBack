@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.business.api.categorie;
+package ch.heigvd.digiback.business.api.category;
 
 import org.json.JSONObject;
 

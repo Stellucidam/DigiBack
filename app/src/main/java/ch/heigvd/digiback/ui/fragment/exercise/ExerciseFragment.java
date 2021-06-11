@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.fragment.exercice;
+package ch.heigvd.digiback.ui.fragment.exercise;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,15 +11,15 @@ import androidx.lifecycle.ViewModelProviders;
 
 import ch.heigvd.digiback.R;
 
-public class ExerciceFragment extends Fragment {
+public class ExerciseFragment extends Fragment {
 
-    private ExerciceViewModel exerciceViewModel;
+    private ExerciseViewModel exerciseViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        exerciceViewModel =
-                ViewModelProviders.of(this).get(ExerciceViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_exercice, container, false);
+        exerciseViewModel =
+                ViewModelProviders.of(this).get(ExerciseViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_exercise, container, false);
         /*
         final TextView textView = root.findViewById(R.id.text_exercice);
         exerciceViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

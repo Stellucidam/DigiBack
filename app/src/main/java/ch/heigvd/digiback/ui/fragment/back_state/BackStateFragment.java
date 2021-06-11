@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.fragment.etat;
+package ch.heigvd.digiback.ui.fragment.back_state;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,20 +28,20 @@ import ch.heigvd.digiback.R;
  * Source pour le graph : https://github.com/jjoe64/GraphView/wiki/Bar-Graph
  */
 
-public class EtatFragment extends Fragment {
+public class BackStateFragment extends Fragment {
 
     private static final String TAG = "EtatFragment";
     private GraphView graph;
     private Button changeDate;
     private Button addPain;
 
-    private EtatViewModel etatViewModel;
+    private BackStateViewModel backStateViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        etatViewModel =
-                ViewModelProviders.of(this).get(EtatViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_etat, container, false);
+        backStateViewModel =
+                ViewModelProviders.of(this).get(BackStateViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_back_state, container, false);
 
         graph = root.findViewById(R.id.graph);
         setGraph();

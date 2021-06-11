@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.fragment.conseils;
+package ch.heigvd.digiback.ui.fragment.tip;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,18 +11,18 @@ import androidx.lifecycle.ViewModelProviders;
 
 import ch.heigvd.digiback.R;
 
-public class ConseilsFragment extends Fragment {
+public class TipsFragment extends Fragment {
 
-    private ConseilsViewModel conseilsViewModel;
+    private TipsViewModel tipsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        conseilsViewModel =
-                ViewModelProviders.of(this).get(ConseilsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_conseils, container, false);
+        tipsViewModel =
+                ViewModelProviders.of(this).get(TipsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_tip, container, false);
         /*
         final TextView textView = root.findViewById(R.id.text_conseils);
-        conseilsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        tipsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.business.api.categorie;
+package ch.heigvd.digiback.business.api.category;
 
 import ch.heigvd.digiback.business.api.CustomCallable;
 import ch.heigvd.digiback.business.model.category.Category;

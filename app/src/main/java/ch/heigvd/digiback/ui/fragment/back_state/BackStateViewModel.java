@@ -1,14 +1,13 @@
-package ch.heigvd.digiback.ui.fragment.exercice;
+package ch.heigvd.digiback.ui.fragment.back_state;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ExerciceViewModel extends ViewModel {
-
+public class BackStateViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 
-    public ExerciceViewModel() {
+    public BackStateViewModel() {
         mText = new MutableLiveData<>();
     }
 

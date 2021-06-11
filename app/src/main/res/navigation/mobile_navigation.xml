@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/nav_accueil"
-        android:name="ch.heigvd.digiback.ui.fragment.accueil.AccueilFragment"
+        android:name="ch.heigvd.digiback.ui.fragment.home.HomeFragment"
         android:label="@string/menu_accueil"
-        tools:layout="@layout/fragment_accueil" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_activite"
-        android:name="ch.heigvd.digiback.ui.fragment.activite.ActiviteFragment"
+        android:name="ch.heigvd.digiback.ui.fragment.activity.ActivityFragment"
         android:label="@string/menu_activite"
-        tools:layout="@layout/fragment_activite" />
+        tools:layout="@layout/fragment_activity" />
 
     <fragment
         android:id="@+id/nav_conseils"
-        android:name="ch.heigvd.digiback.ui.fragment.conseils.ConseilsFragment"
+        android:name="ch.heigvd.digiback.ui.fragment.tip.TipsFragment"
         android:label="@string/menu_conseils"
-        tools:layout="@layout/fragment_conseils" />
+        tools:layout="@layout/fragment_tip" />
 
     <fragment
         android:id="@+id/nav_exercice"
-        android:name="ch.heigvd.digiback.ui.fragment.exercice.ExerciceFragment"
+        android:name="ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment"
         android:label="@string/menu_exercice"
-        tools:layout="@layout/fragment_exercice" />
+        tools:layout="@layout/fragment_exercise" />
 
     <fragment
         android:id="@+id/nav_quiz"
@@ -37,9 +37,9 @@
 
     <fragment
         android:id="@+id/nav_etat"
-        android:name="ch.heigvd.digiback.ui.fragment.etat.EtatFragment"
+        android:name="ch.heigvd.digiback.ui.fragment.back_state.BackStateFragment"
         android:label="@string/menu_etat"
-        tools:layout="@layout/fragment_etat" />
+        tools:layout="@layout/fragment_back_state" />
 
     <fragment
         android:id="@+id/nav_info"
