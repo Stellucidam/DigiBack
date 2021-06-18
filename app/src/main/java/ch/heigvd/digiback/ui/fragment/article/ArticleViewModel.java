@@ -70,7 +70,7 @@ public class ArticleViewModel extends ViewModel {
 
                         @Override
                         public void setDataInPageWithResult(Category category) {
-                            article.getCategoyName().postValue(category.getName());
+                            article.getCategoryName().postValue(category.getName());
                         }
                     }));
                 }

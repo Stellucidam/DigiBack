@@ -1,5 +1,8 @@
 package ch.heigvd.digiback.business.model.category;
 
+import lombok.Getter;
+
+@Getter
 public class Category {
     private final int id;
     private final String name;
@@ -7,13 +10,5 @@ public class Category {
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
     }
 }

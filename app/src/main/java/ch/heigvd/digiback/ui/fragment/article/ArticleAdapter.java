@@ -103,7 +103,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             });
             articleTitle.setText(article.getTitle());
             article.getImageBM().observe(lifecycleOwner, articleImage::setImageBitmap);
-            article.getCategoyName().observe(lifecycleOwner, articleCategory::setText);
+            article.getCategoryName().observe(lifecycleOwner, articleCategory::setText);
         }
     }
 }
