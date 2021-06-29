@@ -24,6 +24,9 @@ import androidx.fragment.app.Fragment;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.utils.Day;
@@ -42,6 +45,8 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
     private boolean running = false;
     private SensorManager sensorManager;
 
+    private ScheduledExecutorService scheduler;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         saveData();
@@ -59,6 +64,10 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
         Calendar calendar = Calendar.getInstance();
         selectedDay = calendar.getTime();
         setCalendar(calendar);
+
+        // Set scheduled data sending
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(this::saveSteps, 0, 24, TimeUnit.SECONDS);
 
         return root;
     }
@@ -105,6 +114,11 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
         previousStepCount = savedNumber;
     }
 
+    private void saveSteps() {
+        // TODO
+        Log.d(TAG, "Save steps " + totalSteps);
+    }
+
     private void setCalendar(Calendar calendar) {
         // set the current date on top of the calendar
         calendar.setTime(selectedDay);
@@ -148,21 +162,15 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
                 date.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
             }
 
-            date.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    selectedDay = dateTime;
-                    table.removeAllViews();
-                    setCalendar(calendar);
-                }
+            date.setOnClickListener(view -> {
+                selectedDay = dateTime;
+                table.removeAllViews();
+                setCalendar(calendar);
             });
-            day.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    selectedDay = dateTime;
-                    table.removeAllViews();
-                    setCalendar(calendar);
-                }
+            day.setOnClickListener(view -> {
+                selectedDay = dateTime;
+                table.removeAllViews();
+                setCalendar(calendar);
             });
 
             rowDay.addView(day);
