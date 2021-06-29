@@ -30,7 +30,7 @@ import ch.heigvd.digiback.business.utils.Day;
 import ch.heigvd.digiback.business.utils.Month;
 
 public class ActivityFragment extends Fragment implements SensorEventListener {
-    private static final String TAG = "ActiviteFragment";
+    private static final String TAG = "ActivityFragment";
     private TextView stepCountTextView;
     private Date selectedDay;
     private TextView currentDate;
