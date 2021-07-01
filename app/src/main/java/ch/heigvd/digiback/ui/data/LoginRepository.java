@@ -1,5 +1,7 @@
 package ch.heigvd.digiback.ui.data;
 
+import ch.heigvd.digiback.business.api.auth.Login;
+import ch.heigvd.digiback.business.api.auth.iOnTokenFetched;
 import ch.heigvd.digiback.ui.data.model.LoggedInUser;
 
 /**
@@ -43,12 +45,24 @@ public class LoginRepository {
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public LoggedInUser login(String username, String password) throws Exception {
         // handle login
-        Result<LoggedInUser> result = dataSource.login(username, password);
-        if (result instanceof Result.Success) {
-            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
-        }
-        return result;
+        Login login = new Login(username, password, new iOnTokenFetched() {
+            @Override
+            public void showProgressBar() {
+
+            }
+
+            @Override
+            public void hideProgressBar() {
+
+            }
+
+            @Override
+            public void setDataInPageWithResult(LoggedInUser loggedInUser) {
+                setLoggedInUser(loggedInUser);
+            }
+        });
+        return login.call();
     }
 }

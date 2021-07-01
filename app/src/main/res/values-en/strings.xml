@@ -38,4 +38,5 @@
     <string name="pain_0">"0 -  No pain "</string>
     <string name="pain_5">5 - Moderate</string>
     <string name="pain_10">10 - Worst possible pain</string>
+    <string name="prompt_email">Email or username</string>
 </resources>

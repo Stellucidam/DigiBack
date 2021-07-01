@@ -1,17 +1,18 @@
 package ch.heigvd.digiback.ui.activity.login;
 
+import lombok.Getter;
+
 /**
  * Class exposing authenticated user details to the UI.
  */
+@Getter
 class LoggedInUserView {
-    private String displayName;
+    private String username;
+    private String token;
     //... other data fields that may be accessible to the UI
 
-    LoggedInUserView(String displayName) {
-        this.displayName = displayName;
-    }
-
-    String getDisplayName() {
-        return displayName;
+    LoggedInUserView(String username, String token) {
+        this.username = username;
+        this.token = token;
     }
 }

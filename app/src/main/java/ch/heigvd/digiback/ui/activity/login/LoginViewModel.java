@@ -1,14 +1,14 @@
 package ch.heigvd.digiback.ui.activity.login;
 
+import android.util.Patterns;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import android.util.Patterns;
 
-import ch.heigvd.digiback.ui.data.LoginRepository;
-import ch.heigvd.digiback.ui.data.Result;
-import ch.heigvd.digiback.ui.data.model.LoggedInUser;
 import ch.heigvd.digiback.R;
+import ch.heigvd.digiback.ui.data.LoginRepository;
+import ch.heigvd.digiback.ui.data.model.LoggedInUser;
 
 public class LoginViewModel extends ViewModel {
 
@@ -28,16 +28,10 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
+    public void login(String username, String password) throws Exception {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
-
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
-        }
+        LoggedInUser result = loginRepository.login(username, password);
+        loginResult.setValue(new LoginResult(new LoggedInUserView(result.getUsername(), result.getToken())));
     }
 
     public void loginDataChanged(String username, String password) {

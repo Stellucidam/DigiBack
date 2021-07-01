@@ -77,7 +77,8 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="408dp"
+            app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="408dp"
             android:fontFamily="@font/montserrat"/>
     <EditText
             android:id="@+id/password"

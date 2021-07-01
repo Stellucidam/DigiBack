@@ -8,11 +8,19 @@ import lombok.Getter;
 @Getter
 public class LoggedInUser {
 
-    private String userId;
-    private String displayName;
+    private Long userId;
+    private String username;
+    private String token;
 
-    public LoggedInUser(String userId, String displayName) {
+    public LoggedInUser(Long userId, String username, String token) {
         this.userId = userId;
-        this.displayName = displayName;
+        this.username = username;
+        this.token = token;
+    }
+
+    public LoggedInUser() {
+        this.userId = 0L;
+        this.username = null;
+        this.token = null;
     }
 }

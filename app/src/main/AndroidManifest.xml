@@ -25,13 +25,13 @@
                 android:name=".ui.activity.login.LoginActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoTitleBar">
-            <!-- Todo : put that back
+            <!-- Todo : put that back-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            -->
+
         </activity>
         <activity
                 android:name=".MainActivity"

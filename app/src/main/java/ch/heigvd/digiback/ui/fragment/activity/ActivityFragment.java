@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,20 +19,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import ch.heigvd.digiback.R;
+import ch.heigvd.digiback.business.api.activity.PostStep;
+import ch.heigvd.digiback.business.model.activity.Step;
 import ch.heigvd.digiback.business.utils.Day;
 import ch.heigvd.digiback.business.utils.Month;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class ActivityFragment extends Fragment implements SensorEventListener {
     private static final String TAG = "ActivityFragment";
     private TextView stepCountTextView;
