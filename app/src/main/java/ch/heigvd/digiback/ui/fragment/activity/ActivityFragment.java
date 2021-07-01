@@ -43,12 +43,11 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
 
     private TableLayout table;
 
+    private float currentSteps = 0;
     private float totalSteps = 0;
     private float previousStepCount = 0;
     private boolean running = false;
     private SensorManager sensorManager;
-
-    private ScheduledExecutorService scheduler;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,19 +67,32 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
         selectedDay = calendar.getTime();
         setCalendar(calendar);
 
-        // Set scheduled data sending
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(this::saveSteps, 0, 24, TimeUnit.SECONDS);
-
         return root;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (running) {
             totalSteps = sensorEvent.values[0];
             float current = totalSteps - previousStepCount;
 
+            this.currentSteps = current;
+            // TODO send update
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Timestamp(cal.getTime().getTime()));
+
+            PostStep postStep = new PostStep(
+                    new Step(new java.sql.Date(cal.getTime().getTime()), (long) this.currentSteps),
+                    1L, // TODO fix this tokenData.getValue().get().first,
+                    null);
+            try {
+                postStep.call();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
+            }
             stepCountTextView.setText((int)current + "");
         }
     }
@@ -117,10 +129,6 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
         previousStepCount = savedNumber;
     }
 
-    private void saveSteps() {
-        // TODO
-        Log.d(TAG, "Save steps " + totalSteps);
-    }
 
     private void setCalendar(Calendar calendar) {
         // set the current date on top of the calendar

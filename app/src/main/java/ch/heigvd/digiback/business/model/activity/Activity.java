@@ -20,6 +20,14 @@ public class Activity {
         nbrSteps = null;
     }
 
+    public Activity(Date date, Long nbrSteps, Long nbrExercises, Long nbrQuiz) {
+        this.id = 0;
+        this.date = date;
+        this.nbrSteps = nbrSteps;
+        this.nbrExercises = nbrExercises;
+        this.nbrQuiz = nbrQuiz;
+    }
+
     public Activity(int id, Date date, Long nbrSteps, Long nbrExercises, Long nbrQuiz) {
         this.id = id;
         this.date = date;

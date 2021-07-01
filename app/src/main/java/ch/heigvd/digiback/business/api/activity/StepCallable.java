@@ -1,13 +1,14 @@
 package ch.heigvd.digiback.business.api.activity;
 
 import ch.heigvd.digiback.business.api.CustomCallable;
-import ch.heigvd.digiback.business.model.activity.Activity;
+import ch.heigvd.digiback.business.model.activity.Step;
 
-public class ActivityCallable implements CustomCallable<Activity> {
-    protected final String activitiesURL = "https://localhost:8080/activity/user/"; // TODO set to backend link
+public class StepCallable implements CustomCallable<Step> {
+    protected final String stepsURL = "https://localhost:8080/activity/user/"; // TODO set to backend link
+    protected final String stepsURLEnd = "/upload/steps/";
 
     @Override
-    public void setDataAfterLoading(Activity activity) {
+    public void setDataAfterLoading(Step step) {
 
     }
 
@@ -17,7 +18,7 @@ public class ActivityCallable implements CustomCallable<Activity> {
     }
 
     @Override
-    public Activity call() throws Exception {
+    public Step call() throws Exception {
         return null;
     }
 }
