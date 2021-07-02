@@ -41,9 +41,12 @@ import ch.heigvd.digiback.business.utils.Month;
 
 public class ActivityFragment extends Fragment implements SensorEventListener {
     private static final String TAG = "ActivityFragment";
-    private TextView stepCountTextView;
-    private Date selectedDay;
     private TextView currentDate;
+    private TextView stepCountTextView;
+    private TextView quizCountTextView;
+    private TextView exerciseCountTextView;
+
+    private Date selectedDay;
 
     private TableLayout table;
 
@@ -62,6 +65,8 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
         sensorManager = (SensorManager) getActivity().getSystemService(getContext().SENSOR_SERVICE);
 
         stepCountTextView = root.findViewById(R.id.steps_total);
+        exerciseCountTextView = root.findViewById(R.id.exercise_total);
+        quizCountTextView = root.findViewById(R.id.quiz_total);
         currentDate = root.findViewById(R.id.text_date);
 
         table = root.findViewById(R.id.calendar_table);
@@ -78,9 +83,8 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (running) {
             float totalSteps = sensorEvent.values[0];
-            float current = totalSteps - previousStepCount;
 
-            this.currentSteps = current;
+            this.currentSteps = totalSteps - previousStepCount;
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Timestamp(cal.getTime().getTime()));
@@ -111,13 +115,7 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
                 Log.e(TAG, e.getMessage());
             }
 
-            Calendar calendar = Calendar.getInstance();
-            Log.d(TAG, selectedDay.toString() + " == " + calendar.getTime().toString() + " ? ");
-            if (selectedDay.getDate() == calendar.getTime().getDate()) {
-                stepCountTextView.setText((int) current + "");
-            } else {
-                setActivities();
-            }
+            setActivities();
         }
     }
 
@@ -223,9 +221,11 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
         Calendar calendar = Calendar.getInstance();
         Log.d(TAG, selectedDay.toString() + " == " + calendar.getTime().toString() + " ? ");
         if (selectedDay.getDate() == calendar.getTime().getDate()) {
-            stepCountTextView.setText((int) currentSteps + "");
+            stepCountTextView.setText((int) currentSteps);
         } else {
             stepCountTextView.setText("0");
+            exerciseCountTextView.setText("0");
+            quizCountTextView.setText("0");
         }
 
         try {
@@ -245,6 +245,10 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
                 public void setDataInPageWithResult(Activity activity) {
                     // TODO
                     Log.d(TAG, activity.toString());
+
+                    stepCountTextView.setText(activity.getNbrSteps().intValue());
+                    exerciseCountTextView.setText(activity.getNbrExercises().intValue());
+                    quizCountTextView.setText(activity.getNbrQuiz().intValue());
                 }
             }));
         } catch (Exception e) {
