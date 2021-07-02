@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.PopupWindow;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,13 +14,19 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import ch.heigvd.digiback.ui.activity.login.LoginActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import ch.heigvd.digiback.ui.activity.login.LoginActivity;
+import ch.heigvd.digiback.ui.data.LoginDataSource;
+import ch.heigvd.digiback.ui.data.LoginRepository;
+
 // TODO comments
 public class MainActivity extends AppCompatActivity {
+    private LoginRepository loginRepository;
+    private LoginDataSource loginDataSource;
 
     private AppBarConfiguration mAppBarConfiguration;
     private PopupWindow deconnexionPopup;
@@ -36,14 +43,14 @@ public class MainActivity extends AppCompatActivity {
         deconnexionPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_deconnexion, null, false),100,100, true);
         //settingsPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_settings, null, false),100,100, true);
 
+
+        String welcome = getString(R.string.welcome) + LoginRepository.getInstance(new LoginDataSource()).getUsername();
+        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

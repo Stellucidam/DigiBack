@@ -1,5 +1,6 @@
 package ch.heigvd.digiback.ui.data;
 
+import ch.heigvd.digiback.business.api.TaskRunner;
 import ch.heigvd.digiback.business.api.auth.Login;
 import ch.heigvd.digiback.business.api.auth.iOnTokenFetched;
 import ch.heigvd.digiback.ui.data.model.LoggedInUser;
@@ -16,7 +17,10 @@ public class LoginRepository {
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
-    private LoggedInUser user = null;
+    private LoggedInUser user = new LoggedInUser(
+            1L,
+            "Jane Doe",
+            "token");
 
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {
@@ -34,6 +38,19 @@ public class LoginRepository {
         return user != null;
     }
 
+    public String getToken() {
+        return user.getToken();
+    }
+
+    public Long getUserId() {
+        return user.getUserId();
+    }
+
+
+    public String getUsername() {
+        return user.getUsername();
+    }
+
     public void logout() {
         user = null;
         dataSource.logout();
@@ -46,7 +63,7 @@ public class LoginRepository {
     }
 
     public LoggedInUser login(String username, String password) throws Exception {
-        // handle login
+        /* TODO put that back handle login
         Login login = new Login(username, password, new iOnTokenFetched() {
             @Override
             public void showProgressBar() {
@@ -63,6 +80,26 @@ public class LoginRepository {
                 setLoggedInUser(loggedInUser);
             }
         });
-        return login.call();
+        return login.call();*/
+
+        final TaskRunner taskRunner = new TaskRunner();
+        taskRunner.executeAsync(new Login(username, password, new iOnTokenFetched() {
+            @Override
+            public void showProgressBar() {
+
+            }
+
+            @Override
+            public void hideProgressBar() {
+
+            }
+
+            @Override
+            public void setDataInPageWithResult(LoggedInUser loggedInUser) {
+                setLoggedInUser(loggedInUser);
+            }
+        }));
+
+        return user;
     }
 }

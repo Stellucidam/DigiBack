@@ -14,19 +14,17 @@ import javax.net.ssl.HttpsURLConnection;
 import ch.heigvd.digiback.business.model.activity.Activity;
 
 public class GetActivity extends ActivityCallable {
-    private final Long userId;
     private final String date;
     private final iOnActivityFetched listener; //listener in fragment that shows and hides ProgressBar
 
-    public GetActivity(String date, Long userId, iOnActivityFetched onImageFetched) {
-        this.userId = userId;
+    public GetActivity(String date, iOnActivityFetched onImageFetched) {
         this.date = date;
         this.listener = onImageFetched;
     }
 
     @Override
     public Activity call() throws Exception {
-        URL getImageUrl = new URL(activitiesURL + userId.toString() + "/date/" + date);
+        URL getImageUrl = new URL(activitiesURL + loginRepository.getUserId().toString() + "/date/" + date);
         HttpsURLConnection imageConn = (HttpsURLConnection)getImageUrl.openConnection();
         InputStream inputStream = imageConn.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

@@ -20,19 +20,22 @@ public class Activity {
         nbrSteps = null;
     }
 
-    public Activity(Date date, Long nbrSteps, Long nbrExercises, Long nbrQuiz) {
-        this.id = 0;
-        this.date = date;
-        this.nbrSteps = nbrSteps;
-        this.nbrExercises = nbrExercises;
-        this.nbrQuiz = nbrQuiz;
-    }
-
     public Activity(int id, Date date, Long nbrSteps, Long nbrExercises, Long nbrQuiz) {
         this.id = id;
         this.date = date;
         this.nbrSteps = nbrSteps;
         this.nbrExercises = nbrExercises;
         this.nbrQuiz = nbrQuiz;
+    }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "id=" + id +
+                ", date=" + date +
+                ", nbrSteps=" + nbrSteps +
+                ", nbrExercises=" + nbrExercises +
+                ", nbrQuiz=" + nbrQuiz +
+                '}';
     }
 }

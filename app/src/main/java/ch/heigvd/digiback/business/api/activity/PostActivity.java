@@ -14,19 +14,17 @@ import ch.heigvd.digiback.business.model.activity.Activity;
 
 public class PostActivity extends ActivityCallable {
     private static final String TAG = "PostActivity";
-    private final Long userId;
     private final Activity activity;
     private final iOnActivityFetched listener; //listener in fragment that shows and hides ProgressBar
 
-    public PostActivity(Activity activity, Long userId, iOnActivityFetched onImageFetched) {
-        this.userId = userId;
+    public PostActivity(Activity activity, iOnActivityFetched onImageFetched) {
         this.activity = activity;
         this.listener = onImageFetched;
     }
 
     @Override
     public Activity call() throws Exception {
-        URL url = new URL(activitiesURL + userId.toString() + "/upload");
+        URL url = new URL(activitiesURL + loginRepository.getUserId().toString() + "/upload");
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
         http.setRequestMethod("POST"); // PUT is another valid option
@@ -47,6 +45,8 @@ public class PostActivity extends ActivityCallable {
             http.setFixedLengthStreamingMode(length);
             os.write(out);
 
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
         //http.getResponseMessage();
         // Do something with http.getInputStream()

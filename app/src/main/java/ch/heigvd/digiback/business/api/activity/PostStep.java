@@ -12,25 +12,25 @@ import java.net.URLConnection;
 import ch.heigvd.digiback.business.model.activity.Step;
 
 public class PostStep extends StepCallable {
-    private static final String TAG = "PostActivity";
-    private final Long userId;
+
+    private static final String TAG = "PostStep";
     private final Step step;
     private final iOnStepFetched listener; //listener in fragment that shows and hides ProgressBar
 
-    public PostStep(Step step, Long userId, iOnStepFetched onStepFetched) {
-        this.userId = userId;
+    public PostStep(Step step, iOnStepFetched onStepFetched) {
         this.step = step;
         this.listener = onStepFetched;
     }
 
     @Override
     public Step call() throws Exception {
-        URL url = new URL(stepsURL + userId.toString() + stepsURLEnd);
+        URL url = new URL(stepsURL + loginRepository.getUserId().toString() + stepsURLEnd);
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
-        http.setRequestMethod("POST"); // PUT is another valid option
+        http.setRequestMethod("POST");
         http.setDoOutput(true);
 
+        Log.i(TAG, url.toString() + " <- " + step.getDate() + " " + step.getNbrSteps() + " " + loginRepository.getToken());
         http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         http.connect();
         try(OutputStream os = http.getOutputStream()) {
@@ -43,6 +43,8 @@ public class PostStep extends StepCallable {
             http.setFixedLengthStreamingMode(length);
             os.write(out);
 
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
         //http.getResponseMessage();
         // Do something with http.getInputStream()
@@ -53,11 +55,7 @@ public class PostStep extends StepCallable {
     }
 
     @Override
-    public void setUiForLoading() {
-        if (listener != null) {
-            listener.showProgressBar();
-        }
-    }
+    public void setUiForLoading() {}
 
     @Override
     public void setDataAfterLoading(Step step) {

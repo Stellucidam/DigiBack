@@ -29,12 +29,16 @@ import java.util.Date;
 import java.util.Locale;
 
 import ch.heigvd.digiback.R;
+import ch.heigvd.digiback.business.api.TaskRunner;
+import ch.heigvd.digiback.business.api.activity.GetActivity;
 import ch.heigvd.digiback.business.api.activity.PostStep;
+import ch.heigvd.digiback.business.api.activity.iOnActivityFetched;
+import ch.heigvd.digiback.business.api.activity.iOnStepFetched;
+import ch.heigvd.digiback.business.model.activity.Activity;
 import ch.heigvd.digiback.business.model.activity.Step;
 import ch.heigvd.digiback.business.utils.Day;
 import ch.heigvd.digiback.business.utils.Month;
 
-@RequiresApi(api = Build.VERSION_CODES.N)
 public class ActivityFragment extends Fragment implements SensorEventListener {
     private static final String TAG = "ActivityFragment";
     private TextView stepCountTextView;
@@ -44,7 +48,6 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
     private TableLayout table;
 
     private float currentSteps = 0;
-    private float totalSteps = 0;
     private float previousStepCount = 0;
     private boolean running = false;
     private SensorManager sensorManager;
@@ -74,26 +77,47 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (running) {
-            totalSteps = sensorEvent.values[0];
+            float totalSteps = sensorEvent.values[0];
             float current = totalSteps - previousStepCount;
 
             this.currentSteps = current;
-            // TODO send update
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Timestamp(cal.getTime().getTime()));
 
             PostStep postStep = new PostStep(
                     new Step(new java.sql.Date(cal.getTime().getTime()), (long) this.currentSteps),
-                    1L, // TODO fix this tokenData.getValue().get().first,
-                    null);
+                    new iOnStepFetched() {
+                        @Override
+                        public void showProgressBar() {
+
+                        }
+
+                        @Override
+                        public void hideProgressBar() {
+
+                        }
+
+                        @Override
+                        public void setDataInPageWithResult(Step step) {
+                            // TODO do something with the data
+                        }
+                    });
             try {
-                postStep.call();
+                final TaskRunner taskRunner = new TaskRunner();
+                taskRunner.executeAsync(postStep);
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(TAG, e.getMessage());
             }
-            stepCountTextView.setText((int)current + "");
+
+            Calendar calendar = Calendar.getInstance();
+            Log.d(TAG, selectedDay.toString() + " == " + calendar.getTime().toString() + " ? ");
+            if (selectedDay.getDate() == calendar.getTime().getDate()) {
+                stepCountTextView.setText((int) current + "");
+            } else {
+                setActivities();
+            }
         }
     }
 
@@ -125,12 +149,13 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
     public void loadData() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
         float savedNumber = sharedPreferences.getFloat("key1", 0);
-        Log.d(TAG, "savedNumber : " + savedNumber);
         previousStepCount = savedNumber;
     }
 
 
     private void setCalendar(Calendar calendar) {
+        setActivities();
+
         // set the current date on top of the calendar
         calendar.setTime(selectedDay);
         String language = Locale.getDefault().getDisplayLanguage();
@@ -192,5 +217,39 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
 
         table.addView(rowDay);
         table.addView(rowDate);
+    }
+
+    private void setActivities() {
+        Calendar calendar = Calendar.getInstance();
+        Log.d(TAG, selectedDay.toString() + " == " + calendar.getTime().toString() + " ? ");
+        if (selectedDay.getDate() == calendar.getTime().getDate()) {
+            stepCountTextView.setText((int) currentSteps + "");
+        } else {
+            stepCountTextView.setText("0");
+        }
+
+        try {
+            final TaskRunner taskRunner = new TaskRunner();
+            taskRunner.executeAsync(new GetActivity(selectedDay.toString(), new iOnActivityFetched() {
+                @Override
+                public void showProgressBar() {
+
+                }
+
+                @Override
+                public void hideProgressBar() {
+
+                }
+
+                @Override
+                public void setDataInPageWithResult(Activity activity) {
+                    // TODO
+                    Log.d(TAG, activity.toString());
+                }
+            }));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+        }
     }
 }
