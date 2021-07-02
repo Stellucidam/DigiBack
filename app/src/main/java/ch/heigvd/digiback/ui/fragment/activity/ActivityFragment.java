@@ -146,8 +146,7 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
 
     public void loadData() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
-        float savedNumber = sharedPreferences.getFloat("key1", 0);
-        previousStepCount = savedNumber;
+        previousStepCount = sharedPreferences.getFloat("key1", 0);
     }
 
 
