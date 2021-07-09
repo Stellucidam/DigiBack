@@ -1,14 +1,12 @@
 package ch.heigvd.digiback.ui.fragment.back_state;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ch.heigvd.digiback.R;
+import ch.heigvd.digiback.ui.activity.mobility.MobilityActivity;
 
 /**
  * Source pour le graph : https://github.com/jjoe64/GraphView/wiki/Bar-Graph
@@ -30,10 +29,9 @@ import ch.heigvd.digiback.R;
 
 public class BackStateFragment extends Fragment {
 
-    private static final String TAG = "EtatFragment";
+    private static final String TAG = "BackStateFragment";
     private GraphView graph;
-    private Button changeDate;
-    private Button addPain;
+    private Button evaluateMobility;
 
     private BackStateViewModel backStateViewModel;
 
@@ -46,64 +44,17 @@ public class BackStateFragment extends Fragment {
         graph = root.findViewById(R.id.graph);
         setGraph();
 
-        changeDate = root.findViewById(R.id.change_date);
-        changeDate.setOnClickListener(view -> {
-            // TODO
-        });
-
-        addPain = root.findViewById(R.id.add_pain);
-        addPain.setOnClickListener(view -> {
-            PopupMenu popup = new PopupMenu(getContext(), view);
-            popup.setOnMenuItemClickListener(item -> {
-                Log.d(TAG, "Selected pain : " + item.getTitle());
-                switch (item.getItemId()) {
-                    case R.id.pain_0:
-                        // TODO
-                        return true;
-                    case R.id.pain_1:
-                        // TODO
-                        return true;
-                    case R.id.pain_2:
-                        // TODO
-                        return true;
-                    case R.id.pain_3:
-                        // TODO
-                        return true;
-                    case R.id.pain_4:
-                        // TODO
-                        return true;
-                    case R.id.pain_5:
-                        // TODO
-                        return true;
-                    case R.id.pain_6:
-                        // TODO
-                        return true;
-                    case R.id.pain_7:
-                        // TODO
-                        return true;
-                    case R.id.pain_8:
-                        // TODO
-                        return true;
-                    case R.id.pain_9:
-                        // TODO
-                        return true;
-                    case R.id.pain_10:
-                        // TODO
-                        return true;
-                    default:
-                        return false;
-                }
-            });
-            MenuInflater inflater1 = popup.getMenuInflater();
-            inflater1.inflate(R.menu.add_pain, popup.getMenu());
-            popup.show();
+        evaluateMobility = root.findViewById(R.id.evaluate_mobility);
+        evaluateMobility.setOnClickListener(view -> {
+            Intent i = new Intent(getContext(), MobilityActivity.class);
+            this.getActivity().startActivity(i);
         });
 
         return root;
     }
 
     private void setGraph() {
-        // TODO make it dynamic
+        // TODO get info from backend
 
         // generate Dates
         final Calendar calendar = Calendar.getInstance();

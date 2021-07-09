@@ -157,7 +157,7 @@
 
                         <TextView
                                 android:id="@+id/conseil_content"
-                                android:text="Vous devrier faire une petite promenade."
+                                android:text="Vous devriez faire une petite promenade."
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"/>
 

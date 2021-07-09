@@ -12,21 +12,21 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_activite"
-        android:name="ch.heigvd.digiback.ui.fragment.activity.ActivityFragment"
-        android:label="@string/menu_activite"
-        tools:layout="@layout/fragment_activity" />
+        android:id="@+id/nav_calendar"
+        android:name="ch.heigvd.digiback.ui.fragment.calendar.CalendarFragment"
+        android:label="@string/menu_calendar"
+        tools:layout="@layout/fragment_calendar" />
 
     <fragment
         android:id="@+id/nav_conseils"
         android:name="ch.heigvd.digiback.ui.fragment.tip.TipsFragment"
-        android:label="@string/menu_conseils"
+        android:label="@string/menu_tips"
         tools:layout="@layout/fragment_tip" />
 
     <fragment
         android:id="@+id/nav_exercice"
         android:name="ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment"
-        android:label="@string/menu_exercice"
+        android:label="@string/menu_exercise"
         tools:layout="@layout/fragment_exercise" />
 
     <fragment
@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/nav_etat"
         android:name="ch.heigvd.digiback.ui.fragment.back_state.BackStateFragment"
-        android:label="@string/menu_etat"
+        android:label="@string/menu_state"
         tools:layout="@layout/fragment_back_state" />
 
     <fragment

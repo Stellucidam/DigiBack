@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Entête de navigation</string>
 
     <!-- Buttons -->
-    <string name="change_date">Changer la date</string>
+    <string name="evaluate_mobility">Evaluer ma mobilité</string>
     <string name="add_pain">Ajouter un niveau de douleur</string>
 
     <!-- Actions -->
@@ -17,20 +17,20 @@
     <string name="menu_accueil">Accueil</string>
     <string name="text_accueil">Ceci est l\'accueil</string>
 
-    <string name="menu_activite">Mon activité</string>
-    <string name="text_activite">Voici votre activité</string>
+    <string name="menu_calendar">Calendrier</string>
+    <string name="text_calendar">Voici votre activité</string>
 
-    <string name="menu_conseils">Vos conseils</string>
-    <string name="text_conseils">Voici vos conseils personnalisés</string>
+    <string name="menu_tips">Nos conseils</string>
+    <string name="text_tips">Voici vos conseils personnalisés</string>
 
-    <string name="menu_exercice" translatable="false">Exercices</string>
-    <string name="text_exercice">Voici les exercices</string>
+    <string name="menu_exercise" translatable="false">Exercices</string>
+    <string name="text_exercise">Voici les exercices</string>
 
     <string name="menu_quiz" translatable="false">Quiz</string>
     <string name="text_quiz">Voici le quiz pour tester vos connaissances</string>
 
-    <string name="menu_etat">Etat du dos</string>
-    <string name="text_etat">Ouvrir le tiroire de navigation</string>
+    <string name="menu_state">Etat du dos</string>
+    <string name="text_state">Ouvrir le tiroire de navigation</string>
 
     <string name="menu_info" translatable="false">Articles</string>
     <string name="text_info">Voici des articles pour approfondir vos connaissances</string>
@@ -55,7 +55,7 @@
     <string name="login_failed">Connection echouée</string>
     <string name="basic_article_txt">Ceci est un article</string>
     <string name="default_day">Vendredi 12 Mars 2021</string>
-    <string name="steps_title" >Nombre de pas</string>
+    <string name="steps_title">Nombre de pas</string>
     <string name="exercise_title">Exercices</string>
     <string name="quiz_title" translatable="false">Quiz</string>
 

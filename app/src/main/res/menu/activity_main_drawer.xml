@@ -10,17 +10,17 @@
             android:icon="@drawable/ic_menu_accueil"
             android:title="@string/menu_accueil" />
         <item
-            android:id="@+id/nav_activite"
+            android:id="@+id/nav_calendar"
             android:icon="@drawable/ic_menu_activite"
-            android:title="@string/menu_activite" />
+            android:title="@string/menu_calendar" />
         <item
             android:id="@+id/nav_conseils"
             android:icon="@drawable/ic_menu_conseils"
-            android:title="@string/menu_conseils" />
+            android:title="@string/menu_tips" />
         <item
             android:id="@+id/nav_exercice"
             android:icon="@drawable/ic_menu_exercice"
-            android:title="@string/menu_exercice" />
+            android:title="@string/menu_exercise" />
         <item
             android:id="@+id/nav_quiz"
             android:icon="@drawable/ic_menu_quiz"
@@ -28,7 +28,7 @@
         <item
             android:id="@+id/nav_etat"
             android:icon="@drawable/ic_menu_etat"
-            android:title="@string/menu_etat" />
+            android:title="@string/menu_state" />
         <item
             android:id="@+id/nav_info"
             android:icon="@drawable/ic_menu_info"

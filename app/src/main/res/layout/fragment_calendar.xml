@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.activity.ActivityFragment">
+    tools:context=".ui.fragment.calendar.CalendarFragment">
 
     <androidx.cardview.widget.CardView
             android:id="@+id/activity_card"
@@ -66,11 +66,20 @@
                 android:orientation="vertical"
                 android:background="@color/colorPrimaryLight">
 
+                <Button
+                    android:id="@+id/add_pain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/add_pain"
+                    android:background="@color/colorAccent"
+                    android:textColor="@color/white" />
+
                 <!-- PEDOMETER -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/activity_card_steps"
                     android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_width="match_parent"

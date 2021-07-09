@@ -17,22 +17,15 @@
         tools:layout_editor_absoluteX="1dp">
 
         <Button
-            android:id="@+id/change_date"
+            android:id="@+id/evaluate_mobility"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
-            android:background="@drawable/basic_button"
-            android:text="@string/change_date"
-            android:textColor="@color/colorSecondary" />
+            android:padding="8dp"
+            android:background="@color/colorAccent"
+            android:text="@string/evaluate_mobility"
+            android:textColor="@color/white" />
 
-        <Button
-            android:id="@+id/add_pain"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:background="@drawable/basic_button"
-            android:text="@string/add_pain"
-            android:textColor="@color/colorSecondary" />
     </LinearLayout>
 
     <com.jjoe64.graphview.GraphView

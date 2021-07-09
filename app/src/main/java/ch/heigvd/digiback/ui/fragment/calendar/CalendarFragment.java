@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.fragment.activity;
+package ch.heigvd.digiback.ui.fragment.calendar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,8 +11,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,8 +23,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -38,13 +43,18 @@ import ch.heigvd.digiback.business.model.activity.Activity;
 import ch.heigvd.digiback.business.model.activity.Step;
 import ch.heigvd.digiback.business.utils.Day;
 import ch.heigvd.digiback.business.utils.Month;
+import ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment;
 
-public class ActivityFragment extends Fragment implements SensorEventListener {
+public class CalendarFragment extends Fragment implements SensorEventListener {
     private static final String TAG = "ActivityFragment";
     private TextView currentDate;
     private TextView stepCountTextView;
     private TextView quizCountTextView;
     private TextView exerciseCountTextView;
+
+    private CardView exercise, quiz;
+
+    private Button addPain;
 
     private Date selectedDay;
 
@@ -60,14 +70,19 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
         saveData();
         loadData();
 
-        View root = inflater.inflate(R.layout.fragment_activity, container, false);
+        View root = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         sensorManager = (SensorManager) getActivity().getSystemService(getContext().SENSOR_SERVICE);
+
+        exercise = root.findViewById(R.id.activity_card_exercise);
+        quiz = root.findViewById(R.id.activity_card_quiz);
+        setCardViewsOnClickListener();
 
         stepCountTextView = root.findViewById(R.id.steps_total);
         exerciseCountTextView = root.findViewById(R.id.exercise_total);
         quizCountTextView = root.findViewById(R.id.quiz_total);
         currentDate = root.findViewById(R.id.text_date);
+        addPain = root.findViewById(R.id.add_pain);
 
         table = root.findViewById(R.id.calendar_table);
 
@@ -75,7 +90,80 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
         selectedDay = calendar.getTime();
         setCalendar(calendar);
 
+        setAddPainOnClickListener();
+
         return root;
+    }
+
+    private void setCardViewsOnClickListener() {
+        exercise.setOnClickListener(view -> {
+            // TODO
+            FragmentTransaction transaction;
+            if (getFragmentManager() != null) {
+                transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.nav_host_fragment, new ExerciseFragment());
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            }
+        });
+
+        quiz.setOnClickListener(view -> {
+            // TODO
+        });
+    }
+
+    private void setAddPainOnClickListener() {
+        addPain.setOnClickListener(view -> {
+            PopupMenu popup = new PopupMenu(getContext(), view);
+            popup.setOnMenuItemClickListener(item -> {
+                Log.d(TAG, "Selected pain : " + item.getTitle());
+                switch (item.getItemId()) {
+                    case R.id.pain_0:
+                        // TODO
+                        return true;
+                    case R.id.pain_1:
+                        // TODO
+                        return true;
+                    case R.id.pain_2:
+                        // TODO
+                        return true;
+                    case R.id.pain_3:
+                        // TODO
+                        return true;
+                    case R.id.pain_4:
+                        // TODO
+                        return true;
+                    case R.id.pain_5:
+                        // TODO
+                        return true;
+                    case R.id.pain_6:
+                        // TODO
+                        return true;
+                    case R.id.pain_7:
+                        // TODO
+                        return true;
+                    case R.id.pain_8:
+                        // TODO
+                        return true;
+                    case R.id.pain_9:
+                        // TODO
+                        return true;
+                    case R.id.pain_10:
+                        // TODO
+                        return true;
+                    default:
+                        return false;
+                }
+            });
+            MenuInflater inflater1 = popup.getMenuInflater();
+            inflater1.inflate(R.menu.add_pain, popup.getMenu());
+            popup.show();
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

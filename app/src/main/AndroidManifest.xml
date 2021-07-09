@@ -5,57 +5,62 @@
     <!-- Permissions -->
     <permission-group
         android:name="ch.heigvd.digiback.permission-group.CUSTOM_PERMISSION"
-        android:label="@string/permission_label"
         android:description="@string/permission_description"
+        android:label="@string/permission_label"
         android:protectionLevel="dangerous" />
+
     <permission
         android:name="ch.heigvd.digiback.permission.USE_CONDITIONS"
-        android:label="@string/permission_label"
         android:description="@string/permission_description"
+        android:label="@string/permission_label"
         android:permissionGroup="ch.heigvd.digiback.permission-group.CUSTOM_PERMISSION"
         android:protectionLevel="dangerous" />
 
     <uses-permission
-            android:usesCleartextTraffic="true"
-            android:name="android.permission.INTERNET"
-            tools:targetApi="m" />
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
-    <uses-permission android:name="ch.heigvd.digiback.permission.USE_CONDITIONS"/>
+        android:name="android.permission.INTERNET"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="ch.heigvd.digiback.permission.USE_CONDITIONS" />
 
-    <uses-feature android:name="android.hardware.sensor.stepcounter"/>
+    <uses-feature android:name="android.hardware.sensor.stepcounter" />
 
     <application
-            android:usesCleartextTraffic="true"
-            android:allowBackup="true"
-            android:icon="@drawable/logo_digiback_small"
-            android:label="@string/app_name"
-            android:roundIcon="@drawable/logo_digiback_small"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
+        android:allowBackup="true"
+        android:icon="@drawable/logo_digiback_small"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo_digiback_small"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:targetApi="m">
-
+        <activity android:name=".ui.activity.mobility.MobilityActivity"></activity>
         <activity
-                android:name=".ui.activity.login.LoginActivity"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoTitleBar">
-            <!-- Todo : put that back
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+            android:name=".ui.activity.login.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoTitleBar">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>-->
-
-        </activity>
-        <activity
-                android:name=".MainActivity"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar">
-            <!-- Todo : remove that -->
+            <!--
+            Todo : put that back
+            -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <!-- Todo : remove that
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
     </application>
 

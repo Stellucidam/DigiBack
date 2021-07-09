@@ -1,14 +1,14 @@
-package ch.heigvd.digiback.ui.fragment.activity;
+package ch.heigvd.digiback.ui.fragment.calendar;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ActivityViewModel extends ViewModel {
+public class CalendarViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ActivityViewModel() {
+    public CalendarViewModel() {
         mText = new MutableLiveData<>();
     }
 
