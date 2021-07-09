@@ -217,14 +217,15 @@ public class ActivityFragment extends Fragment implements SensorEventListener {
     }
 
     private void setActivities() {
+        exerciseCountTextView.setText("0");
+        quizCountTextView.setText("0");
+
         Calendar calendar = Calendar.getInstance();
         Log.d(TAG, selectedDay.toString() + " == " + calendar.getTime().toString() + " ? ");
         if (selectedDay.getDate() == calendar.getTime().getDate()) {
-            stepCountTextView.setText((int) currentSteps);
+            stepCountTextView.setText((int) currentSteps + "");
         } else {
             stepCountTextView.setText("0");
-            exerciseCountTextView.setText("0");
-            quizCountTextView.setText("0");
         }
 
         try {

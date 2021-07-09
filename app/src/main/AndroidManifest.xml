@@ -3,11 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ch.heigvd.digiback">
     <!-- Permissions -->
+    <permission-group
+        android:name="ch.heigvd.digiback.permission-group.CUSTOM_PERMISSION"
+        android:label="@string/permission_label"
+        android:description="@string/permission_description"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:name="ch.heigvd.digiback.permission.USE_CONDITIONS"
+        android:label="@string/permission_label"
+        android:description="@string/permission_description"
+        android:permissionGroup="ch.heigvd.digiback.permission-group.CUSTOM_PERMISSION"
+        android:protectionLevel="dangerous" />
+
     <uses-permission
             android:usesCleartextTraffic="true"
             android:name="android.permission.INTERNET"
             tools:targetApi="m" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+    <uses-permission android:name="ch.heigvd.digiback.permission.USE_CONDITIONS"/>
 
     <uses-feature android:name="android.hardware.sensor.stepcounter"/>
 
@@ -25,12 +38,12 @@
                 android:name=".ui.activity.login.LoginActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoTitleBar">
-            <!-- Todo : put that back-->
+            <!-- Todo : put that back
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            </intent-filter>-->
 
         </activity>
         <activity

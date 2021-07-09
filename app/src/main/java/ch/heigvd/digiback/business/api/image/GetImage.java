@@ -38,7 +38,7 @@ public class GetImage extends ImageCallable {
         imageIs.close();
         imageBR.close();
         JSONObject image = new JSONObject(imageStringBuilder.toString());
-        String imageURL = image.getJSONObject("media_details").getJSONObject("sizes").getJSONObject("thumbnail").getString("source_url");
+        String imageURL = image.getJSONObject("media_details").getJSONObject("sizes").getJSONObject("medium").getString("source_url");
 
         return BitmapFactory.decodeStream(new URL(imageURL).openConnection().getInputStream());
     }

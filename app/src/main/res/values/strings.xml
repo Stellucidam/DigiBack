@@ -71,4 +71,11 @@
     <string name="pain_9" translatable="false">9</string>
     <string name="pain_10">10 - Pire douleur imaginable</string>
 
+    <!-- Permissions -->
+    <string name="permission_group_label" translatable="false">Permission Group Label</string>
+    <string name="permission_group_description" translatable="false">Permission Group Description</string>
+    <string name="permission_label">Permission Label</string>
+    <string name="permission_description">Permission Description</string>
+
+
 </resources>

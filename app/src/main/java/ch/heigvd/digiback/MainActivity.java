@@ -1,14 +1,22 @@
 package ch.heigvd.digiback;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,6 +33,7 @@ import ch.heigvd.digiback.ui.data.LoginRepository;
 
 // TODO comments
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     private LoginRepository loginRepository;
     private LoginDataSource loginDataSource;
 
@@ -32,10 +41,29 @@ public class MainActivity extends AppCompatActivity {
     private PopupWindow deconnexionPopup;
     //private PopupWindow settingsPopup;
 
+    // Register the permissions callback, which handles the user's response to the
+    // system permissions dialog. Save the return value, an instance of
+    // ActivityResultLauncher, as an instance variable.
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+    registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+            // Permission is granted. Continue the action or workflow in your
+            // app.
+        } else {
+            // Explain to the user that the feature is unavailable because the
+            // features requires a permission that the user has denied. At the
+            // same time, respect the user's decision. Don't link to system
+            // settings in an effort to convince the user to change their
+            // decision.
+        }
+    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        askPermission();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,6 +91,32 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void askPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this, "ch.heigvd.digiback.permission.USE_CONDITIONS") ==
+                PackageManager.PERMISSION_GRANTED) {
+            // You can use the API that requires the permission.
+
+            performAction(...);
+            Log.d(TAG, "Permission is granted");
+        } else if (shouldShowRequestPermissionRationale("...")) {
+            // In an educational UI, explain to the user why your app requires this
+            // permission for a specific feature to behave as expected. In this UI,
+            // include a "cancel" or "no thanks" button that allows the user to
+            // continue using your app without granting the permission.
+
+            showInContextUI(...);
+            Log.d(TAG, "Permission explanation");
+        } else {
+            // You can directly ask for the permission.
+            // The registered ActivityResultCallback gets the result of this request.
+
+            requestPermissionLauncher.launch("ch.heigvd.digiback.permission.USE_CONDITIONS");
+            Log.d(TAG, "Ask for permission");
+        }
     }
 
     @Override
