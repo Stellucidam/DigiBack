@@ -76,6 +76,7 @@
     <string name="permission_group_description" translatable="false">Permission Group Description</string>
     <string name="permission_label">Permission Label</string>
     <string name="permission_description">Permission Description</string>
+    <string name="movement_text" >Veuillez séléctionner un mouvement</string>
 
 
 </resources>

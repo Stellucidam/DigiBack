@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="movements_array">
+        <item>No movement selected</item>
+        <item>Front tilt</item>
+        <item>Right tilt</item>
+        <item>Left tilt</item>
+    </string-array>
+</resources>

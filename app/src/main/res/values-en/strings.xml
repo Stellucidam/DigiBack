@@ -44,4 +44,5 @@
     <!-- Permissions -->
     <string name="permission_label">Permission Label</string>
     <string name="permission_description">Permission Description</string>
+    <string name="movement_text">Please select a movement</string>
 </resources>

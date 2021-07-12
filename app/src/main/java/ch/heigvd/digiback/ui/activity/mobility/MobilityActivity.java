@@ -7,9 +7,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,20 +25,24 @@ import com.jjoe64.graphview.series.DataPoint;
 import java.util.LinkedList;
 
 import ch.heigvd.digiback.R;
+import ch.heigvd.digiback.business.utils.Movement;
 
-public class MobilityActivity extends AppCompatActivity implements SensorEventListener {
+public class MobilityActivity extends AppCompatActivity implements SensorEventListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = "MobilityActivity";
     public static final float CST = 57.2957795f;
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private Sensor mMagField;
+    private Spinner spinner;
 
     private Button measureStarter, measureStopper;
     private TextView angleInfo;
 
+    private Movement selectedMovement;
+
     private boolean calculateAngles = false, firstMeasure = true;
 
-    private LinkedList<float[]> allAngles = new LinkedList<>();
+    private LinkedList<Float> allAngles = new LinkedList<>();
 
     float Rot[] = null;
     float I[] = null;
@@ -60,12 +68,25 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
         setContentView(R.layout.activity_mobility);
 
+        spinner = findViewById(R.id.movement_spinner);
         angleInfo = findViewById(R.id.angle);
         measureStarter = findViewById(R.id.start_measure);
         measureStopper = findViewById(R.id.stop_measure);
         graph = findViewById(R.id.angles_graph);
 
         setOnClicks();
+
+        // Set the movements spinner
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.movements_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
+        selectedMovement = Movement.UNKNOWN;
     }
 
     @Override
@@ -96,19 +117,36 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             mags = null;
             accels = null;
 
-            allAngles.add(new float[]{azimuth, pitch, roll});
 
-            if (firstMeasure) {
-                max = Math.max(pitch, Math.max(roll, azimuth));
-                min = Math.min(pitch, Math.min(roll, azimuth));
-                firstMeasure = false;
-            } else {
-                max = Math.max(max, Math.max(pitch, Math.max(roll, azimuth)));
-                min = Math.min(min, Math.min(pitch, Math.min(roll, azimuth)));
+            switch (selectedMovement) {
+                case FRONT_TILT:
+                    if (firstMeasure) {
+                        max = pitch;
+                        min = pitch;
+                        firstMeasure = false;
+                    } else {
+                        max = Math.max(max, pitch);
+                        min = Math.min(min, pitch);
+                    }
+                    allAngles.add(pitch);
+                    break;
+                case RIGHT_TILT:
+                case LEFT_TILT:
+                    if (firstMeasure) {
+                        max = roll;
+                        min = roll;
+                        firstMeasure = false;
+                    } else {
+                        max = Math.max(max, roll);
+                        min = Math.min(min, roll);
+                    }
+                    allAngles.add(roll);
+                    break;
+                case UNKNOWN:
+                    break;
             }
 
             angleInfo.setText("Nbr d'angles : " + allAngles.size());
-            //angleInfo.setText("azimuth = " + azimuth + "\npitch = " + pitch + "\nroll = " + roll);
         }
     }
 
@@ -163,39 +201,46 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         // Graph
         graph.removeAllSeries();
 
-        final DataPoint[] azimuths = new DataPoint[allAngles.size()];
-        final DataPoint[] pitch = new DataPoint[allAngles.size()];
-        final DataPoint[] roll = new DataPoint[allAngles.size()];
+        final DataPoint[] points = new DataPoint[allAngles.size()];
 
         for (int i = 0; i < allAngles.size(); ++i) {
-            azimuths[i] = new DataPoint(i, allAngles.get(i)[0]);
-            pitch[i] = new DataPoint(i, allAngles.get(i)[1]);
-            roll[i] = new DataPoint(i, allAngles.get(i)[2]);
+            points[i] = new DataPoint(i, allAngles.get(i));
         }
 
-        BarGraphSeries<DataPoint> seriesAz = new BarGraphSeries<>(azimuths);
-        BarGraphSeries<DataPoint> seriesPi = new BarGraphSeries<>(pitch);
-        BarGraphSeries<DataPoint> seriesRo = new BarGraphSeries<>(roll);
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
 
-        // Around center angle
-        seriesAz.setValueDependentColor(data -> Color.rgb(235, 235, 235));
-        seriesAz.setSpacing(1);
-
-        // Front angle
-        seriesPi.setValueDependentColor(data -> Color.rgb(55, 106, 125));
-        seriesPi.setSpacing(1);
-
-        // Side angle
-        seriesRo.setValueDependentColor(data -> Color.rgb(124, 54, 54));
-        seriesRo.setSpacing(1);
+        series.setValueDependentColor(data -> Color.rgb(124, 54, 54));
+        series.setSpacing(1);
 
         // set manual y bounds to have nice steps
         graph.getViewport().setMinY(min - 5);
         graph.getViewport().setMaxY(max + 5);
         graph.getViewport().setYAxisBoundsManual(true);
 
-        graph.addSeries(seriesAz);
-        graph.addSeries(seriesPi);
-        graph.addSeries(seriesRo);
+        graph.addSeries(series);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        Log.i(TAG, "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString());
+        switch (pos) {
+            case 1:
+                selectedMovement = Movement.FRONT_TILT;
+                break;
+            case 2:
+                selectedMovement = Movement.RIGHT_TILT;
+                break;
+            case 3:
+                selectedMovement = Movement.LEFT_TILT;
+                break;
+            default:
+                selectedMovement = Movement.UNKNOWN;
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
