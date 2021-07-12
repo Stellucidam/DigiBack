@@ -31,6 +31,7 @@ import ch.heigvd.digiback.ui.data.LoginRepository;
 // TODO comments
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private static final int PERMISSION_REQUEST_FINE_LOCATION = 1;
 
     private AppBarConfiguration mAppBarConfiguration;
     private PopupWindow logoutPopup;
@@ -67,15 +68,8 @@ public class MainActivity extends AppCompatActivity {
         logoutPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_deconnexion, null, false),100,100, true);
         //settingsPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_settings, null, false),100,100, true);
 
-
         String welcome = getString(R.string.welcome) + LoginRepository.getInstance(new LoginDataSource()).getUsername();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-
-        /*
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
-         */
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

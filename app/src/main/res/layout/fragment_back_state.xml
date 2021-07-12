@@ -23,8 +23,8 @@
             android:layout_margin="8dp"
             android:padding="8dp"
             android:background="@color/colorAccent"
-            android:text="@string/evaluate_mobility"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:text="@string/evaluate_mobility" />
 
     </LinearLayout>
 
