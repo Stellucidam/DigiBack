@@ -32,21 +32,17 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     private Button measureStarter, measureStopper;
     private TextView angleInfo;
 
-    private boolean calculateAngles = false;
+    private boolean calculateAngles = false, firstMeasure = true;
 
     private LinkedList<float[]> allAngles = new LinkedList<>();
 
-    float Rot[]=null;
-    float I[]=null;
-    float accels[]=new float[3];
-    float mags[]=new float[3];
-    float[] values = new float[3];
+    float Rot[] = null;
+    float I[] = null;
+    float accels[] = new float[3];
+    float mags[] = new float[3];
+    float values[] = new float[3];
 
-    float azimuth;
-    float pitch;
-    float roll;
-
-    ///
+    float azimuth, pitch, roll, max, min;
 
     private GraphView graph;
 
@@ -67,23 +63,9 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         angleInfo = findViewById(R.id.angle);
         measureStarter = findViewById(R.id.start_measure);
         measureStopper = findViewById(R.id.stop_measure);
+        graph = findViewById(R.id.angles_graph);
 
         setOnClicks();
-
-        graph = findViewById(R.id.angles_graph);
-    }
-
-    private void setOnClicks() {
-        measureStarter.setOnClickListener(view -> {
-            this.allAngles.clear();
-            this.calculateAngles = true;
-        });
-        measureStopper.setOnClickListener(view -> {
-            this.calculateAngles = false;
-            angleInfo.setText("Nbr d'angles : " + allAngles.size());
-            Log.i(TAG, "Got " + allAngles.size() + " measures angles.");
-            setGraph();
-        });
     }
 
     @Override
@@ -115,6 +97,15 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             accels = null;
 
             allAngles.add(new float[]{azimuth, pitch, roll});
+
+            if (firstMeasure) {
+                max = Math.max(pitch, Math.max(roll, azimuth));
+                min = Math.min(pitch, Math.min(roll, azimuth));
+                firstMeasure = false;
+            } else {
+                max = Math.max(max, Math.max(pitch, Math.max(roll, azimuth)));
+                min = Math.min(min, Math.min(pitch, Math.min(roll, azimuth)));
+            }
 
             angleInfo.setText("Nbr d'angles : " + allAngles.size());
             //angleInfo.setText("azimuth = " + azimuth + "\npitch = " + pitch + "\nroll = " + roll);
@@ -152,6 +143,22 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         mSensorManager.unregisterListener(this);
     }
 
+    private void setOnClicks() {
+        // Button to start the measure
+        measureStarter.setOnClickListener(view -> {
+            this.allAngles.clear();
+            this.calculateAngles = true;
+        });
+
+        // Button to stop the measure
+        measureStopper.setOnClickListener(view -> {
+            this.calculateAngles = false;
+            this.firstMeasure = true;
+            Log.i(TAG, "Got " + allAngles.size() + " measures angles.");
+            setGraph();
+        });
+    }
+
     private void setGraph() {
         // Graph
         graph.removeAllSeries();
@@ -171,16 +178,21 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         BarGraphSeries<DataPoint> seriesRo = new BarGraphSeries<>(roll);
 
         // Around center angle
-        seriesAz.setValueDependentColor(data -> Color.rgb(0, 0, 169));
+        seriesAz.setValueDependentColor(data -> Color.rgb(235, 235, 235));
         seriesAz.setSpacing(1);
 
         // Front angle
-        seriesPi.setValueDependentColor(data -> Color.rgb(169, 0, 0));
+        seriesPi.setValueDependentColor(data -> Color.rgb(55, 106, 125));
         seriesPi.setSpacing(1);
 
         // Side angle
-        seriesRo.setValueDependentColor(data -> Color.rgb(0, 169, 0));
+        seriesRo.setValueDependentColor(data -> Color.rgb(124, 54, 54));
         seriesRo.setSpacing(1);
+
+        // set manual y bounds to have nice steps
+        graph.getViewport().setMinY(min - 5);
+        graph.getViewport().setMaxY(max + 5);
+        graph.getViewport().setYAxisBoundsManual(true);
 
         graph.addSeries(seriesAz);
         graph.addSeries(seriesPi);
