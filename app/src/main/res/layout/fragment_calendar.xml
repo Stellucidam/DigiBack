@@ -72,7 +72,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:text="@string/add_pain"
-                    android:background="@color/colorAccent"
+                    android:backgroundTint="@color/colorAccent"
+                    android:padding="16px"
                     android:textColor="@color/white" />
 
                 <!-- PEDOMETER -->
