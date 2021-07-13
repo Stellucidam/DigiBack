@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.utils.Movement;
 
+// TODO Add self-timer for the measures
 public class MobilityActivity extends AppCompatActivity implements SensorEventListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = "MobilityActivity";
     public static final float CST = 57.2957795f;
@@ -333,11 +334,19 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         graph.setAlpha(1f);
     }
 
+    /**
+     * Disables the given view
+     * @param view view to disable
+     */
     private void disable(View view) {
         view.setEnabled(false);
         view.setAlpha(.5f);
     }
 
+    /**
+     * Enables the given view
+     * @param view view to enable
+     */
     private void enable(View view) {
         view.setEnabled(true);
         view.setAlpha(1f);
