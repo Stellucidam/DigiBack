@@ -76,7 +76,20 @@
     <string name="permission_group_description" translatable="false">Permission Group Description</string>
     <string name="permission_label">Permission Label</string>
     <string name="permission_description">Permission Description</string>
-    <string name="movement_text" >Veuillez séléctionner un mouvement</string>
+    <string name="movement_text" >Mouvement</string>
+    <string name="start" >Commencer</string>
+    <string name="stop" >Arrêter</string>
+    <string name="help" >Aide</string>
+    <string name="movement_help" >
+        Pour évaluer votre mobilité, veuillez suivre les instructions suivantes : \n
+         \t 1. \t Choisir un mouvement dans la liste. \n
+         \t 2. \t Clicker sur le bouton pour commencer la mesure. \n
+         \t 3. \t Positionner votre téléphone à plat et à la vérticale sur votre torse. //todo faire schéma \n
+         \t 4. \t Attendre le premier signal sonore. \n
+         \t 5. \t Effectuer le mouvement, vous avez (x secondes) \n
+    </string>
+    <string name="validate" >Valider</string>
+    <string name="cancel" >Annuler</string>
 
 
 </resources>

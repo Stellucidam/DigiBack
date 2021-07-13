@@ -5,19 +5,24 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
@@ -30,29 +35,44 @@ import ch.heigvd.digiback.business.utils.Movement;
 public class MobilityActivity extends AppCompatActivity implements SensorEventListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = "MobilityActivity";
     public static final float CST = 57.2957795f;
+
+    private PopupWindow
+            helpPopUp,
+            validateMovementPopup;
+    private Sensor
+            mAccelerometer,
+            mMagField;
     private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private Sensor mMagField;
     private Spinner spinner;
 
-    private Button measureStarter, measureStopper;
+    private View movementPopView;
+    private GraphView graph;
+    private FloatingActionButton back;
     private TextView angleInfo;
+    private Button
+            measureStarter,
+            measureStopper,
+            help,
+            sendMeasures,
+            cancelMeasures;
 
     private Movement selectedMovement;
-
-    private boolean calculateAngles = false, firstMeasure = true;
-
     private LinkedList<Float> allAngles = new LinkedList<>();
-
-    float Rot[] = null;
-    float I[] = null;
-    float accels[] = new float[3];
-    float mags[] = new float[3];
-    float values[] = new float[3];
-
-    float azimuth, pitch, roll, max, min;
-
-    private GraphView graph;
+    private boolean
+            calculateAngles = false,
+            firstMeasure = true;
+    float[]
+            Rot = null,
+            I = null,
+            accels = new float[3],
+            mags = new float[3],
+            values = new float[3];
+    float
+            azimuth,
+            pitch,
+            roll,
+            max,
+            min;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +84,35 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
         // we need fullscreen
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_mobility);
 
         spinner = findViewById(R.id.movement_spinner);
         angleInfo = findViewById(R.id.angle);
+        back = findViewById(R.id.floating_back_button);
         measureStarter = findViewById(R.id.start_measure);
         measureStopper = findViewById(R.id.stop_measure);
-        graph = findViewById(R.id.angles_graph);
+        help = findViewById(R.id.help);
+        helpPopUp = new PopupWindow(
+                getLayoutInflater()
+                        .inflate(R.layout.popup_movement_help, null, false),
+                100,100, true);
 
-        setOnClicks();
+        movementPopView = getLayoutInflater()
+                .inflate(R.layout.popup_movement_validation, null, false);
+        validateMovementPopup = new PopupWindow(
+                movementPopView,
+                100,100, true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setOnClicks();
+        } else {
+            Log.e(TAG, "Wrong SDK version : " + Build.VERSION.SDK_INT +
+                    " should be >= " + Build.VERSION_CODES.LOLLIPOP);
+        }
 
         // Set the movements spinner
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -170,10 +208,44 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         }
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        Log.i(TAG, "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString());
+        switch (pos) {
+            case 1:
+                selectedMovement = Movement.FRONT_TILT;
+                enable(measureStarter);
+                disable(measureStopper);
+                break;
+            case 2:
+                selectedMovement = Movement.RIGHT_TILT;
+                enable(measureStarter);
+                disable(measureStopper);
+                break;
+            case 3:
+                selectedMovement = Movement.LEFT_TILT;
+                enable(measureStarter);
+                disable(measureStopper);
+                break;
+            default:
+                selectedMovement = Movement.UNKNOWN;
+                disable(measureStarter);
+                disable(measureStopper);
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
     protected void onResume() {
         super.onResume();
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        mSensorManager.registerListener(this, mMagField, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager
+                .registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager
+                .registerListener(this, mMagField, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
@@ -181,23 +253,63 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         mSensorManager.unregisterListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setOnClicks() {
         // Button to start the measure
         measureStarter.setOnClickListener(view -> {
             this.allAngles.clear();
             this.calculateAngles = true;
+            disable(measureStarter);
+            disable(spinner);
+            enable(measureStopper);
         });
 
         // Button to stop the measure
         measureStopper.setOnClickListener(view -> {
             this.calculateAngles = false;
             this.firstMeasure = true;
+            enable(measureStarter);
+            enable(spinner);
+            disable(measureStopper);
             Log.i(TAG, "Got " + allAngles.size() + " measures angles.");
-            setGraph();
+
+            // Validate the movement
+            validateMovementPopup.setElevation(10);
+            validateMovementPopup.showAtLocation(view, Gravity.CENTER, 10, 10);
+            validateMovementPopup.update(800, 1200);
+            graph = movementPopView.findViewById(R.id.angles_graph);
+            sendMeasures = movementPopView.findViewById(R.id.validate_measure);
+            cancelMeasures = movementPopView.findViewById(R.id.cancel_measure);
+            setPopUpGraphAndOnClicks();
+        });
+
+        // Button to see instructions
+        help.setOnClickListener(view -> {
+            helpPopUp.setElevation(10);
+            helpPopUp.showAtLocation(view, Gravity.CENTER, 10, 10);
+            helpPopUp.update(800, 1000);
+        });
+
+        back.setOnClickListener(view -> {
+            super.onBackPressed();
         });
     }
 
-    private void setGraph() {
+    private void setPopUpGraphAndOnClicks() {
+        // OnClicks
+        // Validate measures
+        sendMeasures.setOnClickListener(view -> {
+            // TODO send measures to backend
+            allAngles.clear();
+            validateMovementPopup.dismiss();
+        });
+
+        // Cancel measures
+        cancelMeasures.setOnClickListener(view ->  {
+            allAngles.clear();
+            validateMovementPopup.dismiss();
+        });
+
         // Graph
         graph.removeAllSeries();
 
@@ -209,7 +321,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
 
-        series.setValueDependentColor(data -> Color.rgb(124, 54, 54));
+        series.setValueDependentColor(data -> Color.WHITE);
         series.setSpacing(1);
 
         // set manual y bounds to have nice steps
@@ -218,29 +330,16 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         graph.getViewport().setYAxisBoundsManual(true);
 
         graph.addSeries(series);
+        graph.setAlpha(1f);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        Log.i(TAG, "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString());
-        switch (pos) {
-            case 1:
-                selectedMovement = Movement.FRONT_TILT;
-                break;
-            case 2:
-                selectedMovement = Movement.RIGHT_TILT;
-                break;
-            case 3:
-                selectedMovement = Movement.LEFT_TILT;
-                break;
-            default:
-                selectedMovement = Movement.UNKNOWN;
-                break;
-        }
+    private void disable(View view) {
+        view.setEnabled(false);
+        view.setAlpha(.5f);
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+    private void enable(View view) {
+        view.setEnabled(true);
+        view.setAlpha(1f);
     }
 }
