@@ -29,9 +29,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.api.TaskRunner;
@@ -41,8 +41,6 @@ import ch.heigvd.digiback.business.api.activity.iOnActivityFetched;
 import ch.heigvd.digiback.business.api.activity.iOnStepFetched;
 import ch.heigvd.digiback.business.model.activity.Activity;
 import ch.heigvd.digiback.business.model.activity.Step;
-import ch.heigvd.digiback.business.utils.Day;
-import ch.heigvd.digiback.business.utils.Month;
 import ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment;
 
 public class CalendarFragment extends Fragment implements SensorEventListener {
@@ -214,7 +212,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
         Sensor stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
         if (stepSensor == null) {
-            Toast.makeText(getContext(), "No sensor detected oon this device.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "No sensor detected on this device.", Toast.LENGTH_LONG).show();
         } else {
             sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI);
         }
@@ -243,16 +241,11 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
         // set the current date on top of the calendar
         calendar.setTime(selectedDay);
-        String language = Locale.getDefault().getDisplayLanguage();
-        if (language.equals("français")) {
-            currentDate.setText(Day.getDay(selectedDay.getDay()).french() + " " +
-                    selectedDay.getDate() + " " +
-                    Month.getMonth(selectedDay.getMonth()).french());
-        } else {
-            currentDate.setText(Day.getDay(selectedDay.getDay()).english() + " " +
-                    selectedDay.getDate() + " " +
-                    Month.getMonth(selectedDay.getMonth()).english());
-        }
+        SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat("dd MMMM YYYY");
+        SimpleDateFormat dayAbbreviationFormat = new SimpleDateFormat("EE");
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+
+        currentDate.setText(dayMonthYearFormat.format(calendar.getTime()));
 
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -263,7 +256,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
             Date dateTime = calendar.getTime();
 
             TextView date = new TextView(getContext());
-            date.setText("" + dateTime.getDate());
+            date.setText(dayFormat.format(calendar.getTime()));
             date.setGravity(Gravity.CENTER);
             date.setLayoutParams(new TableRow.LayoutParams(i));
             date.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
@@ -272,11 +265,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
             day.setLayoutParams(new TableRow.LayoutParams(i));
             day.setGravity(Gravity.CENTER);
             day.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
-            if (language.equals("français")) {
-                day.setText(Day.getDay(calendar.getTime().getDay()).frenchAbbreviation());
-            } else {
-                day.setText(Day.getDay(calendar.getTime().getDay()).englishAbbreviation());
-            }
+            day.setText(dayAbbreviationFormat.format(calendar.getTime()));
 
             if (calendar.getTime().getDay() == selectedDay.getDay()) {
                 day.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
