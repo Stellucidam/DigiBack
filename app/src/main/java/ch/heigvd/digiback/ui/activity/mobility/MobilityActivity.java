@@ -27,15 +27,22 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 import ch.heigvd.digiback.R;
-import ch.heigvd.digiback.business.utils.Movement;
+import ch.heigvd.digiback.business.api.TaskRunner;
+import ch.heigvd.digiback.business.api.movement.PostMovement;
+import ch.heigvd.digiback.business.model.movement.Movement;
+import ch.heigvd.digiback.business.model.movement.MovementType;
 
 // TODO Add self-timer for the measures
 public class MobilityActivity extends AppCompatActivity implements SensorEventListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = "MobilityActivity";
     public static final float CST = 57.2957795f;
+
+    private final TaskRunner runner = new TaskRunner();
 
     private PopupWindow
             helpPopUp,
@@ -57,7 +64,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             sendMeasures,
             cancelMeasures;
 
-    private Movement selectedMovement;
+    private MovementType selectedMovementType;
     private LinkedList<Float> allAngles = new LinkedList<>();
     private boolean
             calculateAngles = false,
@@ -125,7 +132,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        selectedMovement = Movement.UNKNOWN;
+        selectedMovementType = MovementType.UNKNOWN;
     }
 
     @Override
@@ -156,8 +163,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             mags = null;
             accels = null;
 
-
-            switch (selectedMovement) {
+            switch (selectedMovementType) {
                 case FRONT_TILT:
                     if (firstMeasure) {
                         max = pitch;
@@ -214,22 +220,22 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         Log.i(TAG, "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString());
         switch (pos) {
             case 1:
-                selectedMovement = Movement.FRONT_TILT;
+                selectedMovementType = MovementType.FRONT_TILT;
                 enable(measureStarter);
                 disable(measureStopper);
                 break;
             case 2:
-                selectedMovement = Movement.RIGHT_TILT;
+                selectedMovementType = MovementType.RIGHT_TILT;
                 enable(measureStarter);
                 disable(measureStopper);
                 break;
             case 3:
-                selectedMovement = Movement.LEFT_TILT;
+                selectedMovementType = MovementType.LEFT_TILT;
                 enable(measureStarter);
                 disable(measureStopper);
                 break;
             default:
-                selectedMovement = Movement.UNKNOWN;
+                selectedMovementType = MovementType.UNKNOWN;
                 disable(measureStarter);
                 disable(measureStopper);
                 break;
@@ -296,11 +302,21 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         });
     }
 
+    /**
+     *
+     */
     private void setPopUpGraphAndOnClicks() {
         // OnClicks
         // Validate measures
         sendMeasures.setOnClickListener(view -> {
-            // TODO send measures to backend
+            // Send measures to backend
+            runner.executeAsync(new PostMovement(
+                    new Movement(
+                            selectedMovementType,
+                            new Date(Calendar.getInstance().getTime().getTime()),
+                            allAngles)
+            ));
+
             allAngles.clear();
             validateMovementPopup.dismiss();
         });

@@ -31,7 +31,7 @@ import ch.heigvd.digiback.ui.data.LoginRepository;
 // TODO comments
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private static final int PERMISSION_REQUEST_FINE_LOCATION = 1;
+    // private static final int PERMISSION_REQUEST_FINE_LOCATION = 1;
 
     private AppBarConfiguration mAppBarConfiguration;
     private PopupWindow logoutPopup;
