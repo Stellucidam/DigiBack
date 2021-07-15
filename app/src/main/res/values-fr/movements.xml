@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="movements_array">
+        <item>Aucun mouvement</item>
+        <item>Inclinaison avant</item>
+        <item>Inclinaison à droite</item>
+        <item>Inclinaison à gauche</item>
+    </string-array>
+</resources>
