@@ -21,15 +21,16 @@ public class PostMovement extends MovementCallable {
 
     @Override
     public Movement call() throws Exception {
+
         URL url = new URL(movementsURL + loginRepository.getUserId().toString() + "/upload");
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
         http.setRequestMethod("POST"); // PUT is another valid option
         http.setDoOutput(true);
-
         http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        http.connect();
+
         try(OutputStream os = http.getOutputStream()) {
+            http.connect();
             JSONObject obj = new JSONObject();
             obj.put("id", movement.getId());
             obj.put("type", movement.getType());
