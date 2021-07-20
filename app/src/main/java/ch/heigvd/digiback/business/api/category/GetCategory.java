@@ -10,6 +10,7 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import ch.heigvd.digiback.business.model.category.Category;
+import ch.heigvd.digiback.business.utils.Backend;
 
 public class GetCategory extends CategoryCallable {
     private final int id;
@@ -23,7 +24,7 @@ public class GetCategory extends CategoryCallable {
 
     @Override
     public Category call() throws Exception {
-        URL getImageUrl = new URL(categoriesURL + id);
+        URL getImageUrl = new URL(Backend.categoriesURL + id);
         HttpsURLConnection imageConn = (HttpsURLConnection)getImageUrl.openConnection();
         InputStream inputStream = imageConn.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

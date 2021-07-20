@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import javax.net.ssl.HttpsURLConnection;
 
 import ch.heigvd.digiback.business.model.article.Article;
+import ch.heigvd.digiback.business.utils.Backend;
 
 
 public class GetArticles extends ArticleClient {
@@ -26,7 +27,7 @@ public class GetArticles extends ArticleClient {
     @Override
     public LinkedList<Article> call() throws Exception {
         LinkedList<Article> returnedArticles = new LinkedList<>();
-        URL articlesUrl = new URL(postsUrl);
+        URL articlesUrl = new URL(Backend.postsUrl);
         HttpsURLConnection conn = (HttpsURLConnection)articlesUrl.openConnection();
         InputStream is = conn.getInputStream();
         InputStreamReader isr = new InputStreamReader(is);
@@ -46,7 +47,7 @@ public class GetArticles extends ArticleClient {
 
             int id = c.getInt("id");
             int imageId = c.getInt("featured_media");
-            String imageURL = mediaUrl + imageId;
+            String imageURL = Backend.mediaUrl + imageId;
 
             String link = c.getString("link");
             String title = c.getJSONObject("title").getString("rendered");
