@@ -1,12 +1,11 @@
-package ch.heigvd.digiback.business.api.movement;
+package ch.heigvd.digiback.business.api.tip;
 
 import ch.heigvd.digiback.business.api.CustomCallable;
-import ch.heigvd.digiback.business.model.movement.Movement;
+import ch.heigvd.digiback.business.model.tip.Tip;
 
-public class MovementCallable implements CustomCallable<Movement> {
-    protected final String movementsURL = "https://localhost:8080/movement/user/"; // TODO set to backend link
+public class TipCallable implements CustomCallable<Tip> {
     @Override
-    public void setDataAfterLoading(Movement result) {
+    public void setDataAfterLoading(Tip result) {
 
     }
 
@@ -16,7 +15,7 @@ public class MovementCallable implements CustomCallable<Movement> {
     }
 
     @Override
-    public Movement call() throws Exception {
+    public Tip call() throws Exception {
         return null;
     }
 }
