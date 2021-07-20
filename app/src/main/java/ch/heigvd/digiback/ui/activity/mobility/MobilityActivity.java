@@ -317,7 +317,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
                             allAngles)
             ));
 
-            allAngles.clear();
+            //allAngles.clear();
             validateMovementPopup.dismiss();
         });
 

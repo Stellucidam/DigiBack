@@ -2,8 +2,8 @@ package ch.heigvd.digiback.business.utils;
 
 public class Backend {
     // Domain names for the backend application
-    private static String debugDomainName = "https//api.fleurimont.site/";
-    private static String domainName = "https//api.infomaldedos.ch/";
+    private static String debugDomainName = "https://api.fleurimont.site/";
+    private static String domainName = "https://api.infomaldedos.ch/";
 
     public static String domain = debugDomainName;
 
