@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import ch.heigvd.digiback.business.utils.Backend;
 import ch.heigvd.digiback.ui.data.model.LoggedInUser;
 
 public class Login extends AuthCallable {
@@ -24,7 +25,7 @@ public class Login extends AuthCallable {
 
     @Override
     public LoggedInUser call() throws Exception {
-        URL url = new URL(authURL+ "/login");
+        URL url = new URL(Backend.getAuthURL() + "/login");
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
         http.setRequestMethod("POST");

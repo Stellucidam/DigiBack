@@ -12,6 +12,7 @@ import java.sql.Date;
 import javax.net.ssl.HttpsURLConnection;
 
 import ch.heigvd.digiback.business.model.activity.Activity;
+import ch.heigvd.digiback.business.utils.Backend;
 
 public class GetActivity extends ActivityCallable {
     private final String date;
@@ -24,7 +25,7 @@ public class GetActivity extends ActivityCallable {
 
     @Override
     public Activity call() throws Exception {
-        URL getImageUrl = new URL(activitiesURL + loginRepository.getUserId().toString() + "/date/" + date);
+        URL getImageUrl = new URL(Backend.getActivityURL() + loginRepository.getUserId().toString() + "/date/" + date);
         HttpsURLConnection imageConn = (HttpsURLConnection)getImageUrl.openConnection();
         InputStream inputStream = imageConn.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

@@ -21,7 +21,6 @@ public class GetImage extends ImageCallable {
         this.listener = onImageFetched;
     }
 
-
     @Override
     public Bitmap call() throws Exception {
         URL getImageUrl = new URL(url);

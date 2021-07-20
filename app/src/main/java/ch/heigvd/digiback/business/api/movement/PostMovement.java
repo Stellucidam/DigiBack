@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import ch.heigvd.digiback.business.model.movement.Movement;
+import ch.heigvd.digiback.business.utils.Backend;
 
 public class PostMovement extends MovementCallable {
     private final String TAG = "PostMovement";
@@ -21,8 +22,7 @@ public class PostMovement extends MovementCallable {
 
     @Override
     public Movement call() throws Exception {
-
-        URL url = new URL(movementsURL + loginRepository.getUserId().toString() + "/upload");
+        URL url = new URL(Backend.getMovementURL() + loginRepository.getUserId().toString() + "/upload");
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
         http.setRequestMethod("POST"); // PUT is another valid option
