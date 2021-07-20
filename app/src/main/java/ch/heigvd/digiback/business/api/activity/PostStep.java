@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import ch.heigvd.digiback.business.model.activity.Step;
+import ch.heigvd.digiback.business.utils.Backend;
 
 public class PostStep extends StepCallable {
 
@@ -24,7 +25,7 @@ public class PostStep extends StepCallable {
 
     @Override
     public Step call() throws Exception {
-        URL url = new URL(stepsURL + loginRepository.getUserId().toString() + stepsURLEnd);
+        URL url = new URL(Backend.getActivityURL() + loginRepository.getUserId().toString() + stepsURLEnd);
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
         http.setRequestMethod("POST");

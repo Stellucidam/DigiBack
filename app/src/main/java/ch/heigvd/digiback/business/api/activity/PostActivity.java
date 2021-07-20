@@ -11,6 +11,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import ch.heigvd.digiback.business.model.activity.Activity;
+import ch.heigvd.digiback.business.utils.Backend;
 
 public class PostActivity extends ActivityCallable {
     private static final String TAG = "PostActivity";
@@ -24,7 +25,7 @@ public class PostActivity extends ActivityCallable {
 
     @Override
     public Activity call() throws Exception {
-        URL url = new URL(activitiesURL + loginRepository.getUserId().toString() + "/upload");
+        URL url = new URL(Backend.getActivityURL() + loginRepository.getUserId().toString() + "/upload");
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
         http.setRequestMethod("POST"); // PUT is another valid option
