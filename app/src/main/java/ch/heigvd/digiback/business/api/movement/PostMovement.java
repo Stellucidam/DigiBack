@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -16,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.heigvd.digiback.business.model.movement.Movement;
 import ch.heigvd.digiback.business.utils.Backend;
@@ -31,9 +33,8 @@ public class PostMovement extends MovementCallable {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public Movement call() throws Exception {
-        String urlParameters  = "token=" + loginRepository.getToken();
-        byte[] postData       = urlParameters.getBytes(StandardCharsets.UTF_8);
-        String u = Backend.getMovementURL() + loginRepository.getUserId().toString() + "/upload";
+        String token  = "token=" + loginRepository.getToken();
+        String u = Backend.getMovementURL() + loginRepository.getUserId().toString() + "/upload?" + token;
         URL url = new URL(u);
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
@@ -48,33 +49,36 @@ public class PostMovement extends MovementCallable {
         // Write the content of the request
         try(OutputStream os = http.getOutputStream()) {
             // Write token
-            os.write(postData);
             http.connect();
             JSONObject obj = new JSONObject();
-            obj.put("id", movement.getId());
             obj.put("type", movement.getType());
             obj.put("date", movement.getDate().toString());
             JSONArray angles = new JSONArray();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                movement.getAngles().forEach(angles::put);
+                AtomicInteger n = new AtomicInteger();
+                movement.getAngles().forEach(a -> {
+                    JSONObject angle = new JSONObject();
+                    try {
+                        angle.put("position", n.getAndIncrement());
+                        angle.put("angle", a.floatValue());
+                        angles.put(angle);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                });
             }
 
-            obj.put("angles", angles);
+            obj.put("angleCredentials", angles);
 
             byte[] out = obj.toString().getBytes();
-            int length = out.length;
-            Log.i(TAG, "Send object : " + obj.toString());
-            // http.setFixedLengthStreamingMode(length);
+            Log.i(TAG, "Send movement...");
             os.write(out);
         } catch (Exception e) {
             Log.e(TAG + " line 61", e.getMessage());
         }
         // http.getResponseMessage();
-        //todo Do something with http.getInputStream()
-
-        Log.d(TAG + " line 70", http.getResponseMessage());
+        Log.d(TAG, http.getResponseMessage());
         try(InputStream is = http.getInputStream()) {
-            Log.i(TAG, "Reading results...");
             int bufferSize = 1024;
             char[] buffer = new char[bufferSize];
             StringBuilder out = new StringBuilder();
@@ -82,12 +86,12 @@ public class PostMovement extends MovementCallable {
             for (int numRead; (numRead = in.read(buffer, 0, buffer.length)) > 0; ) {
                 out.append(buffer, 0, numRead);
             }
+            Log.i(TAG, "Reading results...");
             Log.d(TAG, out.toString());
         } catch (Exception e) {
             Log.e(TAG + " line 82", e.getMessage());
         }
         http.disconnect();
-
-        return new Movement();
+        return null;
     }
 }
