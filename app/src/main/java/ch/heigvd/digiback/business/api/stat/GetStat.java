@@ -67,7 +67,8 @@ public class GetStat extends StatCallable {
         inputStream.close();
         bufferedReader.close();
 
-        Log.d(TAG, "Result : " + stringBuilder.toString());
+        //Log.d(TAG, "URL : " + url.toString());
+        //Log.d(TAG, "Result : " + stringBuilder.toString());
         JSONObject c = new JSONObject(stringBuilder.toString());
         float highestAngle = (float) c.getDouble("highestAngle");
         float angleAverage = (float) c.getDouble("angleAverage");

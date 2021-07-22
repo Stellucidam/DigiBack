@@ -7,7 +7,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "ch.heigvd.digiback"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -83,4 +83,7 @@ dependencies {
 
     //
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    // Charts
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 }
