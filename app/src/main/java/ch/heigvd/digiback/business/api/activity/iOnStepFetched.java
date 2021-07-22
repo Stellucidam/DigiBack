@@ -1,7 +1,7 @@
 package ch.heigvd.digiback.business.api.activity;
 
 import ch.heigvd.digiback.business.api.iOnDataFetched;
-import ch.heigvd.digiback.business.model.activity.Step;
+import ch.heigvd.digiback.business.model.Step;
 
 public interface iOnStepFetched extends iOnDataFetched<Step> {
     void showProgressBar();

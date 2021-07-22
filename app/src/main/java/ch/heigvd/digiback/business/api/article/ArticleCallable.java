@@ -1,7 +1,7 @@
 package ch.heigvd.digiback.business.api.article;
 
 import ch.heigvd.digiback.business.api.CustomCallable;
-import ch.heigvd.digiback.business.model.article.Article;
+import ch.heigvd.digiback.business.model.Article;
 
 import java.util.LinkedList;
 

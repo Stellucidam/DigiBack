@@ -34,8 +34,8 @@ import java.util.LinkedList;
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.api.TaskRunner;
 import ch.heigvd.digiback.business.api.movement.PostMovement;
-import ch.heigvd.digiback.business.model.movement.Movement;
-import ch.heigvd.digiback.business.model.movement.MovementType;
+import ch.heigvd.digiback.business.model.Movement;
+import ch.heigvd.digiback.business.model.MovementType;
 
 // TODO Add self-timer for the measures
 public class MobilityActivity extends AppCompatActivity implements SensorEventListener, AdapterView.OnItemSelectedListener {
@@ -132,7 +132,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        selectedMovementType = MovementType.UNKNOWN;
+        selectedMovementType = MovementType.NONE;
     }
 
     @Override
@@ -187,7 +187,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
                     }
                     allAngles.add(roll);
                     break;
-                case UNKNOWN:
+                case NONE:
                     break;
             }
 
@@ -235,7 +235,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
                 disable(measureStopper);
                 break;
             default:
-                selectedMovementType = MovementType.UNKNOWN;
+                selectedMovementType = MovementType.NONE;
                 disable(measureStarter);
                 disable(measureStopper);
                 break;

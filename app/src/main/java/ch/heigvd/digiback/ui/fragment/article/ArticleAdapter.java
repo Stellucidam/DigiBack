@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ch.heigvd.digiback.R;
-import ch.heigvd.digiback.business.model.article.Article;
+import ch.heigvd.digiback.business.model.Article;
 
 public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private static final int VIEW_TYPE_ARTICLE = 1;

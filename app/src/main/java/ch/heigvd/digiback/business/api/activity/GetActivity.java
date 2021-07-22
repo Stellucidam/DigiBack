@@ -11,7 +11,7 @@ import java.sql.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import ch.heigvd.digiback.business.model.activity.Activity;
+import ch.heigvd.digiback.business.model.Activity;
 import ch.heigvd.digiback.business.utils.Backend;
 
 public class GetActivity extends ActivityCallable {

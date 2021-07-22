@@ -1,6 +1,5 @@
 package ch.heigvd.digiback.ui.activity.login;
 
-import android.util.Log;
 import android.util.Patterns;
 
 import androidx.lifecycle.LifecycleOwner;
@@ -57,6 +56,7 @@ public class LoginViewModel extends ViewModel {
                                             loggedInUser.getUsername(),
                                             loggedInUser.getToken()))
                     );
+                    loginRepository.setUser(loggedInUser);
                 } else {
                     loginResult.setValue(new LoginResult(R.string.login_failed));
                 }

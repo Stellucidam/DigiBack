@@ -1,8 +1,7 @@
 package ch.heigvd.digiback.ui.data;
 
-import androidx.lifecycle.MutableLiveData;
-
 import ch.heigvd.digiback.ui.data.model.LoggedInUser;
+import lombok.Setter;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -16,10 +15,11 @@ public class LoginRepository {
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
-    private MutableLiveData<LoggedInUser> user = new MutableLiveData<>(new LoggedInUser(
+    @Setter
+    private LoggedInUser user = new LoggedInUser(
             1L,
             "username",
-            "token"));
+            "token");
 
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {
@@ -33,20 +33,16 @@ public class LoginRepository {
         return instance;
     }
 
-    public boolean isLoggedIn() {
-        return user != null;
-    }
-
     public String getToken() {
-        return user.getValue().getToken();
+        return user.getToken();
     }
 
     public Long getUserId() {
-        return user.getValue().getUserId();
+        return user.getUserId();
     }
 
     public String getUsername() {
-        return user.getValue().getUsername();
+        return user.getUsername();
     }
 
     public void logout() {

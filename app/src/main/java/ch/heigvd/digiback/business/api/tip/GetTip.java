@@ -9,8 +9,8 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import ch.heigvd.digiback.business.model.tip.Tip;
-import ch.heigvd.digiback.business.model.tip.TipType;
+import ch.heigvd.digiback.business.model.Tip;
+import ch.heigvd.digiback.business.model.TipType;
 import ch.heigvd.digiback.business.utils.Backend;
 
 public class GetTip extends TipCallable {

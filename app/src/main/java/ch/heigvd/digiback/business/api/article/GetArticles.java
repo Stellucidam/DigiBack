@@ -13,7 +13,7 @@ import java.util.LinkedList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import ch.heigvd.digiback.business.model.article.Article;
+import ch.heigvd.digiback.business.model.Article;
 import ch.heigvd.digiback.business.utils.Backend;
 
 

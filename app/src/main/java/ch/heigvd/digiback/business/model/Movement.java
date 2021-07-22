@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.business.model.movement;
+package ch.heigvd.digiback.business.model;
 
 import java.sql.Date;
 import java.util.LinkedList;
@@ -15,7 +15,7 @@ public class Movement {
     private final int painLevel;
 
     public Movement() {
-        type = MovementType.UNKNOWN;
+        type = MovementType.NONE;
         id = 0;
         date = null;
         angles = new LinkedList<>();

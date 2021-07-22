@@ -1,7 +1,7 @@
 package ch.heigvd.digiback.business.api.exercise;
 
 import ch.heigvd.digiback.business.api.CustomCallable;
-import ch.heigvd.digiback.business.model.exercise.Exercise;
+import ch.heigvd.digiback.business.model.Exercise;
 
 public class ExerciseCallable implements CustomCallable<Exercise> {
     @Override

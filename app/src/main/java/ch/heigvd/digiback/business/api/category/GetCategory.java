@@ -9,7 +9,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import ch.heigvd.digiback.business.model.category.Category;
+import ch.heigvd.digiback.business.model.Category;
 import ch.heigvd.digiback.business.utils.Backend;
 
 public class GetCategory extends CategoryCallable {

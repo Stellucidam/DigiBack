@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.business.model.category;
+package ch.heigvd.digiback.business.model;
 
 import lombok.Getter;
 

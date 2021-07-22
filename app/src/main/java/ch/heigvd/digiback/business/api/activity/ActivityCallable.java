@@ -1,7 +1,7 @@
 package ch.heigvd.digiback.business.api.activity;
 
 import ch.heigvd.digiback.business.api.CustomCallable;
-import ch.heigvd.digiback.business.model.activity.Activity;
+import ch.heigvd.digiback.business.model.Activity;
 
 public class ActivityCallable implements CustomCallable<Activity> {
     @Override

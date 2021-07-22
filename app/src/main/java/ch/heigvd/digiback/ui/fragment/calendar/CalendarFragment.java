@@ -39,8 +39,8 @@ import ch.heigvd.digiback.business.api.activity.GetActivity;
 import ch.heigvd.digiback.business.api.activity.PostStep;
 import ch.heigvd.digiback.business.api.activity.iOnActivityFetched;
 import ch.heigvd.digiback.business.api.activity.iOnStepFetched;
-import ch.heigvd.digiback.business.model.activity.Activity;
-import ch.heigvd.digiback.business.model.activity.Step;
+import ch.heigvd.digiback.business.model.Activity;
+import ch.heigvd.digiback.business.model.Step;
 import ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment;
 
 public class CalendarFragment extends Fragment implements SensorEventListener {

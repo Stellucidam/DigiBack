@@ -3,6 +3,7 @@ package ch.heigvd.digiback.ui.fragment.back_state;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.jjoe64.graphview.GraphView;
@@ -21,6 +23,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ch.heigvd.digiback.R;
+import ch.heigvd.digiback.business.api.TaskRunner;
+import ch.heigvd.digiback.business.api.stat.GetStat;
+import ch.heigvd.digiback.business.api.stat.iOnStatFetched;
+import ch.heigvd.digiback.business.model.Stat;
 import ch.heigvd.digiback.ui.activity.mobility.MobilityActivity;
 
 /**
@@ -31,6 +37,7 @@ public class BackStateFragment extends Fragment {
 
     private static final String TAG = "BackStateFragment";
     private GraphView graph;
+    private MutableLiveData<Stat> stats = new MutableLiveData<>();
     private Button evaluateMobility;
 
     private BackStateViewModel backStateViewModel;
@@ -41,8 +48,27 @@ public class BackStateFragment extends Fragment {
                 ViewModelProviders.of(this).get(BackStateViewModel.class);
         View root = inflater.inflate(R.layout.fragment_back_state, container, false);
 
+        TaskRunner taskRunner = new TaskRunner();
+        taskRunner.executeAsync(new GetStat(new iOnStatFetched() {
+            @Override
+            public void showProgressBar() {
+
+            }
+
+            @Override
+            public void hideProgressBar() {
+
+            }
+
+            @Override
+            public void setDataInPageWithResult(Stat stat) {
+                stats.postValue(stat);
+            }
+        }));
+
         graph = root.findViewById(R.id.graph);
-        setGraph();
+        setGraph(stats.getValue());
+        //stats.observe(getViewLifecycleOwner(), this::setGraph);
 
         evaluateMobility = root.findViewById(R.id.evaluate_mobility);
         evaluateMobility.setOnClickListener(view -> {
@@ -53,8 +79,15 @@ public class BackStateFragment extends Fragment {
         return root;
     }
 
-    private void setGraph() {
+    private void setGraph(Stat stat) {
         // TODO get info from backend
+
+        Log.d(TAG, "Set graph");
+
+
+
+
+
 
         // generate Dates
         final Calendar calendar = Calendar.getInstance();

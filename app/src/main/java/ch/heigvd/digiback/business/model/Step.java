@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.business.model.activity;
+package ch.heigvd.digiback.business.model;
 
 import java.sql.Date;
 

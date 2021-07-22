@@ -1,7 +1,7 @@
 package ch.heigvd.digiback.business.api.category;
 
 import ch.heigvd.digiback.business.api.CustomCallable;
-import ch.heigvd.digiback.business.model.category.Category;
+import ch.heigvd.digiback.business.model.Category;
 
 public class CategoryCallable implements CustomCallable<Category> {
     @Override

@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.business.model.exercise;
+package ch.heigvd.digiback.business.model;
 
 import android.graphics.Bitmap;
 

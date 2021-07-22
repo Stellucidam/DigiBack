@@ -1,7 +1,7 @@
 package ch.heigvd.digiback.business.api.movement;
 
 import ch.heigvd.digiback.business.api.CustomCallable;
-import ch.heigvd.digiback.business.model.movement.Movement;
+import ch.heigvd.digiback.business.model.Movement;
 
 public class MovementCallable implements CustomCallable<Movement> {
     @Override

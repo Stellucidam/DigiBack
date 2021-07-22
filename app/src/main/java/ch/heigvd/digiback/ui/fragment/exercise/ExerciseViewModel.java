@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import ch.heigvd.digiback.business.api.TaskRunner;
-import ch.heigvd.digiback.business.model.exercise.Exercise;
+import ch.heigvd.digiback.business.model.Exercise;
 
 public class ExerciseViewModel extends ViewModel {
 

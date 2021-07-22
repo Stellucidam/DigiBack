@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ch.heigvd.digiback.R;
-import ch.heigvd.digiback.business.model.exercise.Exercise;
+import ch.heigvd.digiback.business.model.Exercise;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private static final int VIEW_TYPE_ARTICLE = 1;

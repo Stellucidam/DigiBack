@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.business.model.tip;
+package ch.heigvd.digiback.business.model;
 
 public enum TipType {
     WALK,

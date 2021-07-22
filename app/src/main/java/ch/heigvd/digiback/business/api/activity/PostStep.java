@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-import ch.heigvd.digiback.business.model.activity.Step;
+import ch.heigvd.digiback.business.model.Step;
 import ch.heigvd.digiback.business.utils.Backend;
 
 public class PostStep extends StepCallable {

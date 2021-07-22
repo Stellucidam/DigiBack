@@ -31,4 +31,8 @@ public class Backend {
     public static String getTipURL() {
         return domain + "tip/user/";
     }
+
+    public static String getStatURL() {
+        return domain + "stat/user/";
+    }
 }

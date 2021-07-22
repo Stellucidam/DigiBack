@@ -15,8 +15,8 @@ import ch.heigvd.digiback.business.api.category.GetCategory;
 import ch.heigvd.digiback.business.api.category.iOnCategoryFetched;
 import ch.heigvd.digiback.business.api.image.GetImage;
 import ch.heigvd.digiback.business.api.image.iOnImageFetched;
-import ch.heigvd.digiback.business.model.article.Article;
-import ch.heigvd.digiback.business.model.category.Category;
+import ch.heigvd.digiback.business.model.Article;
+import ch.heigvd.digiback.business.model.Category;
 
 public class ArticleViewModel extends ViewModel {
     private MutableLiveData<List<Article>> articles = new MutableLiveData<>();

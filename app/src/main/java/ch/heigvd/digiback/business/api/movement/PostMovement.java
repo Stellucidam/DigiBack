@@ -15,7 +15,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import ch.heigvd.digiback.business.model.movement.Movement;
+import ch.heigvd.digiback.business.model.Movement;
 import ch.heigvd.digiback.business.utils.Backend;
 
 public class PostMovement extends MovementCallable {

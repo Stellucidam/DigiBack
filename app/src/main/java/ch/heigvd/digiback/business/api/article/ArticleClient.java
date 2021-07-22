@@ -2,7 +2,7 @@ package ch.heigvd.digiback.business.api.article;
 
 import java.util.LinkedList;
 
-import ch.heigvd.digiback.business.model.article.Article;
+import ch.heigvd.digiback.business.model.Article;
 
 public abstract class ArticleClient extends ArticleCallable {
     @Override

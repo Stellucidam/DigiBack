@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-import ch.heigvd.digiback.business.model.activity.Activity;
+import ch.heigvd.digiback.business.model.Activity;
 import ch.heigvd.digiback.business.utils.Backend;
 
 public class PostActivity extends ActivityCallable {
