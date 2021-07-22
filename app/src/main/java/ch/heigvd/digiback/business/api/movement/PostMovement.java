@@ -9,14 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ch.heigvd.digiback.business.model.movement.Movement;
@@ -76,7 +72,8 @@ public class PostMovement extends MovementCallable {
         } catch (Exception e) {
             Log.e(TAG + " line 61", e.getMessage());
         }
-        // http.getResponseMessage();
+
+        /*
         Log.d(TAG, http.getResponseMessage());
         try(InputStream is = http.getInputStream()) {
             int bufferSize = 1024;
@@ -91,6 +88,7 @@ public class PostMovement extends MovementCallable {
         } catch (Exception e) {
             Log.e(TAG + " line 82", e.getMessage());
         }
+        */
         http.disconnect();
         return null;
     }

@@ -1,8 +1,7 @@
 package ch.heigvd.digiback.ui.data;
 
-import ch.heigvd.digiback.business.api.TaskRunner;
-import ch.heigvd.digiback.business.api.auth.Login;
-import ch.heigvd.digiback.business.api.auth.iOnTokenFetched;
+import androidx.lifecycle.MutableLiveData;
+
 import ch.heigvd.digiback.ui.data.model.LoggedInUser;
 
 /**
@@ -17,10 +16,10 @@ public class LoginRepository {
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
-    private LoggedInUser user = new LoggedInUser(
+    private MutableLiveData<LoggedInUser> user = new MutableLiveData<>(new LoggedInUser(
             1L,
-            "Jane Doe",
-            "token");
+            "username",
+            "token"));
 
     // private constructor : singleton access
     private LoginRepository(LoginDataSource dataSource) {
@@ -39,67 +38,19 @@ public class LoginRepository {
     }
 
     public String getToken() {
-        return user.getToken();
+        return user.getValue().getToken();
     }
 
     public Long getUserId() {
-        return user.getUserId();
+        return user.getValue().getUserId();
     }
 
-
     public String getUsername() {
-        return user.getUsername();
+        return user.getValue().getUsername();
     }
 
     public void logout() {
         user = null;
         dataSource.logout();
-    }
-
-    private void setLoggedInUser(LoggedInUser user) {
-        this.user = user;
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-    }
-
-    public LoggedInUser login(String username, String password) throws Exception {
-        /* TODO put that back handle login
-        Login login = new Login(username, password, new iOnTokenFetched() {
-            @Override
-            public void showProgressBar() {
-
-            }
-
-            @Override
-            public void hideProgressBar() {
-
-            }
-
-            @Override
-            public void setDataInPageWithResult(LoggedInUser loggedInUser) {
-                setLoggedInUser(loggedInUser);
-            }
-        });
-        return login.call();*/
-
-        final TaskRunner taskRunner = new TaskRunner();
-        taskRunner.executeAsync(new Login(username, password, new iOnTokenFetched() {
-            @Override
-            public void showProgressBar() {
-
-            }
-
-            @Override
-            public void hideProgressBar() {
-
-            }
-
-            @Override
-            public void setDataInPageWithResult(LoggedInUser loggedInUser) {
-                setLoggedInUser(loggedInUser);
-            }
-        }));
-
-        return user;
     }
 }

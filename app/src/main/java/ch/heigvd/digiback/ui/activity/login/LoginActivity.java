@@ -5,23 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import ch.heigvd.digiback.MainActivity;
 import ch.heigvd.digiback.R;
 
 public class LoginActivity extends AppCompatActivity {
+    private final String TAG = "LoginActivity";
+    private int error;
 
     private LoginViewModel loginViewModel;
 
@@ -38,6 +40,17 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
+        final TextView errorText = findViewById(R.id.login_error);
+
+        try {
+            error = getIntent().getIntExtra("error", -1);
+            if (error > 0) {
+                errorText.setText(R.string.login_failed);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "No extras in intent");
+        }
+
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) {
                 return;
@@ -51,24 +64,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
-                finish();
+        loginViewModel.getLoginResult().observe(this, loginResult -> {
+            if (loginResult == null) {
+                return;
             }
+            loadingProgressBar.setVisibility(View.GONE);
+            if (loginResult.getError() != null) {
+                showLoginFailed(loginResult.getError());
+            }
+            if (loginResult.getSuccess() != null) {
+                updateUiWithUser(loginResult.getSuccess());
+            }
+            setResult(Activity.RESULT_OK);
+
+            //Complete and destroy login activity once successful
+            finish();
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
@@ -94,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 try {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                            passwordEditText.getText().toString(), this);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -106,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             loadingProgressBar.setVisibility(View.VISIBLE);
             try {
                 loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                        passwordEditText.getText().toString(), this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -114,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getUsername();
+        String welcome = getString(R.string.welcome) + " " + model.getUsername();
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_SHORT).show();
 
@@ -124,6 +134,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Failed ");
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("error", errorString);
+        startActivity(intent);
     }
 }
