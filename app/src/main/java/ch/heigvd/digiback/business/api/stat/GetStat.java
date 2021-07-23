@@ -14,9 +14,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.sql.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -73,15 +72,17 @@ public class GetStat extends StatCallable {
         float highestAngle = (float) c.getDouble("highestAngle");
         float angleAverage = (float) c.getDouble("angleAverage");
         JSONArray angleEvolutionJSON = c.getJSONArray("angleEvolution");
-        List<Float> angleEvolution = new LinkedList<>();
+        Map<Date,Float> angleEvolution = new HashMap<>();
         for (int i = 0; i < angleEvolutionJSON.length(); i++) {
-            angleEvolution.add((float) angleEvolutionJSON.getDouble(i));
+            JSONObject map = angleEvolutionJSON.getJSONObject(i);
+            angleEvolution.put(Date.valueOf(map.getString("date")), (float)map.getDouble("value"));
         }
         float painAverage = (float) c.getDouble("painAverage");
         JSONArray painEvolutionJSON = c.getJSONArray("painEvolution");
-        List<Integer> painEvolution = new LinkedList<>();
+        Map<Date,Integer> painEvolution = new HashMap<>();
         for (int i = 0; i < painEvolutionJSON.length(); i++) {
-            painEvolution.add(painEvolutionJSON.getInt(i));
+            JSONObject map = painEvolutionJSON.getJSONObject(i);
+            painEvolution.put(Date.valueOf(map.getString("date")), map.getInt("value"));
         }
 
         JSONObject statByMovementTypeJSON = c.getJSONObject("statByMovementType");
@@ -91,14 +92,16 @@ public class GetStat extends StatCallable {
             try {
                 s = statByMovementTypeJSON.getJSONObject(movementType.name());
                 JSONArray aeJSON = s.getJSONArray("angleEvolution");
-                List<Float> ae = new LinkedList<>();
+                Map<Date, Float> ae = new HashMap<>();
                 for (int i = 0; i < aeJSON.length(); i++) {
-                    ae.add((float) aeJSON.getDouble(i));
+                    JSONObject map = aeJSON.getJSONObject(i);
+                    ae.put(Date.valueOf(map.getString("date")), (float)map.getDouble("value"));
                 }
                 JSONArray peJSON = s.getJSONArray("painEvolution");
-                List<Integer> pe = new LinkedList<>();
+                Map<Date, Integer> pe = new HashMap<>();
                 for (int i = 0; i < peJSON.length(); i++) {
-                    pe.add(peJSON.getInt(i));
+                    JSONObject map = peJSON.getJSONObject(i);
+                    pe.put(Date.valueOf(map.getString("date")), map.getInt("value"));
                 }
                 statByMovementType.put(
                         movementType,

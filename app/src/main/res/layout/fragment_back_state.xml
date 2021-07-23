@@ -6,45 +6,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.fragment.back_state.BackStateFragment">
-    <LinearLayout
-        android:id="@+id/buttonPanel"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp">
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/buttonPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="1dp">
 
-        <Button
-            android:id="@+id/evaluate_mobility"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:padding="16dp"
-            android:backgroundTint="@color/colorAccent"
-            android:textColor="@color/white"
-            android:text="@string/evaluate_mobility" />
+                <Button
+                    android:id="@+id/evaluate_mobility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:padding="16dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textColor="@color/white"
+                    android:text="@string/evaluate_mobility" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <com.anychart.AnyChartView
-        android:id="@+id/any_chart_view"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPanel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        />
+            <com.anychart.AnyChartView
+                android:id="@+id/angle_evolution"
+                app:layout_constraintTop_toBottomOf="@+id/buttonPanel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="8dp"
+                android:layout_margin="8dp"
+                android:layout_width="350dp"
+                android:layout_height="500dp"
+                />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/angle_evolution"
+                app:layout_constraintEnd_toEndOf="@+id/angle_evolution"
+                app:layout_constraintStart_toStartOf="@+id/angle_evolution"
+                app:layout_constraintTop_toTopOf="@+id/angle_evolution"
+                />
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

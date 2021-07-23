@@ -1,6 +1,6 @@
 package ch.heigvd.digiback.business.model;
 
-import java.util.List;
+import java.sql.Date;
 import java.util.Map;
 
 import lombok.Builder;
@@ -12,11 +12,11 @@ public class Stat {
     // Angle information
     private float highestAngle;
     private float angleAverage;
-    private List<Float> angleEvolution;
+    private Map<Date, Float> angleEvolution; // TODO
 
     // Pain information
     private float painAverage;
-    private List<Integer> painEvolution;
+    private Map<Date, Integer> painEvolution; // TODO
 
     private Map<MovementType, Stat> statByMovementType;
 }
