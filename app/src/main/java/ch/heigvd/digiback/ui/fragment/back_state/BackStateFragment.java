@@ -102,8 +102,8 @@ public class BackStateFragment extends Fragment {
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("Evolutions");
-        cartesian.yAxis(0).title("Values");
+        cartesian.title(getString(R.string.evolutions));
+        cartesian.yAxis(0).title(getString(R.string.values));
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
         List<DataEntry> angleSeries = new ArrayList<>();
@@ -121,7 +121,7 @@ public class BackStateFragment extends Fragment {
         Mapping serie2Mapping = anglesSet.mapAs("{ x: 'x', value: 'value2' }");
 
         Line angleLine = cartesian.line(serie1Mapping);
-        angleLine.name("Angles");
+        angleLine.name(getString(R.string.angles));
         angleLine.hovered().markers().enabled(true);
         angleLine.hovered().markers()
                 .type(MarkerType.CIRCLE)

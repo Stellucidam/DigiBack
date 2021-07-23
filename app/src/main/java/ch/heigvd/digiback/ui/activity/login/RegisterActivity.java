@@ -21,50 +21,46 @@ import androidx.lifecycle.ViewModelProvider;
 import ch.heigvd.digiback.MainActivity;
 import ch.heigvd.digiback.R;
 
-public class LoginActivity extends AppCompatActivity {
-    private final String TAG = "LoginActivity";
+public class RegisterActivity extends AppCompatActivity {
+    private final String TAG = "RegisterActivity";
     private int error;
-    private Button registerButton;
 
     private LoginViewModel loginViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText emailOrUsernameTextEdit = findViewById(R.id.username);
+        final EditText usernameTextEdit = findViewById(R.id.username);
+        final EditText emailTextEdit = findViewById(R.id.email);
         final EditText passwordEditText = findViewById(R.id.password);
+        final EditText passwordConfirmationEditText = findViewById(R.id.confirm_password);
 
-        final Button loginButton = findViewById(R.id.login);
+        final Button registerAndLoginButton = findViewById(R.id.login);
+        registerAndLoginButton.setText(getString(R.string.action_register));
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
         final TextView errorText = findViewById(R.id.login_error);
 
         try {
             error = getIntent().getIntExtra("error", -1);
             if (error > 0) {
-                errorText.setText(R.string.login_failed);
+                errorText.setText(R.string.register_failed);
             }
         } catch (Exception e) {
             Log.e(TAG, "No extras in intent");
         }
 
-        registerButton = findViewById(R.id.register);
-        registerButton.setOnClickListener(view -> {
-            Log.i(TAG, "Set on click listener for register button.");
-            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-            startActivity(intent);
-        });
-
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) {
                 return;
             }
-            loginButton.setEnabled(loginFormState.isDataValid());
+            registerAndLoginButton.setEnabled(loginFormState.isDataValid());
             if (loginFormState.getUsernameError() != null) {
-                emailOrUsernameTextEdit.setError(getString(loginFormState.getUsernameError()));
+                usernameTextEdit.setError(getString(loginFormState.getUsernameError()));
             }
             if (loginFormState.getPasswordError() != null) {
                 passwordEditText.setError(getString(loginFormState.getPasswordError()));
@@ -101,18 +97,21 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(emailOrUsernameTextEdit.getText().toString(),
+                loginViewModel.loginDataChanged(usernameTextEdit.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
-        emailOrUsernameTextEdit.addTextChangedListener(afterTextChangedListener);
+        usernameTextEdit.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 try {
-                    loginViewModel.login(emailOrUsernameTextEdit.getText().toString(),
-                        passwordEditText.getText().toString(), this);
+                    loginViewModel.register(
+                            usernameTextEdit.getText().toString(),
+                            emailTextEdit.getText().toString(),
+                            passwordConfirmationEditText.getText().toString(),
+                            passwordEditText.getText().toString(), this);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -120,10 +119,13 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         });
 
-        loginButton.setOnClickListener(v -> {
+        registerAndLoginButton.setOnClickListener(v -> {
             loadingProgressBar.setVisibility(View.VISIBLE);
             try {
-                loginViewModel.login(emailOrUsernameTextEdit.getText().toString(),
+                loginViewModel.register(
+                        usernameTextEdit.getText().toString(),
+                        emailTextEdit.getText().toString(),
+                        passwordConfirmationEditText.getText().toString(),
                         passwordEditText.getText().toString(), this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -144,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
     private void showLoginFailed(@StringRes Integer errorString) {
         Log.d(TAG, "Failed ");
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("error", errorString);
+        intent.putExtra("error", getString(errorString));
         startActivity(intent);
     }
 }

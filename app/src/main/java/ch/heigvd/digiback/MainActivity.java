@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -25,8 +24,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 
 import ch.heigvd.digiback.ui.activity.login.LoginActivity;
-import ch.heigvd.digiback.ui.data.LoginDataSource;
-import ch.heigvd.digiback.ui.data.LoginRepository;
 
 // TODO comments
 public class MainActivity extends AppCompatActivity {
@@ -67,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         logoutPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_deconnexion, null, false),100,100, true);
         //settingsPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_settings, null, false),100,100, true);
-
-        String welcome = getString(R.string.welcome) + LoginRepository.getInstance(new LoginDataSource()).getUsername();
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

@@ -6,7 +6,7 @@ import lombok.Getter;
  * Class exposing authenticated user details to the UI.
  */
 @Getter
-class LoggedInUserView {
+public class LoggedInUserView {
     private String username;
     private String token;
     //... other data fields that may be accessible to the UI

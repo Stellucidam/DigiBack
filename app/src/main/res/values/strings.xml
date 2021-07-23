@@ -36,16 +36,19 @@
     <string name="text_info">Voici des articles pour approfondir vos connaissances</string>
 
     <string name="text_deconnexion">Voulez-vous vraiment nous quitter ?</string>
-    <string name="text_settings">Que voulez-vous changer ?</string>
+    <string name="text_settings" translatable="true">Que voulez-vous changer ?</string>
 
     <!-- Login -->
     <string name="text_welcome">Bienvenue sur\nDigiBack</string>
     <string name="get_in_app">Commencer à utiliser l\'application</string>
     <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
     <string name="title_activity_login" translatable="false">LoginActivity</string>
-    <string name="prompt_email">Email ou nom d\'utilisateur</string>
+    <string name="prompt_email_or_username">Email ou nom d\'utilisateur</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Nom d\'utilisateur</string>
     <string name="prompt_password">Mot de passe</string>
-    <string name="action_sign_in">S\'inscrire ou se connecter</string>
+    <string name="action_sign_in">Se connecter</string>
+    <string name="action_register"><u>Créer un compte</u></string>
     <string name="action_sign_in_short">Se connecter</string>
     <string name="welcome">Bienvenue !</string>
     <string name="invalid_username">Nom d\'utilisateur non valide</string>
@@ -76,11 +79,11 @@
     <string name="permission_group_description" translatable="false">Permission Group Description</string>
     <string name="permission_label">Permission Label</string>
     <string name="permission_description">Permission Description</string>
-    <string name="movement_text" >Mouvement</string>
-    <string name="start" >Commencer</string>
-    <string name="stop" >Arrêter</string>
-    <string name="help" >Aide</string>
-    <string name="movement_help" >
+    <string name="movement_text">Mouvement</string>
+    <string name="start">Commencer</string>
+    <string name="stop">Arrêter</string>
+    <string name="help">Aide</string>
+    <string name="movement_help">
         Pour évaluer votre mobilité, veuillez suivre les instructions suivantes : \n
          \t 1. \t Choisir un mouvement dans la liste. \n
          \t 2. \t Clicker sur le bouton pour commencer la mesure. \n
@@ -88,8 +91,12 @@
          \t 4. \t Attendre le premier signal sonore. \n
          \t 5. \t Effectuer le mouvement, vous avez (x secondes) \n
     </string>
-    <string name="validate" >Valider</string>
-    <string name="cancel" >Annuler</string>
+    <string name="validate">Valider</string>
+    <string name="cancel">Annuler</string>
+    <string name="evolutions" translatable="false">Evolutions</string>
+    <string name="values">Valeures</string>
+    <string name="angles" translatable="false">Angles</string>
+    <string name="register_failed" >Enregistrement échoué</string>
 
 
 </resources>
