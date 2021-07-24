@@ -44,8 +44,7 @@ public class PostStep extends StepCallable {
             obj.put("nbrSteps", step.getNbrSteps());
 
             byte[] out = obj.toString().getBytes();
-            int length = out.length;
-            http.setFixedLengthStreamingMode(length);
+            Log.d(TAG, obj.toString());
             os.write(out);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());

@@ -44,7 +44,7 @@ import ch.heigvd.digiback.business.model.Step;
 import ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment;
 
 public class CalendarFragment extends Fragment implements SensorEventListener {
-    private static final String TAG = "ActivityFragment";
+    private static final String TAG = "CalendarFragment";
     private TextView currentDate;
     private TextView stepCountTextView;
     private TextView quizCountTextView;
@@ -177,23 +177,25 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
             cal.setTime(new Timestamp(cal.getTime().getTime()));
 
             PostStep postStep = new PostStep(
-                    new Step(new java.sql.Date(cal.getTime().getTime()), (long) this.currentSteps),
-                    new iOnStepFetched() {
-                        @Override
-                        public void showProgressBar() {
+                new Step(new java.sql.Date(cal.getTime().getTime()), (long) this.currentSteps),
+                new iOnStepFetched() {
+                    @Override
+                    public void showProgressBar() {
 
-                        }
+                    }
 
-                        @Override
-                        public void hideProgressBar() {
+                    @Override
+                    public void hideProgressBar() {
 
-                        }
+                    }
 
-                        @Override
-                        public void setDataInPageWithResult(Step step) {
-                            // TODO do something with the data
-                        }
-                    });
+                    @Override
+                    public void setDataInPageWithResult(Step step) {
+                        // TODO do something with the data
+                        Log.i(TAG, "Sent steps : " + step.getNbrSteps() + " for date " + step.getDate());
+                    }
+                }
+            );
             try {
                 final TaskRunner taskRunner = new TaskRunner();
                 taskRunner.executeAsync(postStep);
@@ -296,15 +298,14 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
     }
 
     private void setActivities() {
-        exerciseCountTextView.setText("0");
-        quizCountTextView.setText("0");
+        exerciseCountTextView.setText("-");
+        quizCountTextView.setText("-");
 
         Calendar calendar = Calendar.getInstance();
-        Log.d(TAG, selectedDay.toString() + " == " + calendar.getTime().toString() + " ? ");
         if (selectedDay.getDate() == calendar.getTime().getDate()) {
             stepCountTextView.setText((int) currentSteps + "");
         } else {
-            stepCountTextView.setText("0");
+            stepCountTextView.setText("-");
         }
 
         try {

@@ -146,7 +146,7 @@
                             android:layout_marginRight="16dp"
                             android:layout_toEndOf="@+id/steps_image"
                             android:layout_toRightOf="@+id/steps_image"
-                            android:textColor="@color/white"
+                            android:textColor="@color/colorAccent"
                             android:textSize="15sp" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
@@ -221,7 +221,7 @@
                             android:layout_marginRight="16dp"
                             android:layout_toEndOf="@+id/exercise_image"
                             android:layout_toRightOf="@+id/exercise_image"
-                            android:textColor="@color/white"
+                            android:textColor="@color/colorAccent"
                             android:textSize="15sp" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
@@ -296,7 +296,7 @@
                             android:layout_marginRight="16dp"
                             android:layout_toEndOf="@+id/quiz_image"
                             android:layout_toRightOf="@+id/quiz_image"
-                            android:textColor="@color/white"
+                            android:textColor="@color/colorAccent"
                             android:textSize="15sp" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
