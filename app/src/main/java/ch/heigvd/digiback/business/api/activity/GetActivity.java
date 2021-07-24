@@ -1,6 +1,8 @@
 package ch.heigvd.digiback.business.api.activity;
 
 
+import android.util.Log;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -15,6 +17,7 @@ import ch.heigvd.digiback.business.model.Activity;
 import ch.heigvd.digiback.business.utils.Backend;
 
 public class GetActivity extends ActivityCallable {
+    private final String TAG = "GetActivity";
     private final String date;
     private final iOnActivityFetched listener; //listener in fragment that shows and hides ProgressBar
 
@@ -25,9 +28,10 @@ public class GetActivity extends ActivityCallable {
 
     @Override
     public Activity call() throws Exception {
-        URL getImageUrl = new URL(Backend.getActivityURL() + loginRepository.getUserId().toString() + "/date/" + date);
-        HttpsURLConnection imageConn = (HttpsURLConnection)getImageUrl.openConnection();
-        InputStream inputStream = imageConn.getInputStream();
+        String token  = "?token=" + loginRepository.getToken();
+        URL url = new URL(Backend.getActivityURL() + loginRepository.getUserId().toString() + "/date/" + date + token);
+        HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+        InputStream inputStream = connection.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         StringBuilder stringBuilder = new StringBuilder();
@@ -39,12 +43,22 @@ public class GetActivity extends ActivityCallable {
         inputStream.close();
         bufferedReader.close();
 
-        JSONObject c = new JSONObject(stringBuilder.toString());
-        int id  = c.getInt("id");
-        String date  = c.getString("date");
-        Long nbrSteps  = c.getLong("nbrSteps");
-        Long nbrExercises  = c.getLong("nbrExercises");
-        Long nbrQuiz  = c.getLong("nbrQuiz");
+        Log.d(TAG, stringBuilder.toString() + "\nfrom " + url);
+
+        int id = 0;
+        Long nbrSteps = 0L;
+        Long nbrExercises = 0L;
+        Long nbrQuiz = 0L;
+        try {
+            JSONObject c = new JSONObject(stringBuilder.toString());
+            id  = c.getInt("id");
+            String date  = c.getString("date");
+            nbrSteps  = c.getLong("nbrSteps");
+            nbrExercises  = c.getLong("nbrExercises");
+            nbrQuiz  = c.getLong("nbrQuiz");
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
 
         return new Activity(id, Date.valueOf(date), nbrSteps, nbrExercises, nbrQuiz);
     }

@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModel;
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.api.TaskRunner;
 import ch.heigvd.digiback.business.api.auth.Login;
+import ch.heigvd.digiback.business.api.auth.Register;
 import ch.heigvd.digiback.business.api.auth.iOnTokenFetched;
 import ch.heigvd.digiback.ui.data.LoginRepository;
 import ch.heigvd.digiback.ui.data.model.LoggedInUser;
 
 public class LoginViewModel extends ViewModel {
-
     private final String TAG = "LoginViewModel";
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
@@ -92,8 +92,34 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void register(
-            String username, String email, String password, String passwordConfirmation,
+            String username, String email, String password,
             LifecycleOwner lifecycleOwner) {
         // TODO register and login
+        final TaskRunner taskRunner = new TaskRunner();
+        taskRunner.executeAsync(new Register(username, email, password, new iOnTokenFetched() {
+            @Override
+            public void showProgressBar() {
+
+            }
+
+            @Override
+            public void hideProgressBar() {
+
+            }
+
+            @Override
+            public void setDataInPageWithResult(LoggedInUser loggedInUser) {
+                if (loggedInUser != null) {
+                    try {
+                        login(username, password, lifecycleOwner);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        loginResult.setValue(new LoginResult(R.string.register_failed));
+                    }
+                } else {
+                    loginResult.setValue(new LoginResult(R.string.register_failed));
+                }
+            }
+        }));
     }
 }

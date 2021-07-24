@@ -97,6 +97,7 @@
     <string name="values">Valeures</string>
     <string name="angles" translatable="false">Angles</string>
     <string name="register_failed" >Enregistrement échoué</string>
+    <string name="wrong_confirmation_password" >Les deux mots de passes entrés sont différents !</string>
 
 
 </resources>

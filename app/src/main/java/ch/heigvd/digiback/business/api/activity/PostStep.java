@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 
 import ch.heigvd.digiback.business.model.Step;
 import ch.heigvd.digiback.business.utils.Backend;
@@ -25,25 +26,27 @@ public class PostStep extends StepCallable {
 
     @Override
     public Step call() throws Exception {
-        URL url = new URL(Backend.getActivityURL() + loginRepository.getUserId().toString() + stepsURLEnd);
+        String token  = "?token=" + loginRepository.getToken();
+        URL url = new URL(Backend.getActivityURL() + loginRepository.getUserId().toString() + stepsURLEnd + token);
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
         http.setRequestMethod("POST");
         http.setDoOutput(true);
 
-        Log.i(TAG, url.toString() + " <- " + step.getDate() + " " + step.getNbrSteps() + " " + loginRepository.getToken());
+        Log.d(TAG, url.toString());
         http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         http.connect();
         try(OutputStream os = http.getOutputStream()) {
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             JSONObject obj = new JSONObject();
-            obj.put("date", step.getDate().toString());
+            obj.put("date", simpleDateFormat.format(step.getDate()));
             obj.put("nbrSteps", step.getNbrSteps());
 
             byte[] out = obj.toString().getBytes();
             int length = out.length;
             http.setFixedLengthStreamingMode(length);
             os.write(out);
-
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }

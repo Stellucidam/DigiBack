@@ -56,4 +56,5 @@
     <string name="prompt_email_or_username">Email or username</string>
     <string name="prompt_username">Username</string>
     <string name="register_failed">Register failed</string>
+    <string name="wrong_confirmation_password">The two given password are different !</string>
 </resources>

@@ -39,8 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final EditText passwordConfirmationEditText = findViewById(R.id.confirm_password);
 
-        final Button registerAndLoginButton = findViewById(R.id.login);
-        registerAndLoginButton.setText(getString(R.string.action_register));
+        final Button registerAndLoginButton = findViewById(R.id.register_button);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         final TextView errorText = findViewById(R.id.login_error);
@@ -58,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (loginFormState == null) {
                 return;
             }
-            registerAndLoginButton.setEnabled(loginFormState.isDataValid());
+            //registerAndLoginButton.setEnabled(loginFormState.isDataValid());
             if (loginFormState.getUsernameError() != null) {
                 usernameTextEdit.setError(getString(loginFormState.getUsernameError()));
             }
@@ -102,16 +101,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
         usernameTextEdit.addTextChangedListener(afterTextChangedListener);
+        emailTextEdit.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
+            if (actionId == EditorInfo.IME_ACTION_DONE &&
+                    passwordConfirmationEditText.getText().equals(passwordEditText.getText())) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 try {
                     loginViewModel.register(
                             usernameTextEdit.getText().toString(),
                             emailTextEdit.getText().toString(),
-                            passwordConfirmationEditText.getText().toString(),
-                            passwordEditText.getText().toString(), this);
+                            passwordConfirmationEditText.getText().toString(), this);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -120,15 +120,23 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         registerAndLoginButton.setOnClickListener(v -> {
-            loadingProgressBar.setVisibility(View.VISIBLE);
-            try {
-                loginViewModel.register(
-                        usernameTextEdit.getText().toString(),
-                        emailTextEdit.getText().toString(),
-                        passwordConfirmationEditText.getText().toString(),
-                        passwordEditText.getText().toString(), this);
-            } catch (Exception e) {
-                e.printStackTrace();
+            Log.i(TAG, "Compare " + passwordConfirmationEditText.getText().toString() +
+                    " and " +
+                    passwordEditText.getText().toString());
+            if(passwordConfirmationEditText.getText().toString().equals(
+                    passwordEditText.getText().toString())) {
+                loadingProgressBar.setVisibility(View.VISIBLE);
+                try {
+                    Log.i(TAG, "Register " + usernameTextEdit.getText().toString());
+                    loginViewModel.register(
+                            usernameTextEdit.getText().toString(),
+                            emailTextEdit.getText().toString(),
+                            passwordConfirmationEditText.getText().toString(), this);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                errorText.setText(getString(R.string.wrong_confirmation_password));
             }
         });
     }

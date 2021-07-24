@@ -63,6 +63,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
     private boolean running = false;
     private SensorManager sensorManager;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         saveData();
@@ -236,6 +237,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setCalendar(Calendar calendar) {
         setActivities();
 
@@ -307,7 +309,9 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
         try {
             final TaskRunner taskRunner = new TaskRunner();
-            taskRunner.executeAsync(new GetActivity(selectedDay.toString(), new iOnActivityFetched() {
+            String pattern = "yyyy-MM-dd";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            taskRunner.executeAsync(new GetActivity(simpleDateFormat.format(selectedDay), new iOnActivityFetched() {
                 @Override
                 public void showProgressBar() {
 
@@ -323,9 +327,15 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
                     // TODO
                     Log.d(TAG, activity.toString());
 
-                    stepCountTextView.setText(activity.getNbrSteps().intValue());
-                    exerciseCountTextView.setText(activity.getNbrExercises().intValue());
-                    quizCountTextView.setText(activity.getNbrQuiz().intValue());
+                    if (activity != null) {
+                        stepCountTextView.setText("" + activity.getNbrSteps().intValue());
+                        exerciseCountTextView.setText("" + activity.getNbrExercises().intValue());
+                        quizCountTextView.setText("" + activity.getNbrQuiz().intValue());
+                    } else {
+                        stepCountTextView.setText("Nan");
+                        exerciseCountTextView.setText("Nan");
+                        quizCountTextView.setText("Nan");
+                    }
                 }
             }));
         } catch (Exception e) {

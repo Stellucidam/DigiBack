@@ -4,7 +4,7 @@ import ch.heigvd.digiback.business.api.CustomCallable;
 import ch.heigvd.digiback.business.model.Step;
 
 public class StepCallable implements CustomCallable<Step> {
-    protected final String stepsURLEnd = "/upload/steps/";
+    protected final String stepsURLEnd = "/upload/steps";
 
     @Override
     public void setDataAfterLoading(Step step) {
