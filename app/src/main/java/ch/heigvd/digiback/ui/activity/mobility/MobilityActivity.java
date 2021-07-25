@@ -202,7 +202,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
                         max = Math.max(max, roll);
                         min = Math.min(min, roll);
                     }
-                    allAngles.add(roll);
+                    allAngles.add(-roll);
                     break;
                 case NONE:
                     break;
@@ -419,56 +419,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
         // Graph
         setChart();
-    }
-
-    private void setAddPainOnClickListener() {
-        addPain.setOnClickListener(view -> {
-            PopupMenu popup = new PopupMenu(this, view);
-            popup.setOnMenuItemClickListener(item -> {
-                    Log.d(TAG, "Selected pain : " + item.getTitle() + " id " + item.getItemId());
-                    switch (item.getItemId()) {
-                        case R.id.pain_0:
-                            painLevel = 0;
-                            break;
-                        case R.id.pain_1:
-                            painLevel = 1;
-                            break;
-                        case R.id.pain_2:
-                            painLevel = 2;
-                            break;
-                        case R.id.pain_3:
-                            painLevel = 3;
-                            break;
-                        case R.id.pain_4:
-                            painLevel = 4;
-                            break;
-                        case R.id.pain_5:
-                            painLevel = 5;
-                            break;
-                        case R.id.pain_6:
-                            painLevel = 6;
-                            break;
-                        case R.id.pain_7:
-                            painLevel = 7;
-                            break;
-                        case R.id.pain_8:
-                            painLevel = 8;
-                            break;
-                        case R.id.pain_9:
-                            painLevel = 9;
-                            break;
-                        case R.id.pain_10:
-                            painLevel = 10;
-                            break;
-                    }
-
-                    return true;
-                }
-            );
-            MenuInflater inflater1 = popup.getMenuInflater();
-            inflater1.inflate(R.menu.add_pain, popup.getMenu());
-            popup.show();
-        });
     }
 
     /**

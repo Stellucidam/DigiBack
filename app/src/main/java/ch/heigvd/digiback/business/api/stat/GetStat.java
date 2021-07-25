@@ -2,7 +2,6 @@ package ch.heigvd.digiback.business.api.stat;
 
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -43,7 +42,6 @@ public class GetStat extends StatCallable {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public Stat call() throws Exception {
-        Log.d(TAG, "Call GetStat...");
         String token  = "token=" + loginRepository.getToken();
         URL url;
         if (days < 0) {
@@ -52,7 +50,6 @@ public class GetStat extends StatCallable {
             url = new URL(Backend.getStatURL() + loginRepository.getUserId().toString() + "/days/" + days + "?" + token);
         }
 
-        //Log.d(TAG, "URL : " + url.toString());
         HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
         InputStream inputStream = connection.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -66,8 +63,6 @@ public class GetStat extends StatCallable {
         inputStream.close();
         bufferedReader.close();
 
-        //Log.d(TAG, "URL : " + url.toString());
-        //Log.d(TAG, "Result : " + stringBuilder.toString());
         JSONObject c = new JSONObject(stringBuilder.toString());
         float highestAngle = (float) c.getDouble("highestAngle");
         float angleAverage = (float) c.getDouble("angleAverage");
@@ -117,7 +112,6 @@ public class GetStat extends StatCallable {
                 e.printStackTrace();
             }
         });
-        Log.d(TAG, "Finished");
 
         return Stat.builder()
                 .angleAverage(angleAverage)

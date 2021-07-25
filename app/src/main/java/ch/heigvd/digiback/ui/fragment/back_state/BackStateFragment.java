@@ -129,7 +129,6 @@ public class BackStateFragment extends Fragment {
 
         List<DataEntry> angleSeries = new ArrayList<>();
         stats.getValue().getAngleEvolution().forEach((date, angle) -> {
-            Log.d(TAG, date.toString() + " " + angle);
             angleSeries.add(new CustomDataEntry(
                     date.toString(),
                     angle,
