@@ -43,8 +43,6 @@ public class GetActivity extends ActivityCallable {
         inputStream.close();
         bufferedReader.close();
 
-        Log.d(TAG, stringBuilder.toString() + "\nfrom " + url);
-
         int id = 0;
         Long nbrSteps = 0L;
         Long nbrExercises = 0L;

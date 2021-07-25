@@ -1,6 +1,7 @@
 package ch.heigvd.digiback.ui.fragment.calendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,11 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.PopupMenu;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -42,6 +41,7 @@ import ch.heigvd.digiback.business.api.iOnStatusFetched;
 import ch.heigvd.digiback.business.model.Activity;
 import ch.heigvd.digiback.business.model.Status;
 import ch.heigvd.digiback.business.model.Step;
+import ch.heigvd.digiback.ui.activity.mobility.MobilityActivity;
 import ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment;
 import ch.heigvd.digiback.ui.fragment.quiz.QuizFragment;
 
@@ -77,7 +77,6 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
         exercise = root.findViewById(R.id.activity_card_exercise);
         quiz = root.findViewById(R.id.activity_card_quiz);
-        setCardViewsOnClickListener();
 
         stepCountTextView = root.findViewById(R.id.steps_total);
         exerciseCountTextView = root.findViewById(R.id.exercise_total);
@@ -90,13 +89,17 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
         Calendar calendar = Calendar.getInstance();
         selectedDay = calendar.getTime();
         setCalendar(calendar);
-
-        setAddMobilityOnClickListener();
+        setOnClickListeners();
 
         return root;
     }
 
-    private void setCardViewsOnClickListener() {
+    private void setOnClickListeners() {
+        addMobility.setOnClickListener(view -> {
+            Intent i = new Intent(getContext(), MobilityActivity.class);
+            startActivity(i);
+        });
+
         exercise.setOnClickListener(view -> {
             FragmentTransaction transaction;
             if (getFragmentManager() != null) {
@@ -127,57 +130,6 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
                 // Commit the transaction
                 transaction.commit();
             }
-        });
-    }
-
-    private void setAddMobilityOnClickListener() {
-        addMobility.setOnClickListener(view -> {
-            PopupMenu popup = new PopupMenu(getContext(), view);
-            popup.setOnMenuItemClickListener(item -> {
-                int painLevel = 0;
-                Log.d(TAG, "Selected pain : " + item.getTitle() + " id " + item.getItemId());
-                switch (item.getItemId()) {
-                    case R.id.pain_0:
-                        painLevel = 0;
-                        break;
-                    case R.id.pain_1:
-                        painLevel = 1;
-                        break;
-                    case R.id.pain_2:
-                        painLevel = 2;
-                        break;
-                    case R.id.pain_3:
-                        painLevel = 3;
-                        break;
-                    case R.id.pain_4:
-                        painLevel = 4;
-                        break;
-                    case R.id.pain_5:
-                        painLevel = 5;
-                        break;
-                    case R.id.pain_6:
-                        painLevel = 6;
-                        break;
-                    case R.id.pain_7:
-                        painLevel = 7;
-                        break;
-                    case R.id.pain_8:
-                        painLevel = 8;
-                        break;
-                    case R.id.pain_9:
-                        painLevel = 9;
-                        break;
-                    case R.id.pain_10:
-                        painLevel = 10;
-                        break;
-                }
-
-                return true;
-            }
-            );
-            MenuInflater inflater1 = popup.getMenuInflater();
-            inflater1.inflate(R.menu.add_pain, popup.getMenu());
-            popup.show();
         });
     }
 
@@ -341,8 +293,6 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
                 @Override
                 public void setDataInPageWithResult(Activity activity) {
-                    Log.d(TAG, activity.toString());
-
                     if (activity != null) {
                         stepCountTextView.setText("" + activity.getNbrSteps().intValue());
                         exerciseCountTextView.setText("" + activity.getNbrExercises().intValue());

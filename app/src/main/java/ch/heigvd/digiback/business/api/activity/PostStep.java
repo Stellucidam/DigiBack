@@ -36,7 +36,6 @@ public class PostStep extends StatusCallable {
         http.setRequestMethod("POST");
         http.setDoOutput(true);
 
-        Log.d(TAG, url.toString());
         http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         http.connect();
         try(OutputStream os = http.getOutputStream()) {
@@ -55,9 +54,7 @@ public class PostStep extends StatusCallable {
         //http.getResponseMessage();
         // Do something with http.getInputStream()
 
-        Log.d(TAG, http.getResponseMessage());
-
-        return Status.builder().build();
+        return Status.builder().status(http.getResponseMessage()).build();
     }
 
     @Override
