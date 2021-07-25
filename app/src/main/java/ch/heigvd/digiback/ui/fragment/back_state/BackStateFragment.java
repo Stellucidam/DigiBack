@@ -42,7 +42,7 @@ import ch.heigvd.digiback.ui.activity.mobility.MobilityActivity;
 public class BackStateFragment extends Fragment {
     private static final String TAG = "BackStateFragment";
 
-    private AnyChartView angleEvolutionChart;
+        private AnyChartView angleEvolutionChart;
     private MutableLiveData<Stat> stats = new MutableLiveData<>();
     private Button evaluateMobility;
 
@@ -87,6 +87,28 @@ public class BackStateFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        TaskRunner taskRunner = new TaskRunner();
+        taskRunner.executeAsync(new GetStat(new iOnStatFetched() {
+            @Override
+            public void showProgressBar() {
+
+            }
+
+            @Override
+            public void hideProgressBar() {
+
+            }
+
+            @Override
+            public void setDataInPageWithResult(Stat stat) {
+                stats.postValue(stat);
+            }
+        }));
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setChart() {
         Cartesian cartesian = AnyChart.line();
@@ -97,7 +119,6 @@ public class BackStateFragment extends Fragment {
         cartesian.crosshair().enabled(true);
         cartesian.crosshair()
                 .yLabel(true)
-                // TODO ystroke
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);

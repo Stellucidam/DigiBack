@@ -94,7 +94,6 @@ public class LoginViewModel extends ViewModel {
     public void register(
             String username, String email, String password,
             LifecycleOwner lifecycleOwner) {
-        // TODO register and login
         final TaskRunner taskRunner = new TaskRunner();
         taskRunner.executeAsync(new Register(username, email, password, new iOnTokenFetched() {
             @Override

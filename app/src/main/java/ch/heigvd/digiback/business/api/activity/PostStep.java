@@ -10,24 +10,27 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 
+import ch.heigvd.digiback.business.api.StatusCallable;
+import ch.heigvd.digiback.business.api.iOnStatusFetched;
+import ch.heigvd.digiback.business.model.Status;
 import ch.heigvd.digiback.business.model.Step;
 import ch.heigvd.digiback.business.utils.Backend;
 
-public class PostStep extends StepCallable {
+public class PostStep extends StatusCallable {
 
     private static final String TAG = "PostStep";
     private final Step step;
-    private final iOnStepFetched listener; //listener in fragment that shows and hides ProgressBar
+    private final iOnStatusFetched listener; //listener in fragment that shows and hides ProgressBar
 
-    public PostStep(Step step, iOnStepFetched onStepFetched) {
+    public PostStep(Step step, iOnStatusFetched iOnStatusFetched) {
         this.step = step;
-        this.listener = onStepFetched;
+        this.listener = iOnStatusFetched;
     }
 
     @Override
-    public Step call() throws Exception {
+    public Status call() throws Exception {
         String token  = "?token=" + loginRepository.getToken();
-        URL url = new URL(Backend.getActivityURL() + loginRepository.getUserId().toString() + stepsURLEnd + token);
+        URL url = new URL(Backend.getActivityURL() + loginRepository.getUserId().toString() + "/upload/steps" + token);
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
         http.setRequestMethod("POST");
@@ -54,16 +57,16 @@ public class PostStep extends StepCallable {
 
         Log.d(TAG, http.getResponseMessage());
 
-        return new Step();
+        return Status.builder().build();
     }
 
     @Override
     public void setUiForLoading() {}
 
     @Override
-    public void setDataAfterLoading(Step step) {
+    public void setDataAfterLoading(Status status) {
         if (listener != null) {
-            listener.setDataInPageWithResult(step);
+            listener.setDataInPageWithResult(status);
             listener.hideProgressBar();
         }
     }

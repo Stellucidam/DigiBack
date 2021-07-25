@@ -41,7 +41,6 @@ public class GetArticles extends ArticleClient {
 
         JSONArray articles = new JSONArray(stringBuilder.toString());
 
-        // Todo si on récup' tout, on prend pas le content
         for (int i = 0; i < articles.length(); i++) {
             JSONObject c = articles.getJSONObject(i);
 

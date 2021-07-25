@@ -1,6 +1,5 @@
 package ch.heigvd.digiback.ui.activity.mobility;
 
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -9,33 +8,49 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
+import com.anychart.core.cartesian.series.Line;
+import com.anychart.data.Mapping;
+import com.anychart.data.Set;
+import com.anychart.enums.Anchor;
+import com.anychart.enums.MarkerType;
+import com.anychart.enums.TooltipPositionMode;
+import com.anychart.graphics.vector.Stroke;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.List;
 
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.api.TaskRunner;
+import ch.heigvd.digiback.business.api.iOnStatusFetched;
 import ch.heigvd.digiback.business.api.movement.PostMovement;
 import ch.heigvd.digiback.business.model.Movement;
 import ch.heigvd.digiback.business.model.MovementType;
+import ch.heigvd.digiback.business.model.Status;
 
 // TODO Add self-timer for the measures
 public class MobilityActivity extends AppCompatActivity implements SensorEventListener, AdapterView.OnItemSelectedListener {
@@ -54,7 +69,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     private Spinner spinner;
 
     private View movementPopView;
-    private GraphView graph;
+    private AnyChartView movementChartView;
     private FloatingActionButton back;
     private TextView angleInfo;
     private Button
@@ -62,7 +77,8 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             measureStopper,
             help,
             sendMeasures,
-            cancelMeasures;
+            cancelMeasures,
+            addPain;
 
     private MovementType selectedMovementType;
     private LinkedList<Float> allAngles = new LinkedList<>();
@@ -81,6 +97,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             roll,
             max,
             min;
+    int painLevel = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -283,11 +300,16 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             // Validate the movement
             validateMovementPopup.setElevation(10);
             validateMovementPopup.showAtLocation(view, Gravity.CENTER, 10, 10);
-            validateMovementPopup.update(800, 1200);
-            graph = movementPopView.findViewById(R.id.angles_graph);
+            validateMovementPopup.update(800, 1500);
+            movementChartView = movementPopView.findViewById(R.id.angles_graph);
             sendMeasures = movementPopView.findViewById(R.id.validate_measure);
             cancelMeasures = movementPopView.findViewById(R.id.cancel_measure);
-            setPopUpGraphAndOnClicks();
+            addPain = movementPopView.findViewById(R.id.add_pain);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                setPopUpGraphAndOnClicks();
+            } else {
+                Log.e(TAG, "The build version (" + Build.VERSION.SDK_INT + ") does not allow for a chart view !");
+            }
         });
 
         // Button to see instructions
@@ -305,20 +327,39 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     /**
      *
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setPopUpGraphAndOnClicks() {
         // OnClicks
         // Validate measures
         sendMeasures.setOnClickListener(view -> {
             // Send measures to backend
-            runner.executeAsync(new PostMovement(
+            runner.executeAsync(new PostMovement(painLevel,
                     new Movement(
                             selectedMovementType,
                             new Date(Calendar.getInstance().getTime().getTime()),
-                            allAngles)
+                            allAngles),
+                    new iOnStatusFetched() {
+                        @Override
+                        public void showProgressBar() {
+
+                        }
+
+                        @Override
+                        public void hideProgressBar() {
+
+                        }
+
+                        @Override
+                        public void setDataInPageWithResult(Status result) {
+                            // TODO confirm (or not the reception of the movement)
+                            allAngles.clear();
+                            painLevel = -1;
+                            validateMovementPopup.dismiss();
+                            Toast.makeText(getApplicationContext(), result.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
             ));
 
-            //allAngles.clear();
-            // TODO confirm (or not the reception of the movement) validateMovementPopup.dismiss();
         });
 
         // Cancel measures
@@ -327,27 +368,107 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             validateMovementPopup.dismiss();
         });
 
+        // Add pain level
+        addPain.setOnClickListener(view -> {
+            PopupMenu popup = new PopupMenu(this, view);
+            popup.setOnMenuItemClickListener(item -> {
+                        painLevel = 0;
+                        Log.d(TAG, "Selected pain : " + item.getTitle() + " id " + item.getItemId());
+                        switch (item.getItemId()) {
+                            case R.id.pain_0:
+                                painLevel = 0;
+                                break;
+                            case R.id.pain_1:
+                                painLevel = 1;
+                                break;
+                            case R.id.pain_2:
+                                painLevel = 2;
+                                break;
+                            case R.id.pain_3:
+                                painLevel = 3;
+                                break;
+                            case R.id.pain_4:
+                                painLevel = 4;
+                                break;
+                            case R.id.pain_5:
+                                painLevel = 5;
+                                break;
+                            case R.id.pain_6:
+                                painLevel = 6;
+                                break;
+                            case R.id.pain_7:
+                                painLevel = 7;
+                                break;
+                            case R.id.pain_8:
+                                painLevel = 8;
+                                break;
+                            case R.id.pain_9:
+                                painLevel = 9;
+                                break;
+                            case R.id.pain_10:
+                                painLevel = 10;
+                                break;
+                        }
+                        return true;
+                    }
+            );
+            MenuInflater inflater1 = popup.getMenuInflater();
+            inflater1.inflate(R.menu.add_pain, popup.getMenu());
+            popup.show();
+        });
+
         // Graph
-        graph.removeAllSeries();
+        setChart();
+    }
 
-        final DataPoint[] points = new DataPoint[allAngles.size()];
+    private void setAddPainOnClickListener() {
+        addPain.setOnClickListener(view -> {
+            PopupMenu popup = new PopupMenu(this, view);
+            popup.setOnMenuItemClickListener(item -> {
+                    Log.d(TAG, "Selected pain : " + item.getTitle() + " id " + item.getItemId());
+                    switch (item.getItemId()) {
+                        case R.id.pain_0:
+                            painLevel = 0;
+                            break;
+                        case R.id.pain_1:
+                            painLevel = 1;
+                            break;
+                        case R.id.pain_2:
+                            painLevel = 2;
+                            break;
+                        case R.id.pain_3:
+                            painLevel = 3;
+                            break;
+                        case R.id.pain_4:
+                            painLevel = 4;
+                            break;
+                        case R.id.pain_5:
+                            painLevel = 5;
+                            break;
+                        case R.id.pain_6:
+                            painLevel = 6;
+                            break;
+                        case R.id.pain_7:
+                            painLevel = 7;
+                            break;
+                        case R.id.pain_8:
+                            painLevel = 8;
+                            break;
+                        case R.id.pain_9:
+                            painLevel = 9;
+                            break;
+                        case R.id.pain_10:
+                            painLevel = 10;
+                            break;
+                    }
 
-        for (int i = 0; i < allAngles.size(); ++i) {
-            points[i] = new DataPoint(i, allAngles.get(i));
-        }
-
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(points);
-
-        series.setValueDependentColor(data -> Color.WHITE);
-        series.setSpacing(1);
-
-        // set manual y bounds to have nice steps
-        graph.getViewport().setMinY(min - 5);
-        graph.getViewport().setMaxY(max + 5);
-        graph.getViewport().setYAxisBoundsManual(true);
-
-        graph.addSeries(series);
-        graph.setAlpha(1f);
+                    return true;
+                }
+            );
+            MenuInflater inflater1 = popup.getMenuInflater();
+            inflater1.inflate(R.menu.add_pain, popup.getMenu());
+            popup.show();
+        });
     }
 
     /**
@@ -366,5 +487,52 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     private void enable(View view) {
         view.setEnabled(true);
         view.setAlpha(1f);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setChart() {
+        Cartesian cartesian = AnyChart.line();
+
+        cartesian.animation(true);
+        cartesian.padding(10d, 20d, 5d, 20d);
+
+        cartesian.crosshair().enabled(true);
+        cartesian.crosshair()
+                .yLabel(true)
+                .yStroke((Stroke) null, null, null, (String) null, (String) null);
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+
+        cartesian.title(getString(R.string.movement_text));
+        cartesian.yAxis(0).title(getString(R.string.values));
+        cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
+
+        List<DataEntry> angleSeries = new ArrayList<>();
+        for (int i = 0; i < allAngles.size(); ++i) {
+            angleSeries.add(new ValueDataEntry(i, allAngles.get(i)));
+        }
+
+        Set anglesSet = Set.instantiate();
+        anglesSet.data(angleSeries);
+        Mapping seriesMapping = anglesSet.mapAs("{ x: 'x', value: 'value' }");
+
+        Line angleLine = cartesian.line(seriesMapping);
+        angleLine.name(getString(R.string.angles));
+        angleLine.hovered().markers().enabled(true);
+        angleLine.hovered().markers()
+                .type(MarkerType.CIRCLE)
+                .size(4d);
+        angleLine.tooltip()
+                .position("right")
+                .anchor(Anchor.LEFT_CENTER)
+                .offsetX(5d)
+                .offsetY(5d);
+
+        cartesian.legend().enabled(true);
+        cartesian.legend().fontFamily("Montserrat");
+        cartesian.legend().fontSize(14d);
+        cartesian.legend().padding(0d, 0d, 10d, 0d);
+
+        movementChartView.setChart(cartesian);
     }
 }

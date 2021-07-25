@@ -37,12 +37,15 @@
         android:screenOrientation="portrait"
         tools:targetApi="m">
         <activity android:name=".ui.activity.login.RegisterActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoTitleBar"></activity>
         <activity
-            android:name=".ui.activity.mobility.MobilityActivity" />
+            android:name=".ui.activity.mobility.MobilityActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.login.LoginActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoTitleBar">
 
@@ -55,6 +58,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
 

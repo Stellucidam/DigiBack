@@ -20,17 +20,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.jjoe64.graphview.GraphView
+    <com.anychart.AnyChartView
         android:id="@+id/angles_graph"
-        android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:layout_marginStart="-16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movement_validation"
-        tools:ignore="MissingConstraints" />
+        android:padding="8dp"
+        android:layout_margin="8dp"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        />
+    <Button
+        android:id="@+id/add_pain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/add_pain"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/white"
+        android:padding="16px"
+        app:layout_constraintTop_toBottomOf="@+id/angles_graph"/>
 
     <LinearLayout
         android:id="@+id/buttons"
@@ -43,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/angles_graph">
+        app:layout_constraintTop_toBottomOf="@+id/add_pain">
 
         <Button
             android:id="@+id/validate_measure"

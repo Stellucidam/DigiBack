@@ -12,11 +12,11 @@ public class Stat {
     // Angle information
     private float highestAngle;
     private float angleAverage;
-    private Map<Date, Float> angleEvolution; // TODO
+    private Map<Date, Float> angleEvolution;
 
     // Pain information
     private float painAverage;
-    private Map<Date, Integer> painEvolution; // TODO
+    private Map<Date, Integer> painEvolution;
 
     private Map<MovementType, Stat> statByMovementType;
 }

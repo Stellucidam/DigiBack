@@ -38,10 +38,12 @@ import ch.heigvd.digiback.business.api.TaskRunner;
 import ch.heigvd.digiback.business.api.activity.GetActivity;
 import ch.heigvd.digiback.business.api.activity.PostStep;
 import ch.heigvd.digiback.business.api.activity.iOnActivityFetched;
-import ch.heigvd.digiback.business.api.activity.iOnStepFetched;
+import ch.heigvd.digiback.business.api.iOnStatusFetched;
 import ch.heigvd.digiback.business.model.Activity;
+import ch.heigvd.digiback.business.model.Status;
 import ch.heigvd.digiback.business.model.Step;
 import ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment;
+import ch.heigvd.digiback.ui.fragment.quiz.QuizFragment;
 
 public class CalendarFragment extends Fragment implements SensorEventListener {
     private static final String TAG = "CalendarFragment";
@@ -52,7 +54,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
     private CardView exercise, quiz;
 
-    private Button addPain;
+    private Button addMobility;
 
     private Date selectedDay;
 
@@ -81,7 +83,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
         exerciseCountTextView = root.findViewById(R.id.exercise_total);
         quizCountTextView = root.findViewById(R.id.quiz_total);
         currentDate = root.findViewById(R.id.text_date);
-        addPain = root.findViewById(R.id.add_pain);
+        addMobility = root.findViewById(R.id.add_pain);
 
         table = root.findViewById(R.id.calendar_table);
 
@@ -89,20 +91,20 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
         selectedDay = calendar.getTime();
         setCalendar(calendar);
 
-        setAddPainOnClickListener();
+        setAddMobilityOnClickListener();
 
         return root;
     }
 
     private void setCardViewsOnClickListener() {
         exercise.setOnClickListener(view -> {
-            // TODO
             FragmentTransaction transaction;
             if (getFragmentManager() != null) {
                 transaction = getFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack
+                // TODO set title on fragment (navigation)
                 transaction.replace(R.id.nav_host_fragment, new ExerciseFragment());
                 transaction.addToBackStack(null);
 
@@ -112,53 +114,67 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
         });
 
         quiz.setOnClickListener(view -> {
-            // TODO
+            FragmentTransaction transaction;
+            if (getFragmentManager() != null) {
+                transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                // TODO set title on fragment (navigation)
+                transaction.replace(R.id.nav_host_fragment, new QuizFragment());
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            }
         });
     }
 
-    private void setAddPainOnClickListener() {
-        addPain.setOnClickListener(view -> {
+    private void setAddMobilityOnClickListener() {
+        addMobility.setOnClickListener(view -> {
             PopupMenu popup = new PopupMenu(getContext(), view);
             popup.setOnMenuItemClickListener(item -> {
-                Log.d(TAG, "Selected pain : " + item.getTitle());
+                int painLevel = 0;
+                Log.d(TAG, "Selected pain : " + item.getTitle() + " id " + item.getItemId());
                 switch (item.getItemId()) {
                     case R.id.pain_0:
-                        // TODO
-                        return true;
+                        painLevel = 0;
+                        break;
                     case R.id.pain_1:
-                        // TODO
-                        return true;
+                        painLevel = 1;
+                        break;
                     case R.id.pain_2:
-                        // TODO
-                        return true;
+                        painLevel = 2;
+                        break;
                     case R.id.pain_3:
-                        // TODO
-                        return true;
+                        painLevel = 3;
+                        break;
                     case R.id.pain_4:
-                        // TODO
-                        return true;
+                        painLevel = 4;
+                        break;
                     case R.id.pain_5:
-                        // TODO
-                        return true;
+                        painLevel = 5;
+                        break;
                     case R.id.pain_6:
-                        // TODO
-                        return true;
+                        painLevel = 6;
+                        break;
                     case R.id.pain_7:
-                        // TODO
-                        return true;
+                        painLevel = 7;
+                        break;
                     case R.id.pain_8:
-                        // TODO
-                        return true;
+                        painLevel = 8;
+                        break;
                     case R.id.pain_9:
-                        // TODO
-                        return true;
+                        painLevel = 9;
+                        break;
                     case R.id.pain_10:
-                        // TODO
-                        return true;
-                    default:
-                        return false;
+                        painLevel = 10;
+                        break;
                 }
-            });
+
+                return true;
+            }
+            );
             MenuInflater inflater1 = popup.getMenuInflater();
             inflater1.inflate(R.menu.add_pain, popup.getMenu());
             popup.show();
@@ -178,7 +194,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
             PostStep postStep = new PostStep(
                 new Step(new java.sql.Date(cal.getTime().getTime()), (long) this.currentSteps),
-                new iOnStepFetched() {
+                new iOnStatusFetched() {
                     @Override
                     public void showProgressBar() {
 
@@ -190,9 +206,9 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
                     }
 
                     @Override
-                    public void setDataInPageWithResult(Step step) {
+                    public void setDataInPageWithResult(Status status) {
                         // TODO do something with the data
-                        Log.i(TAG, "Sent steps : " + step.getNbrSteps() + " for date " + step.getDate());
+                        Log.i(TAG, "Sent steps ");
                     }
                 }
             );
@@ -245,7 +261,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
         // set the current date on top of the calendar
         calendar.setTime(selectedDay);
-        SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat("dd MMMM YYYY");
+        SimpleDateFormat dayMonthYearFormat = new SimpleDateFormat("dd MMMM yyyy");
         SimpleDateFormat dayAbbreviationFormat = new SimpleDateFormat("EE");
         SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
 
@@ -325,7 +341,6 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
                 @Override
                 public void setDataInPageWithResult(Activity activity) {
-                    // TODO
                     Log.d(TAG, activity.toString());
 
                     if (activity != null) {
