@@ -51,7 +51,7 @@ public class GetActivity extends ActivityCallable {
             JSONObject c = new JSONObject(stringBuilder.toString());
             String date  = c.getString("date");
             nbrSteps  = c.getLong("nbrSteps");
-            nbrExercises  = c.getLong("nbrExercices");
+            nbrExercises  = c.getLong("nbrExercises");
             nbrQuiz  = c.getLong("nbrQuiz");
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());

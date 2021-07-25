@@ -1,7 +1,6 @@
 package ch.heigvd.digiback.ui.fragment.exercise;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,9 +17,10 @@ import java.util.List;
 
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.model.Exercise;
+import ch.heigvd.digiback.ui.activity.exercise.ExerciseActivity;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private static final int VIEW_TYPE_ARTICLE = 1;
+    private static final int VIEW_TYPE_EXERCISE = 1;
     private static final String TAG = "ExerciseAdapter";
 
     private ExerciseViewModel state;
@@ -53,7 +53,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
-            case VIEW_TYPE_ARTICLE:
+            case VIEW_TYPE_EXERCISE:
                 return new ExerciseViewHolder(parent, lifecycleOwner, exerciseFragment);
             default:
                 throw new IllegalStateException("Unknown view type.");
@@ -72,13 +72,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        return VIEW_TYPE_ARTICLE;
+        return VIEW_TYPE_EXERCISE;
     }
 
     private static class ExerciseViewHolder extends RecyclerView.ViewHolder {
         private final CardView exerciseCard;
         private final TextView exerciseTitle;
-        private final TextView exerciseCategory;
         private final ImageView exerciseImage;
         private final LifecycleOwner lifecycleOwner;
         private final ExerciseFragment exerciseFragment;
@@ -91,19 +90,19 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             exerciseCard = itemView.findViewById(R.id.exercise_card);
             exerciseTitle = itemView.findViewById(R.id.exo_title);
             exerciseImage = itemView.findViewById(R.id.exo_image);
-            exerciseCategory = itemView.findViewById(R.id.exo_duration);
             this.lifecycleOwner = lifecycleOwner;
         }
 
         private void bindExercise(Exercise exercise) {
             exerciseCard.setOnClickListener(view -> {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(exercise.getLink()));
-                exerciseFragment.getActivity().startActivity(i);
+                Intent i = new Intent(exerciseFragment.getContext(), ExerciseActivity.class);
+                i.putExtra("id", exercise.getId());
+                i.putExtra("title", exercise.getTitle());
+                i.putExtra("imageURL", exercise.getImageURL());
+                exerciseFragment.startActivity(i);
             });
             exerciseTitle.setText(exercise.getTitle());
             exercise.getImageBM().observe(lifecycleOwner, exerciseImage::setImageBitmap);
-            exercise.getCategoryName().observe(lifecycleOwner, exerciseCategory::setText);
         }
     }
 }

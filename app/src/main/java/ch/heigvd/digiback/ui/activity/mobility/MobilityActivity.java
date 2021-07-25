@@ -295,7 +295,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             enable(measureStarter);
             enable(spinner);
             disable(measureStopper);
-            Log.i(TAG, "Got " + allAngles.size() + " measures angles.");
 
             // Validate the movement
             validateMovementPopup.setElevation(10);
@@ -351,11 +350,10 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
                         @Override
                         public void setDataInPageWithResult(Status result) {
-                            // TODO confirm (or not the reception of the movement)
                             allAngles.clear();
                             painLevel = -1;
                             validateMovementPopup.dismiss();
-                            Toast.makeText(getApplicationContext(), result.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), result.getStatus(), Toast.LENGTH_LONG).show();
                         }
                     }
             ));
@@ -373,7 +371,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             PopupMenu popup = new PopupMenu(this, view);
             popup.setOnMenuItemClickListener(item -> {
                         painLevel = 0;
-                        Log.d(TAG, "Selected pain : " + item.getTitle() + " id " + item.getItemId());
                         switch (item.getItemId()) {
                             case R.id.pain_0:
                                 painLevel = 0;
@@ -417,7 +414,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             popup.show();
         });
 
-        // Graph
+        // Chart
         setChart();
     }
 

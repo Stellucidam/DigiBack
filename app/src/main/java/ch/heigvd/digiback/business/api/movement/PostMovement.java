@@ -83,7 +83,7 @@ public class PostMovement extends StatusCallable {
             Log.i(TAG, "Send movement...");
             os.write(out);
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            Log.e(TAG   , e.getMessage());
         }
 
         String status = "", message = "";

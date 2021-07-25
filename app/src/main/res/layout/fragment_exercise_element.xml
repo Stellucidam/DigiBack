@@ -16,7 +16,6 @@
         android:background="@drawable/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <ImageView
             android:id="@+id/exo_image"
             android:layout_width="150dp"
@@ -47,23 +46,6 @@
             android:text="Title"
             android:textSize="18sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/exo_duration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/exo_title"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_toEndOf="@id/exo_image"
-            android:layout_toRightOf="@id/exo_image"
-            android:drawablePadding="4dp"
-            android:text="Category" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

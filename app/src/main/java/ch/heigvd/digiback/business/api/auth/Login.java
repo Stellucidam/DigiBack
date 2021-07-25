@@ -54,8 +54,6 @@ public class Login extends AuthCallable {
         }  catch (Exception e) {
             Log.e(TAG + " line 48", e.getMessage());
         }
-        //http.getResponseMessage();
-        // Do something with http.getInputStream()
 
         Log.d(TAG, http.getResponseMessage());
         String result = null;

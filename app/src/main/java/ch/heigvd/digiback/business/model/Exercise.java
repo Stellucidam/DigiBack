@@ -4,22 +4,29 @@ import android.graphics.Bitmap;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.List;
+
 import lombok.Getter;
 
 @Getter
 public class Exercise {
-    private final int id;
-    private final String imageURL;
-    private final String title;
-    private final String link;
+    private Long id;
+    private String imageURL;
+    private String title;
+    private List<Instruction> instructions;
 
     private MutableLiveData<Bitmap> imageBM = new MutableLiveData<>();
-    private MutableLiveData<String> categoryName = new MutableLiveData<>();
 
-    public Exercise(int id, String imageURL, String title, String link) {
+    public Exercise(Long id, String imageURL, String title) {
         this.id = id;
         this.imageURL = imageURL;
         this.title = title;
-        this.link = link;
+    }
+
+    public Exercise(Long id, String imageURL, String title, List<Instruction> instructions) {
+        this.id = id;
+        this.imageURL = imageURL;
+        this.title = title;
+        this.instructions = instructions;
     }
 }

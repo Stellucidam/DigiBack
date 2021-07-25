@@ -31,25 +31,27 @@
         android:icon="@drawable/logo_digiback_small"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_digiback_small"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        android:screenOrientation="portrait"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.login.RegisterActivity"
-            android:screenOrientation="portrait"
+        <activity android:name=".ui.activity.exercise.ExerciseActivity"></activity>
+        <activity
+            android:name=".ui.activity.login.RegisterActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoTitleBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoTitleBar" />
         <activity
             android:name=".ui.activity.mobility.MobilityActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.login.LoginActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitleBar">
 
-            <!--             Todo : put that back -->
+            <!-- Todo : put that back -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,8 +60,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
             <!--

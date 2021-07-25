@@ -25,7 +25,7 @@ public class Backend {
     }
 
     public static String getExerciseURL() {
-        return domain + "exercise/user/";
+        return domain + "exercise/";
     }
 
     public static String getTipURL() {
