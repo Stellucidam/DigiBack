@@ -58,8 +58,6 @@ public class PostExercise extends StatusCallable {
             Log.e(TAG, e.getMessage());
         }
         Log.d(TAG, http.getResponseMessage());
-        //http.getResponseMessage();
-        // Do something with http.getInputStream()
 
         http.connect();
         return Status.builder().status(http.getResponseMessage()).build();

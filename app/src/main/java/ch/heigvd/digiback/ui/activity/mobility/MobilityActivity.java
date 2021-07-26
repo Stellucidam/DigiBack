@@ -4,8 +4,14 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
@@ -23,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -38,11 +45,15 @@ import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.api.TaskRunner;
@@ -74,7 +85,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     private TextView angleInfo;
     private Button
             measureStarter,
-            measureStopper,
             help,
             sendMeasures,
             cancelMeasures,
@@ -85,19 +95,75 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     private boolean
             calculateAngles = false,
             firstMeasure = true;
-    float[]
+    private float[]
             Rot = null,
             I = null,
             accels = new float[3],
             mags = new float[3],
             values = new float[3];
-    float
-            azimuth,
+    private float
             pitch,
             roll,
             max,
             min;
-    int painLevel = -1;
+    private int painLevel = -1;
+
+    // Self timer part
+    private Timer timer = new Timer();
+    private View view;
+    private TextView time;
+    private MutableLiveData<Long> startTime = new MutableLiveData<>(0L);
+    private final Handler h = new Handler(new Callback() {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public boolean handleMessage(Message msg) {
+            long millis = System.currentTimeMillis() - startTime.getValue();
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds     = seconds % 60;
+
+            time.setText(String.format("%d:%02d", minutes, seconds));
+            if (seconds == 3 && minutes == 0) {
+                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                Log.d(TAG, "Should sound an alarm");
+                r.play();
+
+                // Start measures
+                allAngles.clear();
+                calculateAngles = true;
+            }
+
+            if (seconds == 8 && minutes == 0) {
+                // Re-enable measure starter
+                enable(measureStarter);
+                enable(spinner);
+
+                // Stop timer
+                timer.cancel();
+                timer.purge();
+
+                // Stop measures
+                calculateAngles = false;
+                firstMeasure = true;
+
+                // Validate the movement
+                validateMovementPopup.setElevation(10);
+                validateMovementPopup.showAtLocation(view, Gravity.CENTER, 10, 10);
+                validateMovementPopup.update(800, 1500);
+                movementChartView = movementPopView.findViewById(R.id.angles_graph);
+                sendMeasures = movementPopView.findViewById(R.id.validate_measure);
+                cancelMeasures = movementPopView.findViewById(R.id.cancel_measure);
+                addPain = movementPopView.findViewById(R.id.add_pain);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    setPopUpGraphAndOnClicks();
+                } else {
+                    Log.e(TAG, "The build version (" + Build.VERSION.SDK_INT + ") does not allow for a chart view !");
+                }
+            }
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +181,11 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
         setContentView(R.layout.activity_mobility);
 
+        view = findViewById(R.id.movement_spinner).getRootView();
         spinner = findViewById(R.id.movement_spinner);
         angleInfo = findViewById(R.id.angle);
         back = findViewById(R.id.floating_back_button);
         measureStarter = findViewById(R.id.start_measure);
-        measureStopper = findViewById(R.id.stop_measure);
         help = findViewById(R.id.help);
         helpPopUp = new PopupWindow(
                 getLayoutInflater()
@@ -150,10 +216,13 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         spinner.setOnItemSelectedListener(this);
 
         selectedMovementType = MovementType.NONE;
+
+        // Self timer part
+        time = (TextView)findViewById(R.id.text_timer);
     }
 
     @Override
-    public void onSensorChanged(SensorEvent event) {
+    public void onSensorChanged(@NotNull SensorEvent event) {
         // Source : https://www.ssaurel.com/blog/get-android-device-rotation-angles-with-accelerometer-and-geomagnetic-sensors/
         switch (event.sensor.getType()) {
             case Sensor.TYPE_MAGNETIC_FIELD:
@@ -173,7 +242,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             SensorManager.remapCoordinateSystem(Rot, SensorManager.AXIS_X, SensorManager.AXIS_Z, outR);
             SensorManager.getOrientation(outR, values);
 
-            azimuth = values[0] * CST;
             pitch = values[1] * CST;
             roll = values[2] * CST;
 
@@ -190,7 +258,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
                         max = Math.max(max, pitch);
                         min = Math.min(min, pitch);
                     }
-                    allAngles.add(pitch);
+                    allAngles.add(Math.abs(pitch));
                     break;
                 case RIGHT_TILT:
                 case LEFT_TILT:
@@ -202,7 +270,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
                         max = Math.max(max, roll);
                         min = Math.min(min, roll);
                     }
-                    allAngles.add(-roll);
+                    allAngles.add(Math.abs(roll));
                     break;
                 case NONE:
                     break;
@@ -239,22 +307,18 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             case 1:
                 selectedMovementType = MovementType.FRONT_TILT;
                 enable(measureStarter);
-                disable(measureStopper);
                 break;
             case 2:
                 selectedMovementType = MovementType.RIGHT_TILT;
                 enable(measureStarter);
-                disable(measureStopper);
                 break;
             case 3:
                 selectedMovementType = MovementType.LEFT_TILT;
                 enable(measureStarter);
-                disable(measureStopper);
                 break;
             default:
                 selectedMovementType = MovementType.NONE;
                 disable(measureStarter);
-                disable(measureStopper);
                 break;
         }
     }
@@ -275,40 +339,18 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     protected void onPause() {
         super.onPause();
         mSensorManager.unregisterListener(this);
+        timer.cancel();
+        timer.purge();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setOnClicks() {
         // Button to start the measure
         measureStarter.setOnClickListener(view -> {
-            this.allAngles.clear();
-            this.calculateAngles = true;
+            startTime.setValue(System.currentTimeMillis());
+            timer.schedule(new firstTask(), 0,500);
             disable(measureStarter);
             disable(spinner);
-            enable(measureStopper);
-        });
-
-        // Button to stop the measure
-        measureStopper.setOnClickListener(view -> {
-            this.calculateAngles = false;
-            this.firstMeasure = true;
-            enable(measureStarter);
-            enable(spinner);
-            disable(measureStopper);
-
-            // Validate the movement
-            validateMovementPopup.setElevation(10);
-            validateMovementPopup.showAtLocation(view, Gravity.CENTER, 10, 10);
-            validateMovementPopup.update(800, 1500);
-            movementChartView = movementPopView.findViewById(R.id.angles_graph);
-            sendMeasures = movementPopView.findViewById(R.id.validate_measure);
-            cancelMeasures = movementPopView.findViewById(R.id.cancel_measure);
-            addPain = movementPopView.findViewById(R.id.add_pain);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                setPopUpGraphAndOnClicks();
-            } else {
-                Log.e(TAG, "The build version (" + Build.VERSION.SDK_INT + ") does not allow for a chart view !");
-            }
         });
 
         // Button to see instructions
@@ -482,4 +524,13 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
         movementChartView.setChart(cartesian);
     }
+
+    //tells handler to send a message
+    class firstTask extends TimerTask {
+
+        @Override
+        public void run() {
+            h.sendEmptyMessage(0);
+        }
+    };
 }

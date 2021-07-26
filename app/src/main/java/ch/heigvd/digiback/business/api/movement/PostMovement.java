@@ -54,7 +54,6 @@ public class PostMovement extends StatusCallable {
         http.setRequestProperty( "charset", "utf-8");
         http.setUseCaches(false);
 
-        Log.d(TAG, url.toString());
         // Write the content of the request
         try(OutputStream os = http.getOutputStream()) {
             // Write token
@@ -80,10 +79,10 @@ public class PostMovement extends StatusCallable {
             obj.put("angleCredentials", angles);
 
             byte[] out = obj.toString().getBytes();
-            Log.i(TAG, "Send movement...");
+            //Log.i(TAG, "Send movement...\n" + obj.toString());
             os.write(out);
         } catch (Exception e) {
-            Log.e(TAG   , e.getMessage());
+            Log.e(TAG + " write", e.getMessage());
         }
 
         String status = "", message = "";
@@ -101,10 +100,10 @@ public class PostMovement extends StatusCallable {
                 status  = c.getString("status");
                 message  = c.getString("message");
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
+                Log.e(TAG + " get JSON", e.getMessage());
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            Log.e(TAG + " read", e.getMessage());
         }
 
         http.disconnect();
