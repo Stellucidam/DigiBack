@@ -30,7 +30,7 @@ public class GetExercise extends ExerciseCallable {
 
     @Override
     public Exercise call() throws Exception {
-        URL url = new URL(Backend.getExerciseURL());
+        URL url = new URL(Backend.getExerciseURL() + exerciseId);
         HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
         InputStream is = conn.getInputStream();
         InputStreamReader isr = new InputStreamReader(is);
@@ -45,6 +45,7 @@ public class GetExercise extends ExerciseCallable {
         String imageURL = "";
         String title = "";
         List<Instruction> instructions = new LinkedList<>();
+        Log.d(TAG, stringBuilder.toString());
         try {
             JSONObject exercise = new JSONObject(stringBuilder.toString());
 

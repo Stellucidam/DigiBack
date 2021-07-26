@@ -46,6 +46,17 @@
             android:text="Title"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/mark_exercise_as_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/mark_as_done"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_below="@+id/exo_title"
+            android:layout_toEndOf="@+id/exo_image" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

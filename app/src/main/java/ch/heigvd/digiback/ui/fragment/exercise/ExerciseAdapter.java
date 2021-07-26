@@ -1,8 +1,10 @@
 package ch.heigvd.digiback.ui.fragment.exercise;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,12 +13,18 @@ import androidx.cardview.widget.CardView;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Date;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import ch.heigvd.digiback.R;
+import ch.heigvd.digiback.business.api.TaskRunner;
+import ch.heigvd.digiback.business.api.activity.PostExercise;
+import ch.heigvd.digiback.business.api.iOnStatusFetched;
+import ch.heigvd.digiback.business.model.DoneExercise;
 import ch.heigvd.digiback.business.model.Exercise;
+import ch.heigvd.digiback.business.model.Status;
 import ch.heigvd.digiback.ui.activity.exercise.ExerciseActivity;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
@@ -81,6 +89,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private final ImageView exerciseImage;
         private final LifecycleOwner lifecycleOwner;
         private final ExerciseFragment exerciseFragment;
+        private final Button doExercise;
 
         private ExerciseViewHolder(@NonNull ViewGroup parent, LifecycleOwner lifecycleOwner, ExerciseFragment exerciseFragment) {
             super(LayoutInflater.from(parent.getContext())
@@ -90,6 +99,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             exerciseCard = itemView.findViewById(R.id.exercise_card);
             exerciseTitle = itemView.findViewById(R.id.exo_title);
             exerciseImage = itemView.findViewById(R.id.exo_image);
+            doExercise = itemView.findViewById(R.id.mark_exercise_as_done);
             this.lifecycleOwner = lifecycleOwner;
         }
 
@@ -100,6 +110,30 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 i.putExtra("title", exercise.getTitle());
                 i.putExtra("imageURL", exercise.getImageURL());
                 exerciseFragment.startActivity(i);
+            });
+            doExercise.setOnClickListener(view -> {
+                TaskRunner taskRunner = new TaskRunner();
+                List<Long> exerciseId = new LinkedList<>();
+                exerciseId.add(exercise.getId());
+                taskRunner.executeAsync(new PostExercise(
+                        new DoneExercise(new java.sql.Date(new Date().getTime()), exerciseId),
+                        new iOnStatusFetched() {
+                            @Override
+                            public void showProgressBar() {
+
+                            }
+
+                            @Override
+                            public void hideProgressBar() {
+
+                            }
+
+                            @Override
+                            public void setDataInPageWithResult(Status status) {
+                                // TODO
+                                Log.d(TAG, status.getStatus() + " " + status.getMessage());
+                            }
+                }));
             });
             exerciseTitle.setText(exercise.getTitle());
             exercise.getImageBM().observe(lifecycleOwner, exerciseImage::setImageBitmap);

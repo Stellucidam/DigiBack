@@ -38,7 +38,7 @@ public class PostActivity extends ActivityCallable {
             obj.put("id", activity.getId());
             obj.put("date", activity.getDate().toString());
             obj.put("nbrSteps", activity.getNbrSteps());
-            obj.put("nbrExercises", activity.getNbrExercises());
+            obj.put("nbrExercises", activity.getExercises());
             obj.put("nbrQuiz", activity.getNbrQuiz());
 
             byte[] out = obj.toString().getBytes();

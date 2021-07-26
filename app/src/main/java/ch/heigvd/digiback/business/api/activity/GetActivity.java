@@ -3,6 +3,7 @@ package ch.heigvd.digiback.business.api.activity;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -10,6 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.sql.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -45,19 +48,22 @@ public class GetActivity extends ActivityCallable {
 
         int id = 0;
         Long nbrSteps = 0L;
-        Long nbrExercises = 0L;
+        List<Long> exercises = new LinkedList<>();
         Long nbrQuiz = 0L;
         try {
             JSONObject c = new JSONObject(stringBuilder.toString());
             String date  = c.getString("date");
             nbrSteps  = c.getLong("nbrSteps");
-            nbrExercises  = c.getLong("nbrExercises");
+            JSONArray exercicesJSON  = c.getJSONArray("exercices");
+            for (int i = 0; i < exercicesJSON.length(); i++) {
+                exercises.add(exercicesJSON.getLong(i));
+            }
             nbrQuiz  = c.getLong("nbrQuiz");
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
 
-        return new Activity(id, Date.valueOf(date), nbrSteps, nbrExercises, nbrQuiz);
+        return new Activity(id, Date.valueOf(date), nbrSteps, exercises, nbrQuiz);
     }
 
     @Override

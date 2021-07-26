@@ -98,6 +98,7 @@
     <string name="angles" translatable="false">Angles</string>
     <string name="register_failed">Enregistrement échoué</string>
     <string name="wrong_confirmation_password">Les deux mots de passes entrés sont différents !</string>
+    <string name="mark_as_done" >Fait aujourd\'hui</string>
 
 
 </resources>

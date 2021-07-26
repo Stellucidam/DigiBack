@@ -1,6 +1,7 @@
 package ch.heigvd.digiback.business.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Getter;
 
@@ -9,22 +10,22 @@ public class Activity {
     private final int id;
     private final Date date;
     private final Long nbrSteps;
-    private final Long nbrExercises;
+    private final List<Long> exercises;
     private final Long nbrQuiz;
 
     public Activity() {
-        nbrExercises = null;
+        exercises = null;
         id = 0;
         date = null;
         nbrQuiz = null;
         nbrSteps = null;
     }
 
-    public Activity(int id, Date date, Long nbrSteps, Long nbrExercises, Long nbrQuiz) {
+    public Activity(int id, Date date, Long nbrSteps, List<Long> exercises, Long nbrQuiz) {
         this.id = id;
         this.date = date;
         this.nbrSteps = nbrSteps;
-        this.nbrExercises = nbrExercises;
+        this.exercises = exercises;
         this.nbrQuiz = nbrQuiz;
     }
 
@@ -34,7 +35,7 @@ public class Activity {
                 "id=" + id +
                 ", date=" + date +
                 ", nbrSteps=" + nbrSteps +
-                ", nbrExercises=" + nbrExercises +
+                ", exercises=" + exercises +
                 ", nbrQuiz=" + nbrQuiz +
                 '}';
     }

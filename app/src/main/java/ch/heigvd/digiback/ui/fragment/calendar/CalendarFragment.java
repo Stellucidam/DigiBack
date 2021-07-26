@@ -295,7 +295,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
                 public void setDataInPageWithResult(Activity activity) {
                     if (activity != null) {
                         stepCountTextView.setText("" + activity.getNbrSteps().intValue());
-                        exerciseCountTextView.setText("" + activity.getNbrExercises().intValue());
+                        exerciseCountTextView.setText("" + activity.getExercises().size());
                         quizCountTextView.setText("" + activity.getNbrQuiz().intValue());
                     } else {
                         stepCountTextView.setText("Nan");
