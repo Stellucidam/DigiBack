@@ -102,8 +102,8 @@
     <string name="angles" translatable="false">Angles</string>
     <string name="register_failed">Enregistrement échoué</string>
     <string name="wrong_confirmation_password">Les deux mots de passes entrés sont différents !</string>
-    <string name="mark_as_done" >Fait aujourd\'hui</string>
-    <string name="permission_denied_explenation" >Il est, pour l\'instant, impossible d\'utiliser cette application sans autoriser l\'utilisation de données personnellles.</string>
+    <string name="mark_as_done">Fait aujourd\'hui</string>
+    <string name="permission_denied_explenation">Il est, pour l\'instant, impossible d\'utiliser cette application sans autoriser l\'utilisation de données personnellles.</string>
 
 
 </resources>

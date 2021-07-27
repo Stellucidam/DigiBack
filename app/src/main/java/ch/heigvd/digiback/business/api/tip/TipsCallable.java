@@ -1,11 +1,13 @@
 package ch.heigvd.digiback.business.api.tip;
 
+import java.util.List;
+
 import ch.heigvd.digiback.business.api.CustomCallable;
 import ch.heigvd.digiback.business.model.Tip;
 
-public class TipCallable implements CustomCallable<Tip> {
+public class TipsCallable implements CustomCallable<List<Tip>> {
     @Override
-    public void setDataAfterLoading(Tip result) {
+    public void setDataAfterLoading(List<Tip> result) {
 
     }
 
@@ -15,7 +17,7 @@ public class TipCallable implements CustomCallable<Tip> {
     }
 
     @Override
-    public Tip call() throws Exception {
+    public List<Tip> call() throws Exception {
         return null;
     }
 }

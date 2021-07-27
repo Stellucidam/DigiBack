@@ -7,27 +7,30 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import ch.heigvd.digiback.R;
 
 public class TipsFragment extends Fragment {
 
-    private TipsViewModel tipsViewModel;
+    private TipsViewModel tipsViewModel, state;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         tipsViewModel =
                 ViewModelProviders.of(this).get(TipsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_tip, container, false);
-        /*
-        final TextView textView = root.findViewById(R.id.text_conseils);
-        tipsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+
+        state = new ViewModelProvider(this, new TipsViewModelFactory()).get(TipsViewModel.class);
+
+        TipAdapter tipAdapter = new TipAdapter(state, this, this);
+
+        RecyclerView tipList = root.findViewById(R.id.tips_view);
+        tipList.setLayoutManager(new LinearLayoutManager(getContext()));
+        tipList.setAdapter(tipAdapter);
         return root;
     }
 }
