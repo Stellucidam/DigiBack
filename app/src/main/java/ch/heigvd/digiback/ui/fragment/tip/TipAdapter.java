@@ -70,8 +70,7 @@ public class TipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     }
 
     private static class TipViewHolder extends RecyclerView.ViewHolder {
-        //private final CardView tipCard;
-        private final TextView tipTitle;
+        private final TextView tipTitle, tipText;
         private final LifecycleOwner lifecycleOwner;
         private final TipsFragment tipsFragment;
 
@@ -80,13 +79,46 @@ public class TipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
                     .inflate(R.layout.fragment_tip_element, parent, false));
 
             this.tipsFragment = tipsFragment;
-            //tipCard = itemView.findViewById(R.id.tip_card);
             tipTitle = itemView.findViewById(R.id.tip_title);
+            tipText = itemView.findViewById(R.id.tip_text);
             this.lifecycleOwner = lifecycleOwner;
         }
 
         private void bindTip(Tip tip) {
             tipTitle.setText(tip.getType().toString());
+            StringBuilder stringBuilder = new StringBuilder();
+            switch (tip.getType()) {
+                case QUIZ:
+                    stringBuilder.append("Testez vos connaissances avec no quiz.\n");
+                    break;
+                case WALK:
+                    stringBuilder.append("Allez vous promener un peu.\n");
+                    break;
+                case MUSCLE:
+                    stringBuilder.append("Faites quelques exercices de musculation du dos.\n");
+                    break;
+                case STRETCH:
+                    stringBuilder.append("Faites quelques exercices d'assouplissement du dos.\n");
+                    break;
+                case EXERCISE:
+                    stringBuilder.append("Faites quelques uns des exercices dans la liste.\n");
+                    break;
+                case STILL_EXERCISE:
+                    stringBuilder.append("---\n");
+                    break;
+                case MOVEMENT_EXERCISE:
+                    stringBuilder.append("Bouger un peu votre dos.\n");
+                    break;
+            }
+
+            if (tip.getDuration() != null && tip.getDuration() != 0f) {
+                stringBuilder.append("\nDurée conseillée : " + tip.getDuration());
+            }
+
+            if (tip.getRepetition() != 0) {
+                stringBuilder.append("\nNombre conseillé : " + tip.getRepetition());
+            }
+            tipText.setText(stringBuilder.toString());
         }
     }
 }
