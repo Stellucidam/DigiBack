@@ -130,7 +130,6 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                             @Override
                             public void setDataInPageWithResult(Status status) {
-                                // TODO
                                 Log.d(TAG, status.getStatus() + " " + status.getMessage());
                             }
                 }));

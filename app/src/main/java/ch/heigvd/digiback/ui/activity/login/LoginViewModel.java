@@ -54,7 +54,8 @@ public class LoginViewModel extends ViewModel {
                             new LoginResult(
                                     new LoggedInUserView(
                                             loggedInUser.getUsername(),
-                                            loggedInUser.getToken()))
+                                            loggedInUser.getToken(),
+                                            loggedInUser.getUserId()))
                     );
                     loginRepository.setUser(loggedInUser);
                 } else {

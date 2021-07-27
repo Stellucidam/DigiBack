@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,10 +21,11 @@ public class ArticleFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_article, container, false);
+        ProgressBar progressBar = root.findViewById(R.id.progress_bar);
 
         state = new ViewModelProvider(this, new ArticleViewModelFactory()).get(ArticleViewModel.class);
 
-        ArticleAdapter articleAdapter = new ArticleAdapter(state, this, this);
+        ArticleAdapter articleAdapter = new ArticleAdapter(progressBar, state, this, this);
 
         // LinearLayoutManager manager = new LinearLayoutManager(getContext());
         // RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();

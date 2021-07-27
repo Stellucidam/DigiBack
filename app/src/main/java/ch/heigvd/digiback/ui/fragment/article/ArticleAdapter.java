@@ -3,8 +3,10 @@ package ch.heigvd.digiback.ui.fragment.article;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +32,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private ArticleFragment articleFragment;
 
-    public ArticleAdapter(ArticleViewModel state, LifecycleOwner lifecycleOwner, ArticleFragment articleFragment) {
+    public ArticleAdapter(ProgressBar progressBar, ArticleViewModel state, LifecycleOwner lifecycleOwner, ArticleFragment articleFragment) {
         this.state = state;
         this.lifecycleOwner = lifecycleOwner;
         this.articleFragment = articleFragment;
@@ -39,6 +41,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         state.getArticles().observe(lifecycleOwner, newArticles -> {
             articles.clear();
             articles.addAll(newArticles);
+            if (articles.size() == 0) {
+                progressBar.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+            }
             Collections.sort(articles, (o1, o2) -> Double.compare(o1.getId(), o2.getId()));
             this.notifyDataSetChanged();
         });

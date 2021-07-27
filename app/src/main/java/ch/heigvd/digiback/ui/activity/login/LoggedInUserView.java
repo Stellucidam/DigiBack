@@ -9,10 +9,12 @@ import lombok.Getter;
 public class LoggedInUserView {
     private String username;
     private String token;
+    private Long id;
     //... other data fields that may be accessible to the UI
 
-    LoggedInUserView(String username, String token) {
+    LoggedInUserView(String username, String token, Long id) {
         this.username = username;
         this.token = token;
+        this.id = id;
     }
 }

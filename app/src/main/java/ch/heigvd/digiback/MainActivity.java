@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -24,9 +28,12 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 
 import ch.heigvd.digiback.ui.activity.login.LoginActivity;
+import ch.heigvd.digiback.ui.data.LoginDataSource;
+import ch.heigvd.digiback.ui.data.LoginRepository;
 
 // TODO comments
 public class MainActivity extends AppCompatActivity {
+    private final LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
     private static final String TAG = "MainActivity";
     // private static final int PERMISSION_REQUEST_FINE_LOCATION = 1;
 
@@ -63,10 +70,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         logoutPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_deconnexion, null, false),100,100, true);
-        //settingsPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_settings, null, false),100,100, true);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View v =  navigationView.getHeaderView(0);
+        ImageView imageView = v.findViewById(R.id.nav_image);
+        imageView.setImageDrawable(getDrawable(R.drawable.logo_digiback_tiny));
+        TextView email = v.findViewById(R.id.nav_email);
+        email.setText("");
+        TextView username = v.findViewById(R.id.nav_username);
+        username.setText(loginRepository.getUsername());
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -85,21 +98,21 @@ public class MainActivity extends AppCompatActivity {
                 this, "ch.heigvd.digiback.permission.USE_CONDITIONS") ==
                 PackageManager.PERMISSION_GRANTED) {
             // You can use the API that requires the permission.
-
-            //todo performAction(...);
             Log.d(TAG, "Permission is granted");
         } else if (shouldShowRequestPermissionRationale("...")) {
             // In an educational UI, explain to the user why your app requires this
             // permission for a specific feature to behave as expected. In this UI,
             // include a "cancel" or "no thanks" button that allows the user to
             // continue using your app without granting the permission.
-
-            //todo showInContextUI(...);
             Log.d(TAG, "Permission explanation");
+        } else if (ContextCompat.checkSelfPermission(
+                this, "ch.heigvd.digiback.permission.USE_CONDITIONS") ==
+                PackageManager.PERMISSION_DENIED) {
+            Toast.makeText(this, getString(R.string.permission_denied_explenation), Toast.LENGTH_LONG).show();
+            logout();
+            requestPermissionLauncher.launch("ch.heigvd.digiback.permission.USE_CONDITIONS");
+            Log.d(TAG, "Permission denied");
         } else {
-            // You can directly ask for the permission.
-            // The registered ActivityResultCallback gets the result of this request.
-
             requestPermissionLauncher.launch("ch.heigvd.digiback.permission.USE_CONDITIONS");
             Log.d(TAG, "Ask for permission");
         }
@@ -115,18 +128,7 @@ public class MainActivity extends AppCompatActivity {
             logout();
             return true;
         });
-
-        /* TODO
-        MenuItem settings = menu.findItem(R.id.action_settings);
-        settings.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                settings();
-            }
-        });
-        */
         return true;
-
     }
 
     @Override

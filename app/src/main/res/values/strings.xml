@@ -78,18 +78,22 @@
     <string name="permission_group_label" translatable="false">Permission Group Label</string>
     <string name="permission_group_description" translatable="false">Permission Group Description</string>
     <string name="permission_label">Permission Label</string>
-    <string name="permission_description">Permission Description</string>
+    <string name="permission_description">
+        récolter, sauvegarder et utiliser des données personnelles vous concernant afin de vous conseiller au mieux?
+        Les informations concernées sont les suivantes : nombre de pas que vous faites, niveau de mobilité de votre dos, niveaux de douleurs ressentis.
+        Autorisez-vous DigiBack à utiliser ces informations
+    </string>
     <string name="movement_text">Mouvement</string>
     <string name="start">Commencer</string>
     <string name="stop">Arrêter</string>
     <string name="help">Aide</string>
     <string name="movement_help">
         Pour évaluer votre mobilité, veuillez suivre les instructions suivantes : \n
-         \t 1. \t Choisir un mouvement dans la liste. \n
-         \t 2. \t Clicker sur le bouton pour commencer la mesure. \n
-         \t 3. \t Positionner votre téléphone à plat et à la vérticale sur votre torse. //todo faire schéma \n
-         \t 4. \t Attendre le premier signal sonore. \n
-         \t 5. \t Effectuer le mouvement, vous avez (x secondes) \n
+         \t 1. \t Choisissez un mouvement dans la liste. \n
+         \t 2. \t Cliquez sur le bouton pour commencer la mesure. \n
+         \t 3. \t Positionnez votre téléphone à plat et à la vérticale sur votre torse. \n
+         \t 4. \t Attendez le premier signal sonore. \n
+         \t 5. \t Effectuer le mouvement, vous avez (5 secondes) \n
     </string>
     <string name="validate">Valider</string>
     <string name="cancel">Annuler</string>
@@ -99,6 +103,7 @@
     <string name="register_failed">Enregistrement échoué</string>
     <string name="wrong_confirmation_password">Les deux mots de passes entrés sont différents !</string>
     <string name="mark_as_done" >Fait aujourd\'hui</string>
+    <string name="permission_denied_explenation" >Il est, pour l\'instant, impossible d\'utiliser cette application sans autoriser l\'utilisation de données personnellles.</string>
 
 
 </resources>

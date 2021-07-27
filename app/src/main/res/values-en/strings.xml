@@ -44,7 +44,11 @@
 
     <!-- Permissions -->
     <string name="permission_label">Permission Label</string>
-    <string name="permission_description">Permission Description</string>
+    <string name="permission_description">
+        collect, save and use personal data concerning you in order to give you the best advice?
+        The information concerned is as follows: number of steps you take, level of mobility of your back, levels of pain felt.
+        Do you authorize DigiBack to use this information
+    </string>
     <string name="movement_text">Movement</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
@@ -58,4 +62,5 @@
     <string name="register_failed">Register failed</string>
     <string name="wrong_confirmation_password">The two given password are different !</string>
     <string name="mark_as_done">Done today</string>
+    <string name="permission_denied_explenation">For now, this application is nto functionnal without using personal information.</string>
 </resources>

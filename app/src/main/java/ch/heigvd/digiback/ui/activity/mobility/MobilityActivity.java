@@ -63,7 +63,6 @@ import ch.heigvd.digiback.business.model.Movement;
 import ch.heigvd.digiback.business.model.MovementType;
 import ch.heigvd.digiback.business.model.Status;
 
-// TODO Add self-timer for the measures
 public class MobilityActivity extends AppCompatActivity implements SensorEventListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = "MobilityActivity";
     public static final float CST = 57.2957795f;

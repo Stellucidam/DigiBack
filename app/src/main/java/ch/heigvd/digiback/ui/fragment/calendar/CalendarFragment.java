@@ -107,7 +107,6 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack
-                // TODO set title on fragment (navigation)
                 transaction.replace(R.id.nav_host_fragment, new ExerciseFragment());
                 transaction.addToBackStack(null);
 
@@ -123,7 +122,6 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack
-                // TODO set title on fragment (navigation)
                 transaction.replace(R.id.nav_host_fragment, new QuizFragment());
                 transaction.addToBackStack(null);
 
@@ -159,7 +157,6 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
 
                     @Override
                     public void setDataInPageWithResult(Status status) {
-                        // TODO do something with the data
                         Log.i(TAG, "Sent steps ");
                     }
                 }
