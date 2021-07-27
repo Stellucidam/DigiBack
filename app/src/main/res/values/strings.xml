@@ -93,7 +93,7 @@
          \t 2. \t Cliquez sur le bouton pour commencer la mesure. \n
          \t 3. \t Positionnez votre téléphone à plat et à la vérticale sur votre torse. \n
          \t 4. \t Attendez le premier signal sonore. \n
-         \t 5. \t Effectuer le mouvement, vous avez (5 secondes) \n
+         \t 5. \t Effectuer le mouvement en gardant le téléphone sur votre torse. Vous avez 5 secondes pour le faire \n
     </string>
     <string name="validate">Valider</string>
     <string name="cancel">Annuler</string>

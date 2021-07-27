@@ -69,9 +69,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
     private final TaskRunner runner = new TaskRunner();
 
-    private PopupWindow
-            helpPopUp,
-            validateMovementPopup;
+    private PopupWindow validateMovementPopup;
     private Sensor
             mAccelerometer,
             mMagField;
@@ -84,7 +82,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     private TextView angleInfo;
     private Button
             measureStarter,
-            help,
             sendMeasures,
             cancelMeasures,
             addPain;
@@ -192,11 +189,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         angleInfo = findViewById(R.id.angle);
         back = findViewById(R.id.floating_back_button);
         measureStarter = findViewById(R.id.start_measure);
-        help = findViewById(R.id.help);
-        helpPopUp = new PopupWindow(
-                getLayoutInflater()
-                        .inflate(R.layout.popup_movement_help, null, false),
-                100,100, true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setOnClicks();
@@ -218,7 +210,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         selectedMovementType = MovementType.NONE;
 
         // Self timer part
-        time = (TextView)findViewById(R.id.text_timer);
+        time = findViewById(R.id.text_timer);
     }
 
     @Override
@@ -352,13 +344,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             timer.schedule(new firstTask(), 0,500);
             disable(measureStarter);
             disable(spinner);
-        });
-
-        // Button to see instructions
-        help.setOnClickListener(view -> {
-            helpPopUp.setElevation(10);
-            helpPopUp.showAtLocation(view, Gravity.CENTER, 10, 10);
-            helpPopUp.update(800, 1000);
         });
 
         back.setOnClickListener(view -> {
