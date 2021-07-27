@@ -12,7 +12,7 @@
 
     <!-- Actions -->
     <string name="action_settings">Parametres</string>
-    <string name="action_deconnexion">Deconnexion</string>
+    <string name="action_deconnexion">Déconnexion</string>
 
     <string name="menu_accueil">Accueil</string>
     <string name="text_accueil">Ceci est l\'accueil</string>
@@ -109,6 +109,10 @@
     <string name="radio_maybe_true" >Peut-être vrai</string>
     <string name="radio_not_sure" >Je ne suis pas sûr(e)</string>
     <string name="radio_true" >Vrai</string>
+    <string name="back_state_help" >Sur cette page vous pouvez suivre l\'état de votre dos. Le graphique ci-dessous montre l\'évolution de la mobilité de votre dos (angles) ainsi que l\'évolution des niveau de douleurs ressentis lors des mouvements. Pour évaluer la mobilité de votre dos aujourd\'hui, cliquez sur le bouton en bas de la page.</string>
+    <string name="welcome_start" >Bonjour,</string>
+    <string name="welcome_end" >Vous êtes sur la page d\'accueil. Pour aller sur d\'autre pages, veuillez utiliser le bouton menu en haut à gauche de l\'écran. Pour vous déconnecter, cliquez sur les trois petits points en haut à droite, puis sur \"Deconnexion\".</string>
+    <string name="text_help" >Tous les cadres comme celui-ci avec l\'intitulé \"Aide\" contiennent des informations sur l\'utilisation de l\'application dans la page où ils se situent.</string>
 
 
 </resources>

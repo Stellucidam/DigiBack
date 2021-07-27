@@ -68,4 +68,8 @@
     <string name="radio_maybe_true">Maybe true</string>
     <string name="radio_not_sure">I am not sure</string>
     <string name="radio_true">True</string>
+    <string name="back_state_help">On this page you can follow the condition of your back. The graph below shows the evolution of the mobility of your back (angles) as well as the evolution of the level of pain felt during movements. To assess your back mobility today, click the button at the bottom of the page.</string>
+    <string name="welcome_start">Hello,</string>
+    <string name="welcome_end">You are on the home page. To go to other pages, please use the menu button at the top left of the screen. To disconnect, click on the three small dots at the top right, then on \"Log out\".</string>
+    <string name="text_help">" All frames like this one labeled \"Help\" contain information about the application's use on the page they are on."</string>
 </resources>
