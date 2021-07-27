@@ -93,7 +93,7 @@ public class QuizActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new ScreenSlideQuestionPageFragment(idQuiz, questions.get(position));
+            return new ScreenSlideQuestionPageFragment(idQuiz, questions.get(position), position, questions.size());
         }
 
         @Override

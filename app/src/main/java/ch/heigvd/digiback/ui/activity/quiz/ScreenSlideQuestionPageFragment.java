@@ -27,10 +27,13 @@ public class ScreenSlideQuestionPageFragment extends Fragment {
     private final String TAG = "QuestionPageFragment";
     private final Question question;
     private final Long idQuiz;
+    private final int position, totalQuestions;
 
-    public ScreenSlideQuestionPageFragment(Long idQuiz, Question question) {
+    public ScreenSlideQuestionPageFragment(Long idQuiz, Question question, int position, int totalQuestions) {
         this.question = question;
         this.idQuiz = idQuiz;
+        this.position = position + 1;
+        this.totalQuestions = totalQuestions;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -43,6 +46,8 @@ public class ScreenSlideQuestionPageFragment extends Fragment {
         TextView text = rootView.findViewById(R.id.questions_pager_text);
         text.setText(question.getTitle());
 
+        TextView pageNumber = rootView.findViewById(R.id.page_number);
+        pageNumber.setText("Question " + position + " / " + totalQuestions);
 
         List<RadioButton> buttons = new LinkedList<>();
         buttons.add(rootView.findViewById(R.id.radio_true));

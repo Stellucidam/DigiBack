@@ -53,4 +53,13 @@
             style="?android:textAppearanceMedium"
             android:text="@string/radio_false"/>
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/page_number"
+        android:textColor="@color/colorSecondary"
+        android:textStyle="bold"
+        android:layout_margin="32dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

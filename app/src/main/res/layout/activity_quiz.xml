@@ -21,13 +21,14 @@
 
     <!-- activity_screen_slide.xml -->
     <androidx.viewpager.widget.ViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/questions_pager"
         android:layout_width="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="580dp" />
+        android:layout_height="580dp" >
+    </androidx.viewpager.widget.ViewPager>
+
 
     <!-- Back Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
