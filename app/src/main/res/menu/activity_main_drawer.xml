@@ -11,7 +11,7 @@
             android:title="@string/menu_accueil" />
         <item
             android:id="@+id/nav_calendar"
-            android:icon="@drawable/ic_menu_activite"
+            android:icon="@drawable/ic_menu_calendar"
             android:title="@string/menu_calendar" />
         <item
             android:id="@+id/nav_conseils"
@@ -19,7 +19,7 @@
             android:title="@string/menu_tips" />
         <item
             android:id="@+id/nav_exercice"
-            android:icon="@drawable/ic_menu_exercice"
+            android:icon="@drawable/ic_menu_exercise"
             android:title="@string/menu_exercise" />
         <item
             android:id="@+id/nav_quiz"
