@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import ch.heigvd.digiback.business.api.TaskRunner;
-import ch.heigvd.digiback.business.api.quiz.GetQuiz;
-import ch.heigvd.digiback.business.api.quiz.iOnQuizFetched;
+import ch.heigvd.digiback.business.api.quiz.GetQuizzes;
+import ch.heigvd.digiback.business.api.quiz.iOnQuizzesFetched;
 import ch.heigvd.digiback.business.model.Quiz;
 
 public class QuizViewModel extends ViewModel {
@@ -18,7 +18,7 @@ public class QuizViewModel extends ViewModel {
     private final TaskRunner runner = new TaskRunner();
 
     public QuizViewModel() {
-        runner.executeAsync(new GetQuiz(new iOnQuizFetched() {
+        runner.executeAsync(new GetQuizzes(new iOnQuizzesFetched() {
             @Override
             public void showProgressBar() {
                 return;

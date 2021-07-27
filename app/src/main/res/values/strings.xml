@@ -104,6 +104,11 @@
     <string name="wrong_confirmation_password">Les deux mots de passes entrés sont différents !</string>
     <string name="mark_as_done">Fait aujourd\'hui</string>
     <string name="permission_denied_explenation">Il est, pour l\'instant, impossible d\'utiliser cette application sans autoriser l\'utilisation de données personnellles.</string>
+    <string name="radio_maybe_false" >Peut-être faux</string>
+    <string name="radio_false" >Faux</string>
+    <string name="radio_maybe_true" >Peut-être vrai</string>
+    <string name="radio_not_sure" >Je ne suis pas sûr(e)</string>
+    <string name="radio_true" >Vrai</string>
 
 
 </resources>

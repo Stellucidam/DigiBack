@@ -51,6 +51,7 @@ dependencies {
 
     // graph
     implementation 'com.jjoe64:graphview:4.2.2'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
@@ -86,4 +87,6 @@ dependencies {
 
     // Charts
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
+    implementation 'androidx.viewpager:viewpager:1.0.0'
 }

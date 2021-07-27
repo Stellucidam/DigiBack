@@ -1,0 +1,56 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/questions_pager_text"
+        style="?android:textAppearanceMedium"
+        android:padding="16dp"
+        android:lineSpacingMultiplier="1.2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:id="@+id/answers_group"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        style="?android:textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical">
+        <RadioButton
+            android:id="@+id/radio_true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:textAppearanceMedium"
+            android:text="@string/radio_true"/>
+        <RadioButton
+            android:id="@+id/radio_maybe_true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:textAppearanceMedium"
+            android:text="@string/radio_maybe_true"/>
+        <RadioButton
+            android:id="@+id/radio_not_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:textAppearanceMedium"
+            android:text="@string/radio_not_sure"/>
+        <RadioButton
+            android:id="@+id/radio_maybe_false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:textAppearanceMedium"
+            android:text="@string/radio_maybe_false"/>
+        <RadioButton
+            android:id="@+id/radio_false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:textAppearanceMedium"
+            android:text="@string/radio_false"/>
+    </RadioGroup>
+</LinearLayout>

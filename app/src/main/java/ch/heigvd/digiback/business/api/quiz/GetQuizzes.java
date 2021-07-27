@@ -14,23 +14,21 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import ch.heigvd.digiback.business.model.Question;
 import ch.heigvd.digiback.business.model.Quiz;
 import ch.heigvd.digiback.business.utils.Backend;
 
-public class GetQuiz extends QuizCallable {
-    private final String TAG = "GetQuiz";
-    private final iOnQuizFetched listener;
-    private final Long idQuiz;
+public class GetQuizzes extends QuizzesCallable {
+    private final String TAG = "GetQuizzes";
+    private final iOnQuizzesFetched listener;
 
-    public GetQuiz(Long idQuiz, iOnQuizFetched listener) {
+    public GetQuizzes(iOnQuizzesFetched listener) {
         this.listener = listener;
-        this.idQuiz = idQuiz;
     }
 
+
     @Override
-    public Quiz call() throws Exception {
-        URL url = new URL(Backend.getQuizURL() + idQuiz);
+    public List<Quiz> call() throws Exception {
+        URL url = new URL(Backend.getQuizURL());
         HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
         InputStream is = conn.getInputStream();
         InputStreamReader isr = new InputStreamReader(is);
@@ -42,31 +40,26 @@ public class GetQuiz extends QuizCallable {
             stringBuilder.append(line);
         }
 
-        Quiz quiz = null;
+        String imageURL = "";
+        String title = "";
+        List<Quiz> quizzes = new LinkedList<>();
         Log.d(TAG, stringBuilder.toString());
         try {
-            JSONObject quizJSON = new JSONObject(stringBuilder.toString());
-            List<Question> questions = new LinkedList<>();
-            JSONArray questionArray = quizJSON.getJSONArray("questions");
-            for (int i = 0; i < questionArray.length(); i++) {
-                JSONObject question = questionArray.getJSONObject(i);
-                questions.add(Question.builder()
-                        .idQuestion(question.getLong("idQuestion"))
-                        .title(question.getString("title"))
+            JSONArray quizArray = new JSONArray(stringBuilder.toString());
+            for (int i = 0; i < quizArray.length(); i++) {
+                JSONObject quiz = quizArray.getJSONObject(i);
+                quizzes.add(Quiz.builder()
+                        .title(quiz.getString("title"))
+                        .idQuiz(quiz.getLong("idQuiz"))
                         .build());
             }
-
-            quiz = Quiz.builder()
-                    .title(quizJSON.getString("title"))
-                    .questions(questions)
-                    .build();
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
 
         isr.close();
         br.close();
-        return quiz;
+        return quizzes;
     }
 
     @Override
@@ -77,7 +70,7 @@ public class GetQuiz extends QuizCallable {
     }
 
     @Override
-    public void setDataAfterLoading(Quiz result) {
+    public void setDataAfterLoading(List<Quiz> result) {
         if (listener != null) {
             listener.setDataInPageWithResult(result);
             listener.hideProgressBar();
