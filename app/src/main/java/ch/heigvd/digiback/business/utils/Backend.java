@@ -35,4 +35,8 @@ public class Backend {
     public static String getStatURL() {
         return domain + "stat/user/";
     }
+
+    public static String getQuizURL() {
+        return domain + "quiz/";
+    }
 }

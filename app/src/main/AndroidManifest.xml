@@ -36,7 +36,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.exercise.ExerciseActivity"></activity>
+        <activity android:name=".ui.activity.quiz.QuizActivity"></activity>
+        <activity android:name=".ui.activity.exercise.ExerciseActivity" />
         <activity
             android:name=".ui.activity.login.RegisterActivity"
             android:label="@string/app_name"

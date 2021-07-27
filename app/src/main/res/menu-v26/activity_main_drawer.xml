@@ -21,10 +21,10 @@
             android:id="@+id/nav_exercice"
             android:icon="@drawable/ic_menu_exercice"
             android:title="@string/menu_exercise" />
-        <!--<item
+        <item
             android:id="@+id/nav_quiz"
             android:icon="@drawable/ic_menu_quiz"
-            android:title="@string/menu_quiz" />-->
+            android:title="@string/menu_quiz" />
         <item
             android:id="@+id/nav_etat"
             android:icon="@drawable/ic_menu_etat"
