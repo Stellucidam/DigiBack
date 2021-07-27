@@ -146,10 +146,17 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
                 calculateAngles = false;
                 firstMeasure = true;
 
+                movementPopView = getLayoutInflater()
+                        .inflate(R.layout.popup_movement_validation, null, false);
+                validateMovementPopup = new PopupWindow(
+                        movementPopView,
+                        100,100, true);
+
                 // Validate the movement
                 validateMovementPopup.setElevation(10);
                 validateMovementPopup.showAtLocation(view, Gravity.CENTER, 10, 10);
                 validateMovementPopup.update(800, 1500);
+
                 movementChartView = movementPopView.findViewById(R.id.angles_graph);
                 sendMeasures = movementPopView.findViewById(R.id.validate_measure);
                 cancelMeasures = movementPopView.findViewById(R.id.cancel_measure);
@@ -189,12 +196,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         helpPopUp = new PopupWindow(
                 getLayoutInflater()
                         .inflate(R.layout.popup_movement_help, null, false),
-                100,100, true);
-
-        movementPopView = getLayoutInflater()
-                .inflate(R.layout.popup_movement_validation, null, false);
-        validateMovementPopup = new PopupWindow(
-                movementPopView,
                 100,100, true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -347,6 +348,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         // Button to start the measure
         measureStarter.setOnClickListener(view -> {
             startTime.setValue(System.currentTimeMillis());
+            timer = new Timer();
             timer.schedule(new firstTask(), 0,500);
             disable(measureStarter);
             disable(spinner);
@@ -372,6 +374,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         // OnClicks
         // Validate measures
         sendMeasures.setOnClickListener(view -> {
+            movementChartView.clear();
             // Send measures to backend
             runner.executeAsync(new PostMovement(painLevel,
                     new Movement(
@@ -403,6 +406,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
         // Cancel measures
         cancelMeasures.setOnClickListener(view ->  {
+            movementChartView.clear();
             allAngles.clear();
             validateMovementPopup.dismiss();
         });
@@ -479,6 +483,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setChart() {
+        Log.d(TAG, "Set chart with new values...");
         Cartesian cartesian = AnyChart.line();
 
         cartesian.animation(true);
