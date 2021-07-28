@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.exercise.ExerciseActivity">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <TextView
         android:id="@+id/exercise_title"
         android:layout_width="match_parent"
@@ -33,7 +39,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exercise_instructions_view"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/exercise_image"
         app:layout_constraintVertical_bias="1.0" />
 
+    </LinearLayout>
 
     <!-- Back Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

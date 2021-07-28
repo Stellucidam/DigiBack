@@ -5,6 +5,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +15,9 @@ import java.util.List;
 
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.model.Tip;
+import ch.heigvd.digiback.ui.fragment.calendar.CalendarFragment;
+import ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment;
+import ch.heigvd.digiback.ui.fragment.quiz.QuizFragment;
 
 public class TipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private static final int VIEW_TYPE_TIP = 1;
@@ -71,6 +76,7 @@ public class TipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
 
     private static class TipViewHolder extends RecyclerView.ViewHolder {
         private final TextView tipTitle, tipText;
+        private final CardView tipCard;
         private final LifecycleOwner lifecycleOwner;
         private final TipsFragment tipsFragment;
 
@@ -81,6 +87,7 @@ public class TipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
             this.tipsFragment = tipsFragment;
             tipTitle = itemView.findViewById(R.id.tip_title);
             tipText = itemView.findViewById(R.id.tip_text);
+            tipCard = itemView.findViewById(R.id.tip_card);
             this.lifecycleOwner = lifecycleOwner;
         }
 
@@ -119,6 +126,36 @@ public class TipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
                 stringBuilder.append("\nNombre conseillé : " + tip.getRepetition());
             }
             tipText.setText(stringBuilder.toString());
+            tipCard.setOnClickListener(view -> {
+                if (tipsFragment.getFragmentManager() != null) {
+                    FragmentTransaction transaction = tipsFragment.getFragmentManager().beginTransaction();
+                    switch (tip.getType()) {
+                        case QUIZ:
+                            // Replace whatever is in the fragment_container view with this fragment,
+                            // and add the transaction to the back stack
+                            transaction.replace(R.id.nav_host_fragment, new QuizFragment());
+                            break;
+                        case WALK:
+                            // Replace whatever is in the fragment_container view with this fragment,
+                            // and add the transaction to the back stack
+                            transaction.replace(R.id.nav_host_fragment, new CalendarFragment());
+                            break;
+                        case MUSCLE:
+                        case STRETCH:
+                        case STILL_EXERCISE:
+                        case MOVEMENT_EXERCISE:
+                        case EXERCISE:
+                            // Replace whatever is in the fragment_container view with this fragment,
+                            // and add the transaction to the back stack
+                            transaction.replace(R.id.nav_host_fragment, new ExerciseFragment());
+                            break;
+                    }
+
+                    transaction.addToBackStack(null);
+                    // Commit the transaction
+                    transaction.commit();
+                }
+            });
         }
     }
 }
