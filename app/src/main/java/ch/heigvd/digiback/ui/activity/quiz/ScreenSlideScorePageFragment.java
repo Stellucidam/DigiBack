@@ -1,6 +1,5 @@
 package ch.heigvd.digiback.ui.activity.quiz;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -49,11 +48,6 @@ public class ScreenSlideScorePageFragment extends Fragment {
             @Override
             public void setDataInPageWithResult(Score score) {
                 scoreValue.setText(getString(R.string.score) + " : " + score.toString());
-                if (score.getScore() >= score.getTotal() * 2 / 3) {
-                    scoreValue.setTextColor(Color.RED);
-                } else if (score.getScore() >= score.getTotal() / 3) {
-                    scoreValue.setTextColor(Color.rgb(238, 197, 132));
-                }
             }
         }));
 
