@@ -61,7 +61,7 @@
     <string name="prompt_username">Username</string>
     <string name="register_failed">Register failed</string>
     <string name="wrong_confirmation_password">The two given password are different !</string>
-    <string name="mark_as_done">Done today</string>
+    <string name="mark_as_done">Mark as done</string>
     <string name="permission_denied_explenation">For now, this application is nto functionnal without using personal information.</string>
     <string name="radio_maybe_false">Maybe false</string>
     <string name="radio_false">False</string>
@@ -77,4 +77,8 @@
     <string name="left_tilt_help">At the beep, arch your back as low as possible (without straining it) to the left.</string>
     <string name="back_tilt_help">At the beep, arch your back as low as possible (without straining it) to the back.</string>
     <string name="front_tilt_help">At the beep, arch your back as low as possible (without straining it) to the front.</string>
+    <string name="mark_exercise_as_done_again">Do the exercise again</string>
+    <string name="done">Done</string>
+    <string name="nbr_times">times</string>
+    <string name="not_done">Not done</string>
 </resources>

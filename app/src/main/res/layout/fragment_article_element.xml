@@ -44,9 +44,8 @@
                     android:layout_marginRight="8dp"
                     android:layout_toEndOf="@+id/info_image"
                     android:layout_toRightOf="@+id/info_image"
-                    android:text="Title"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    style="?android:textAppearanceMedium"/>
 
                 <TextView
                     android:id="@+id/info_duration"

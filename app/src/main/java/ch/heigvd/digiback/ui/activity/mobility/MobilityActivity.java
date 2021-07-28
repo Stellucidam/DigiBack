@@ -83,7 +83,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     private View movementPopView;
     private AnyChartView movementChartView;
     private FloatingActionButton back;
-    private TextView angleInfo;
     private Button
             measureStarter,
             sendMeasures,
@@ -228,7 +227,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
         view = findViewById(R.id.movement_spinner).getRootView();
         spinner = findViewById(R.id.movement_spinner);
-        angleInfo = findViewById(R.id.angle);
         back = findViewById(R.id.floating_back_button);
         measureStarter = findViewById(R.id.start_measure);
 
@@ -312,8 +310,6 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
                 case NONE:
                     break;
             }
-
-            angleInfo.setText("Nbr d'angles : " + allAngles.size());
         }
     }
 

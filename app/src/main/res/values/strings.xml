@@ -102,7 +102,7 @@
     <string name="angles" translatable="false">Angles</string>
     <string name="register_failed">Enregistrement échoué</string>
     <string name="wrong_confirmation_password">Les deux mots de passes entrés sont différents !</string>
-    <string name="mark_as_done">Fait aujourd\'hui</string>
+    <string name="mark_as_done">Marquer comme fait</string>
     <string name="permission_denied_explenation">Il est, pour l\'instant, impossible d\'utiliser cette application sans autoriser l\'utilisation de données personnellles.</string>
     <string name="radio_maybe_false" >Peut-être faux</string>
     <string name="radio_false" >Faux</string>
@@ -118,8 +118,12 @@
     <string name="left_tilt_help" >Au signal sonore, courbez votre dos aussi bas que possible (sans forcer) sur la gauche.</string>
     <string name="back_tilt_help" >Au signal sonore, courbez votre dos en arrière aussi bas que possible (sans forcer).</string>
     <string name="front_tilt_help" >Au signal sonore, courbez votre dos en avant aussi bas que possible (sans forcer).</string>
-    <string name="left_rotation_help" />
-    <string name="right_rotation_help" />
+    <string name="left_rotation_help" translatable="false">...</string>
+    <string name="right_rotation_help" translatable="false">...</string>
+    <string name="mark_exercise_as_done_again" >Refaire l\'exercice</string>
+    <string name="done" >Fait</string>
+    <string name="nbr_times" >fois</string>
+    <string name="not_done" >Pas fait</string>
 
 
 </resources>
