@@ -113,6 +113,13 @@
     <string name="welcome_start" >Bonjour,</string>
     <string name="welcome_end" >Vous êtes sur la page d\'accueil. Pour aller sur d\'autre pages, veuillez utiliser le bouton menu en haut à gauche de l\'écran. Pour vous déconnecter, cliquez sur les trois petits points en haut à droite, puis sur \"Deconnexion\".</string>
     <string name="text_help" >Tous les cadres comme celui-ci avec l\'intitulé \"Aide\" contiennent des informations sur l\'utilisation de l\'application dans la page où ils se situent.</string>
+    <string name="help_quiz" >Pour passer d\'une question à l\'autre, il vous suffit de les glisser sur le côté.</string>
+    <string name="right_tilt_help" >Au signal sonore, courbez votre dos aussi bas que possible (sans forcer) sur la droite.</string>
+    <string name="left_tilt_help" >Au signal sonore, courbez votre dos aussi bas que possible (sans forcer) sur la gauche.</string>
+    <string name="back_tilt_help" >Au signal sonore, courbez votre dos en arrière aussi bas que possible (sans forcer).</string>
+    <string name="front_tilt_help" >Au signal sonore, courbez votre dos en avant aussi bas que possible (sans forcer).</string>
+    <string name="left_rotation_help" />
+    <string name="right_rotation_help" />
 
 
 </resources>

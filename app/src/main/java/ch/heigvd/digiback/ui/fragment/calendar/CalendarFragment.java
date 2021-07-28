@@ -236,6 +236,11 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
             day.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
             day.setText(dayAbbreviationFormat.format(calendar.getTime()));
 
+            if (calendar.getTime().getDay() == Calendar.getInstance().getTime().getDay()) {
+                day.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
+                date.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
+            }
+
             if (calendar.getTime().getDay() == selectedDay.getDay()) {
                 day.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 date.setTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent));

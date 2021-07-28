@@ -21,16 +21,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:textColor="@color/colorSecondary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            style="?android:textAppearanceSmall" />
 
         <TextView
             android:id="@+id/instruction_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            style="?android:textAppearanceSmall" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

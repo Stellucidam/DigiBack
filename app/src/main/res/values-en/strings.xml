@@ -72,4 +72,9 @@
     <string name="welcome_start">Hello,</string>
     <string name="welcome_end">You are on the home page. To go to other pages, please use the menu button at the top left of the screen. To disconnect, click on the three small dots at the top right, then on \"Log out\".</string>
     <string name="text_help">" All frames like this one labeled \"Help\" contain information about the application's use on the page they are on."</string>
+    <string name="help_quiz">" To move from one question to another, just slide them to the side."</string>
+    <string name="right_tilt_help">At the beep, arch your back as low as possible (without straining it) to the right.</string>
+    <string name="left_tilt_help">At the beep, arch your back as low as possible (without straining it) to the left.</string>
+    <string name="back_tilt_help">At the beep, arch your back as low as possible (without straining it) to the back.</string>
+    <string name="front_tilt_help">At the beep, arch your back as low as possible (without straining it) to the front.</string>
 </resources>

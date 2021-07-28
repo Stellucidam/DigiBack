@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.MutableLiveData;
 
 import com.anychart.AnyChart;
@@ -76,6 +77,9 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
     private SensorManager mSensorManager;
     private Spinner spinner;
 
+    private CardView movementHelpCard;
+    private TextView movementHelp;
+
     private View movementPopView;
     private AnyChartView movementChartView;
     private FloatingActionButton back;
@@ -86,7 +90,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             cancelMeasures,
             addPain;
 
-    private MovementType selectedMovementType;
+    private MutableLiveData<MovementType> selectedMovementType = new MutableLiveData<>(MovementType.NONE);
     private LinkedList<Float> allAngles = new LinkedList<>();
     private boolean
             calculateAngles = false,
@@ -184,6 +188,44 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
 
         setContentView(R.layout.activity_mobility);
 
+        // HELP
+        movementHelpCard = findViewById(R.id.card_view_movement_help);
+        movementHelpCard.setVisibility(View.GONE);
+        movementHelp = findViewById(R.id.movement_help_content);
+        movementHelp.setText("");
+        selectedMovementType.observe(this, newType -> {
+            switch (newType) {
+                case RIGHT_TILT:
+                    movementHelpCard.setVisibility(View.VISIBLE);
+                    movementHelp.setText(getString(R.string.right_tilt_help));
+                    break;
+                case LEFT_TILT:
+                    movementHelpCard.setVisibility(View.VISIBLE);
+                    movementHelp.setText(getString(R.string.left_tilt_help));
+                    break;
+                case NONE:
+                    movementHelpCard.setVisibility(View.GONE);
+                    movementHelp.setText("");
+                    break;
+                case BACK_TILT:
+                    movementHelpCard.setVisibility(View.VISIBLE);
+                    movementHelp.setText(getString(R.string.back_tilt_help));
+                    break;
+                case FRONT_TILT:
+                    movementHelpCard.setVisibility(View.VISIBLE);
+                    movementHelp.setText(getString(R.string.front_tilt_help));
+                    break;
+                case LEFT_ROTATION:
+                    movementHelpCard.setVisibility(View.VISIBLE);
+                    movementHelp.setText(getString(R.string.left_rotation_help));
+                    break;
+                case RIGHT_ROTATION:
+                    movementHelpCard.setVisibility(View.VISIBLE);
+                    movementHelp.setText(getString(R.string.right_rotation_help));
+                    break;
+            }
+        });
+
         view = findViewById(R.id.movement_spinner).getRootView();
         spinner = findViewById(R.id.movement_spinner);
         angleInfo = findViewById(R.id.angle);
@@ -207,10 +249,9 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        selectedMovementType = MovementType.NONE;
-
         // Self timer part
         time = findViewById(R.id.text_timer);
+
     }
 
     @Override
@@ -240,7 +281,11 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             mags = null;
             accels = null;
 
-            switch (selectedMovementType) {
+            MovementType mt = selectedMovementType.getValue();
+            if (mt == null) {
+                mt = MovementType.NONE;
+            }
+            switch (mt) {
                 case FRONT_TILT:
                     if (firstMeasure) {
                         max = pitch;
@@ -297,19 +342,19 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
         Log.i(TAG, "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString());
         switch (pos) {
             case 1:
-                selectedMovementType = MovementType.FRONT_TILT;
+                selectedMovementType.postValue(MovementType.FRONT_TILT);
                 enable(measureStarter);
                 break;
             case 2:
-                selectedMovementType = MovementType.RIGHT_TILT;
+                selectedMovementType.postValue(MovementType.RIGHT_TILT);
                 enable(measureStarter);
                 break;
             case 3:
-                selectedMovementType = MovementType.LEFT_TILT;
+                selectedMovementType.postValue(MovementType.LEFT_TILT);
                 enable(measureStarter);
                 break;
             default:
-                selectedMovementType = MovementType.NONE;
+                selectedMovementType.postValue(MovementType.NONE);
                 disable(measureStarter);
                 break;
         }
@@ -363,7 +408,7 @@ public class MobilityActivity extends AppCompatActivity implements SensorEventLi
             // Send measures to backend
             runner.executeAsync(new PostMovement(painLevel,
                     new Movement(
-                            selectedMovementType,
+                            selectedMovementType.getValue(),
                             new Date(Calendar.getInstance().getTime().getTime()),
                             allAngles),
                     new iOnStatusFetched() {

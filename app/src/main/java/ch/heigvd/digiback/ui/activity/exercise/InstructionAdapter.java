@@ -27,12 +27,15 @@ public class InstructionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private ExerciseActivity exerciseActivity;
 
-    public InstructionAdapter(Long exerciseId, InstructionViewModel state, LifecycleOwner lifecycleOwner, ExerciseActivity exerciseActivity) {
+    public InstructionAdapter(
+            Long exerciseId,
+            InstructionViewModel state,
+            LifecycleOwner lifecycleOwner,
+            ExerciseActivity exerciseActivity) {
         this.state = state;
         this.lifecycleOwner = lifecycleOwner;
         this.exerciseActivity = exerciseActivity;
         setHasStableIds(true);
-
         state.getInstructionsFrom(exerciseId);
 
         state.getInstructions().observe(lifecycleOwner, newInstructions -> {
