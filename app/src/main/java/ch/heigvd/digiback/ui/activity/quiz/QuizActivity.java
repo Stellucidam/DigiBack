@@ -94,7 +94,7 @@ public class QuizActivity extends AppCompatActivity {
 
         answers.observe(this, newAnswers -> {
             questions.observe(this, newQuestions -> {
-                pagerAdapter = new ScreenSlidePagerAdapter(idQuiz, answers, newQuestions, getSupportFragmentManager());
+                pagerAdapter = new ScreenSlidePagerAdapter(idQuiz, titleQuiz, answers, newQuestions, getSupportFragmentManager());
                 questionsPager.setAdapter(pagerAdapter);
             });
         });
@@ -111,9 +111,12 @@ public class QuizActivity extends AppCompatActivity {
         private List<Question> questions;
         private MutableLiveData<Map<Long, QuestionAnswer>> answers;
         private final Long idQuiz;
+        private final String quizTitle;
+        private final String TAG = "ScreenSlidePagerAdapter";
 
         public ScreenSlidePagerAdapter(
                 Long idQuiz,
+                String quizTitle,
                 MutableLiveData<Map<Long, QuestionAnswer>> answers,
                 List<Question> questions,
                 FragmentManager fm) {
@@ -121,20 +124,41 @@ public class QuizActivity extends AppCompatActivity {
             this.questions = questions;
             this.answers = answers;
             this.idQuiz = idQuiz;
+            this.quizTitle = quizTitle;
         }
 
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public Fragment getItem(int position) {
             if (position < questions.size()) {
-                return new ScreenSlideQuestionPageFragment(
-                        idQuiz,
-                        answers.getValue().getOrDefault(questions.get(position).getIdQuestion(), QuestionAnswer.NONE),
-                        questions.get(position),
-                        position,
-                        questions.size());
+                if (!quizTitle.equals("STarT Back Screening Tool")) {
+                    return new ScreenSlideQuestionPageFragment(
+                            idQuiz,
+                            answers.getValue().getOrDefault(questions.get(position).getIdQuestion(), QuestionAnswer.NONE),
+                            questions.get(position),
+                            position,
+                            questions.size());
+                } else {
+                    if (questions.get(position).getTitle().equals("Globalement, à quel point votre mal de dos vous a-t-il gêné(e) au cours des 2 dernières semaines ?")) {
+                        return new StateSpecialQuestionPageFragment(
+                                idQuiz,
+                                answers.getValue().getOrDefault(questions.get(position).getIdQuestion(), QuestionAnswer.NONE),
+                                questions.get(position),
+                                position,
+                                questions.size());
+                    }
+                    return new StateQuestionPageFragment(
+                            idQuiz,
+                            answers.getValue().getOrDefault(questions.get(position).getIdQuestion(), QuestionAnswer.NONE),
+                            questions.get(position),
+                            position,
+                            questions.size());
+                }
             } else {
-                return new ScreenSlideScorePageFragment(idQuiz);
+                if (!quizTitle.equals("STarT Back Screening Tool")) {
+                    return new ScreenSlideScorePageFragment(idQuiz);
+                }
+                return new StateScorePageFragment(idQuiz);
             }
         }
 
