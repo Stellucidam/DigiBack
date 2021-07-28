@@ -65,19 +65,19 @@ public class StateSpecialQuestionPageFragment extends Fragment {
         for (int i = 0; i < buttons.size(); i++) {
             switch (i) {
                 case 0:
-                    buttons.get(i).setText(getString(R.string.not_at_all));
+                    buttons.get(i).setText(getString(R.string.extremely));
                     break;
                 case 1:
-                    buttons.get(i).setText(getString(R.string.a_bit));
+                    buttons.get(i).setText(getString(R.string.a_lot));
                     break;
                 case 2:
                     buttons.get(i).setText(getString(R.string.moderately));
                     break;
                 case 3:
-                    buttons.get(i).setText(getString(R.string.a_lot));
+                    buttons.get(i).setText(getString(R.string.a_bit));
                     break;
                 case 4:
-                    buttons.get(i).setText(getString(R.string.extremely));
+                    buttons.get(i).setText(getString(R.string.not_at_all));
                     break;
             }
             buttons.get(i).setOnClickListener(this::onRadioButtonClicked);

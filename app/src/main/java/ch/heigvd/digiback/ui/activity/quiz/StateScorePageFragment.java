@@ -60,7 +60,7 @@ public class StateScorePageFragment extends Fragment {
                             comment = getString(R.string.state_high);
                         }
                     }
-                    scoreValue.setText(getString(R.string.score) + " : " + score.toString() + "\n" + comment);
+                    scoreValue.setText(comment);
                 }
             }
         }));
