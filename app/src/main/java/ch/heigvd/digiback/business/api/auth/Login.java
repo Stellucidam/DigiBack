@@ -67,7 +67,6 @@ public class Login extends AuthCallable {
             }
             result = out.toString();
             Log.i(TAG, "Reading results...");
-            Log.d(TAG, result);
         } catch (Exception e) {
             Log.e(TAG + " line 69", e.getMessage());
         }

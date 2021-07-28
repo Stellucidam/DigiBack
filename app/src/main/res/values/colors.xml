@@ -9,6 +9,8 @@
     <color name="colorSecondaryLight">#A6C5AB</color>
     <color name="colorSecondaryLightTransparent">#5BEFFBF1</color>
 
+    <color name="colorAccentRedish">#E16661</color>
+
     <color name="colorAccent">#EEC584</color>
     <color name="white">#FFFFFF</color>
 

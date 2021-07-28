@@ -81,4 +81,5 @@
     <string name="done">Done</string>
     <string name="nbr_times">times</string>
     <string name="not_done">Not done</string>
+    <string name="help_score">"The score tells you how much you know about the back. The higher the score, the more false beliefs there are on the back. "</string>
 </resources>

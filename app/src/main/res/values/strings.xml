@@ -124,6 +124,8 @@
     <string name="done" >Fait</string>
     <string name="nbr_times" >fois</string>
     <string name="not_done" >Pas fait</string>
+    <string name="score" translatable="false" >Score</string>
+    <string name="help_score" >"Le score vous indique a quel point vous êtes renseigné sur le dos. Plus le score est haut, plus il y a de croyances négatives sur le dos. "</string>
 
 
 </resources>

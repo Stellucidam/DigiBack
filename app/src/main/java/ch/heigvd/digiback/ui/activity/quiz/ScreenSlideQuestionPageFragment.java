@@ -25,11 +25,18 @@ import ch.heigvd.digiback.business.model.Status;
 
 public class ScreenSlideQuestionPageFragment extends Fragment {
     private final String TAG = "QuestionPageFragment";
+    private final QuestionAnswer answer;
     private final Question question;
     private final Long idQuiz;
     private final int position, totalQuestions;
 
-    public ScreenSlideQuestionPageFragment(Long idQuiz, Question question, int position, int totalQuestions) {
+    public ScreenSlideQuestionPageFragment(
+            Long idQuiz,
+            QuestionAnswer answer,
+            Question question,
+            int position,
+            int totalQuestions) {
+        this.answer = answer;
         this.question = question;
         this.idQuiz = idQuiz;
         this.position = position + 1;
@@ -50,13 +57,32 @@ public class ScreenSlideQuestionPageFragment extends Fragment {
         pageNumber.setText("Question " + position + " / " + totalQuestions);
 
         List<RadioButton> buttons = new LinkedList<>();
-        buttons.add(rootView.findViewById(R.id.radio_true));
-        buttons.add(rootView.findViewById(R.id.radio_maybe_true));
-        buttons.add(rootView.findViewById(R.id.radio_maybe_false));
-        buttons.add(rootView.findViewById(R.id.radio_false));
-        buttons.add(rootView.findViewById(R.id.radio_not_sure));
+        buttons.add(rootView.findViewById(R.id.radio_true)); // 0
+        buttons.add(rootView.findViewById(R.id.radio_maybe_true));// 1
+        buttons.add(rootView.findViewById(R.id.radio_maybe_false));// 2
+        buttons.add(rootView.findViewById(R.id.radio_false));// 3
+        buttons.add(rootView.findViewById(R.id.radio_not_sure));// 4
         buttons.forEach(button -> button.setOnClickListener(this::onRadioButtonClicked));
 
+        switch (answer) {
+            case NONE:
+                break;
+            case FALSE:
+                buttons.get(3).toggle();
+                break;
+            case MAYBE_FALSE:
+                buttons.get(2).toggle();
+                break;
+            case NOT_SURE:
+                buttons.get(4).toggle();
+                break;
+            case MAYBE_TRUE:
+                buttons.get(1).toggle();
+                break;
+            case TRUE:
+                buttons.get(0).toggle();
+                break;
+        }
 
         return rootView;
     }
