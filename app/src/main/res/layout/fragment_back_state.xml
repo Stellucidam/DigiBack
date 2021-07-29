@@ -61,15 +61,6 @@
             </androidx.cardview.widget.CardView>
             <!-- HELP end -->
 
-            <com.anychart.AnyChartView
-                android:id="@+id/angle_evolution"
-                app:layout_constraintStart_toStartOf="parent"
-                android:padding="8dp"
-                android:layout_margin="8dp"
-                android:layout_width="350dp"
-                android:layout_height="500dp"
-                />
-
             <Button
                 android:id="@+id/evaluate_mobility"
                 android:layout_width="wrap_content"
@@ -80,15 +71,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/angle_evolution"
                 android:textColor="@color/white"
                 android:text="@string/evaluate_mobility" />
+
+            <com.anychart.AnyChartView
+                android:id="@+id/angle_evolution"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="8dp"
+                android:layout_margin="8dp"
+                android:layout_width="350dp"
+                android:layout_height="500dp"
+                >
+
+                <ProgressBar
+                    android:layout_gravity="center"
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </com.anychart.AnyChartView>
+
         </LinearLayout>
     </ScrollView>
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

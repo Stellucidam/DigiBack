@@ -30,7 +30,7 @@
             android:id="@+id/tip_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:layout_margin="8dp"
             android:textSize="16sp" />
     </LinearLayout>

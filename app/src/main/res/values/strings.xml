@@ -111,7 +111,7 @@
     <string name="radio_true" >Vrai</string>
     <string name="back_state_help" >Sur cette page vous pouvez suivre l\'état de votre dos. Le graphique ci-dessous montre l\'évolution de la mobilité de votre dos (angles) ainsi que l\'évolution des niveau de douleurs ressentis lors des mouvements. Pour évaluer la mobilité de votre dos aujourd\'hui, cliquez sur le bouton en bas de la page.</string>
     <string name="welcome_start" >Bonjour,</string>
-    <string name="welcome_end" >Vous êtes sur la page d\'accueil. Pour aller sur d\'autre pages, veuillez utiliser le bouton menu en haut à gauche de l\'écran. Pour vous déconnecter, cliquez sur les trois petits points en haut à droite, puis sur \"Deconnexion\".</string>
+    <string name="welcome_end" >Vous êtes sur la page d\'accueil. Pour aller sur d\'autre pages, veuillez utiliser le menu en haut à gauche de l\'écran. Pour vous déconnecter, cliquez sur les trois petits points en haut à droite, puis sur \"Deconnexion\".</string>
     <string name="text_help" >Tous les cadres comme celui-ci avec l\'intitulé \"Aide\" contiennent des informations sur l\'utilisation de l\'application dans la page où ils se situent.</string>
     <string name="help_quiz" >Pour passer d\'une question à l\'autre, il vous suffit de les glisser sur le côté.</string>
     <string name="right_tilt_help" >Au signal sonore, courbez votre dos aussi bas que possible (sans forcer) sur la droite.</string>

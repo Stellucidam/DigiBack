@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import ch.heigvd.digiback.MainActivity;
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.api.TaskRunner;
 import ch.heigvd.digiback.business.api.activity.GetActivity;
@@ -109,6 +110,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
                 // and add the transaction to the back stack
                 transaction.replace(R.id.nav_host_fragment, new ExerciseFragment());
                 transaction.addToBackStack(null);
+                ((MainActivity)getActivity()).getToolbar().setTitle(R.string.menu_exercise);
 
                 // Commit the transaction
                 transaction.commit();
@@ -124,6 +126,7 @@ public class CalendarFragment extends Fragment implements SensorEventListener {
                 // and add the transaction to the back stack
                 transaction.replace(R.id.nav_host_fragment, new QuizFragment());
                 transaction.addToBackStack(null);
+                ((MainActivity)getActivity()).getToolbar().setTitle(R.string.menu_quiz);
 
                 // Commit the transaction
                 transaction.commit();

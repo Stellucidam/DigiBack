@@ -30,6 +30,7 @@ import com.google.android.material.navigation.NavigationView;
 import ch.heigvd.digiback.ui.activity.login.LoginActivity;
 import ch.heigvd.digiback.ui.data.LoginDataSource;
 import ch.heigvd.digiback.ui.data.LoginRepository;
+import lombok.Getter;
 
 // TODO comments
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private PopupWindow logoutPopup;
+
+    @Getter
+    private Toolbar toolbar;
     //private PopupWindow settingsPopup;
 
     // Register the permissions callback, which handles the user's response to the
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         askPermission();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         logoutPopup = new PopupWindow(getLayoutInflater().inflate(R.layout.popup_deconnexion, null, false),100,100, true);

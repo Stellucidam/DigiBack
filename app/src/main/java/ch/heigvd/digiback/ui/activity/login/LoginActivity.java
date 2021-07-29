@@ -133,4 +133,9 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("error", errorString);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+    }
 }

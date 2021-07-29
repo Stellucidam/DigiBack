@@ -153,8 +153,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Log.d(TAG, "Failed ");
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra("error", getString(errorString));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

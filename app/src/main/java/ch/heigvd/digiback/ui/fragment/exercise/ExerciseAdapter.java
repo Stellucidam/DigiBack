@@ -77,6 +77,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((ExerciseViewHolder) holder).bindExercise(exercises.get(position));
@@ -171,7 +172,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                                             Toast.LENGTH_LONG).show();
                                     doExercise.setText(exerciseFragment.getString(R.string.mark_exercise_as_done_again));
                                     doExercise.setBackgroundColor(exerciseFragment.getContext().getResources().getColor(R.color.colorAccent));
-                                    int i = (int) doneExercises.getValue().stream().filter(ex -> ex.equals(exercise.getId())).count() + 1;
+                                    doneExercises.getValue().add(exercise.getId());
+                                    int i = (int) doneExercises.getValue().stream().filter(ex -> ex.equals(exercise.getId())).count();
                                     doneXTimes.setText(exerciseFragment.getString(R.string.done) +
                                             " " + i + " " + exerciseFragment.getString(R.string.nbr_times));
                                 }
@@ -179,7 +181,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }));
             });
             exerciseTitle.setText(exercise.getTitle());
-            exercise.getImageBM().observe(lifecycleOwner, exerciseImage::setImageBitmap);
+            String imageName = "exercise_" + exercise.getId();
+            exerciseImage.setImageDrawable(exerciseFragment.getActivity()
+                    .getResources()
+                    .getDrawable(exerciseFragment.getActivity()
+                            .getResources()
+                            .getIdentifier(imageName, "mipmap", exerciseFragment.getActivity().getPackageName())));
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.LinkedList;
 import java.util.List;
 
+import ch.heigvd.digiback.MainActivity;
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.model.Tip;
 import ch.heigvd.digiback.ui.fragment.calendar.CalendarFragment;
@@ -96,7 +97,7 @@ public class TipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
             StringBuilder stringBuilder = new StringBuilder();
             switch (tip.getType()) {
                 case QUIZ:
-                    stringBuilder.append("Testez vos connaissances avec no quiz.\n");
+                    stringBuilder.append("Testez vos connaissances avec nos quiz.\n");
                     break;
                 case WALK:
                     stringBuilder.append("Allez vous promener un peu.\n");
@@ -134,11 +135,13 @@ public class TipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
                             // Replace whatever is in the fragment_container view with this fragment,
                             // and add the transaction to the back stack
                             transaction.replace(R.id.nav_host_fragment, new QuizFragment());
+                            ((MainActivity)tipsFragment.getActivity()).getToolbar().setTitle(R.string.menu_quiz);
                             break;
                         case WALK:
                             // Replace whatever is in the fragment_container view with this fragment,
                             // and add the transaction to the back stack
                             transaction.replace(R.id.nav_host_fragment, new CalendarFragment());
+                            ((MainActivity)tipsFragment.getActivity()).getToolbar().setTitle(R.string.menu_calendar);
                             break;
                         case MUSCLE:
                         case STRETCH:
@@ -148,6 +151,7 @@ public class TipAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
                             // Replace whatever is in the fragment_container view with this fragment,
                             // and add the transaction to the back stack
                             transaction.replace(R.id.nav_host_fragment, new ExerciseFragment());
+                            ((MainActivity)tipsFragment.getActivity()).getToolbar().setTitle(R.string.menu_exercise);
                             break;
                     }
 

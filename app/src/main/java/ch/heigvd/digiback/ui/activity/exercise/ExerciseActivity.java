@@ -34,7 +34,11 @@ public class ExerciseActivity extends AppCompatActivity {
 
         InstructionAdapter instructionAdapter = new InstructionAdapter(exerciseId, instructionViewModel, this, this);
         ImageView exerciseImage = findViewById(R.id.exercise_image);
-        // TODO set exercise image
+        String imageName = "exercise_" + exerciseId;
+        exerciseImage.setImageDrawable(getResources()
+                .getDrawable(getResources()
+                        .getIdentifier(imageName, "mipmap", getPackageName())));
+
         RecyclerView exerciseList = findViewById(R.id.exercise_instructions_view);
         exerciseList.setLayoutManager(new LinearLayoutManager(this));
         exerciseList.setAdapter(instructionAdapter);
