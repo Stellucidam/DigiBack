@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.calendar.CalendarFragment">
+    tools:context=".ui.CalendarFragment">
 
     <androidx.cardview.widget.CardView
             android:id="@+id/activity_card"

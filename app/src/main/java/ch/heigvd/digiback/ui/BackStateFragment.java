@@ -1,9 +1,8 @@
-package ch.heigvd.digiback.ui.fragment.back_state;
+package ch.heigvd.digiback.ui;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -46,13 +44,9 @@ public class BackStateFragment extends Fragment {
     private MutableLiveData<Stat> stats = new MutableLiveData<>();
     private Button evaluateMobility;
 
-    private BackStateViewModel backStateViewModel;
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        backStateViewModel =
-                ViewModelProviders.of(this).get(BackStateViewModel.class);
         View root = inflater.inflate(R.layout.fragment_back_state, container, false);
 
         angleEvolutionChart = root.findViewById(R.id.angle_evolution);

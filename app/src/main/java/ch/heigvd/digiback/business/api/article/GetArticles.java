@@ -17,7 +17,7 @@ import ch.heigvd.digiback.business.model.Article;
 import ch.heigvd.digiback.business.utils.Backend;
 
 
-public class GetArticles extends ArticleClient {
+public class GetArticles extends ArticleCallable {
     private final iOnArticlesFetched listener; //listener in fragment that shows and hides ProgressBar
 
     public GetArticles(iOnArticlesFetched onArticlesFetched) {

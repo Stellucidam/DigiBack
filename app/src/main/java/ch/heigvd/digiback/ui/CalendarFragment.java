@@ -1,4 +1,4 @@
-package ch.heigvd.digiback.ui.fragment.calendar;
+package ch.heigvd.digiback.ui;
 
 import android.content.Context;
 import android.content.Intent;

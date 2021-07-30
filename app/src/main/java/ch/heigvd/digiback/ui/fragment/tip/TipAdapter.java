@@ -16,7 +16,7 @@ import java.util.List;
 import ch.heigvd.digiback.MainActivity;
 import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.model.Tip;
-import ch.heigvd.digiback.ui.fragment.calendar.CalendarFragment;
+import ch.heigvd.digiback.ui.CalendarFragment;
 import ch.heigvd.digiback.ui.fragment.exercise.ExerciseFragment;
 import ch.heigvd.digiback.ui.fragment.quiz.QuizFragment;
 
