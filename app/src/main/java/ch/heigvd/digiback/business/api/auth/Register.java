@@ -19,8 +19,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
+import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.utils.Backend;
-import ch.heigvd.digiback.ui.data.model.LoggedInUser;
+import ch.heigvd.digiback.ui.activity.login.LoggedInUserView;
+import ch.heigvd.digiback.ui.activity.login.LoginResult;
 
 public class Register extends AuthCallable {
     private static final String TAG = "Register";
@@ -36,7 +38,7 @@ public class Register extends AuthCallable {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public LoggedInUser call() throws Exception {
+    public LoginResult call() throws Exception {
         Log.i(TAG, "Register called...");
         URL url = new URL(Backend.getAuthURL() + "register");
         URLConnection con = url.openConnection();
@@ -61,6 +63,7 @@ public class Register extends AuthCallable {
         // Do something with http.getInputStream()
 
         Log.d(TAG, http.getResponseMessage());
+
         String result = null;
         try(InputStream is = http.getInputStream()) {
             int bufferSize = 1024;
@@ -71,10 +74,21 @@ public class Register extends AuthCallable {
                 out.append(buffer, 0, numRead);
             }
             result = out.toString();
-            Log.i(TAG, "Reading results...");
-            Log.d(TAG, result);
         } catch (Exception e) {
-            Log.e(TAG + " line 69", e.getMessage());
+            Log.e(TAG, e.getMessage());
+            try(InputStream is = http.getErrorStream()) {
+                int bufferSize = 1024;
+                char[] buffer = new char[bufferSize];
+                StringBuilder out = new StringBuilder();
+                Reader in = new InputStreamReader(is, StandardCharsets.UTF_8);
+                for (int numRead; (numRead = in.read(buffer, 0, buffer.length)) > 0; ) {
+                    out.append(buffer, 0, numRead);
+                }
+                result = out.toString();
+            } catch (Exception e1) {
+                Log.e(TAG, e1.getMessage());
+                result = http.getResponseMessage();
+            }
         }
         http.disconnect();
 
@@ -85,10 +99,11 @@ public class Register extends AuthCallable {
                 throw new Exception(resObj.get("error").asText());
             }
 
-            return new LoggedInUser(resObj.get("idUser").asLong(), this.username, resObj.get("token").asText());
+            return new LoginResult(new LoggedInUserView(this.username, resObj.get("token").asText(), resObj.get("idUser").asLong()));
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
-            return null;
+            JSONObject c = new JSONObject(result);
+            return new LoginResult(R.string.register_failed, c.getString("error"));
         }
     }
 
@@ -100,7 +115,7 @@ public class Register extends AuthCallable {
     }
 
     @Override
-    public void setDataAfterLoading(LoggedInUser result) {
+    public void setDataAfterLoading(LoginResult result) {
         if (listener != null) {
             listener.setDataInPageWithResult(result);
             listener.hideProgressBar();

@@ -1,11 +1,11 @@
 package ch.heigvd.digiback.business.api.auth;
 
 import ch.heigvd.digiback.business.api.CustomCallable;
-import ch.heigvd.digiback.ui.data.model.LoggedInUser;
+import ch.heigvd.digiback.ui.activity.login.LoginResult;
 
-public class AuthCallable implements CustomCallable<LoggedInUser> {
+public class AuthCallable implements CustomCallable<LoginResult> {
     @Override
-    public void setDataAfterLoading(LoggedInUser result) {
+    public void setDataAfterLoading(LoginResult result) {
 
     }
 
@@ -15,7 +15,7 @@ public class AuthCallable implements CustomCallable<LoggedInUser> {
     }
 
     @Override
-    public LoggedInUser call() throws Exception {
+    public LoginResult call() throws Exception {
         return null;
     }
 }

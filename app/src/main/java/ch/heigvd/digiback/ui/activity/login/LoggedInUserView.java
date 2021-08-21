@@ -12,7 +12,7 @@ public class LoggedInUserView {
     private Long id;
     //... other data fields that may be accessible to the UI
 
-    LoggedInUserView(String username, String token, Long id) {
+    public LoggedInUserView(String username, String token, Long id) {
         this.username = username;
         this.token = token;
         this.id = id;

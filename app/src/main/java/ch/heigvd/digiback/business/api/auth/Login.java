@@ -19,8 +19,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
+import ch.heigvd.digiback.R;
 import ch.heigvd.digiback.business.utils.Backend;
-import ch.heigvd.digiback.ui.data.model.LoggedInUser;
+import ch.heigvd.digiback.ui.activity.login.LoggedInUserView;
+import ch.heigvd.digiback.ui.activity.login.LoginResult;
 
 public class Login extends AuthCallable {
     private static final String TAG = "Login";
@@ -35,7 +37,7 @@ public class Login extends AuthCallable {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public LoggedInUser call() throws Exception {
+    public LoginResult call() throws Exception {
         URL url = new URL(Backend.getAuthURL() + "login");
         URLConnection con = url.openConnection();
         HttpURLConnection http = (HttpURLConnection)con;
@@ -76,10 +78,10 @@ public class Login extends AuthCallable {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode resObj = objectMapper.readTree(result);
 
-            return new LoggedInUser(resObj.get("idUser").asLong(), this.username, resObj.get("token").asText());
+            return new LoginResult(new LoggedInUserView(this.username, resObj.get("token").asText(), resObj.get("idUser").asLong()));
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
-            return null;
+            return new LoginResult(R.string.login_failed, e.getMessage());
         }
     }
 
@@ -91,9 +93,9 @@ public class Login extends AuthCallable {
     }
 
     @Override
-    public void setDataAfterLoading(LoggedInUser activity) {
+    public void setDataAfterLoading(LoginResult loginResult) {
         if (listener != null) {
-            listener.setDataInPageWithResult(activity);
+            listener.setDataInPageWithResult(loginResult);
             listener.hideProgressBar();
         }
     }

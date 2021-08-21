@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,7 +22,7 @@ import ch.heigvd.digiback.R;
 
 public class RegisterActivity extends AppCompatActivity {
     private final String TAG = "RegisterActivity";
-    private int error;
+    private String error;
 
     private LoginViewModel loginViewModel;
 
@@ -45,9 +44,13 @@ public class RegisterActivity extends AppCompatActivity {
         final TextView errorText = findViewById(R.id.login_error);
 
         try {
-            error = getIntent().getIntExtra("error", -1);
-            if (error > 0) {
-                errorText.setText(R.string.register_failed);
+            error = getIntent().getStringExtra("error");
+            String email = getIntent().getStringExtra("email");
+            String username = getIntent().getStringExtra("username");
+            if (error != null) {
+                errorText.setText(error);
+                emailTextEdit.setText(email);
+                usernameTextEdit.setText(username);
             }
         } catch (Exception e) {
             Log.e(TAG, "No extras in intent");
@@ -72,7 +75,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
             loadingProgressBar.setVisibility(View.GONE);
             if (loginResult.getError() != null) {
-                showLoginFailed(loginResult.getError());
+                showLoginFailed(loginResult.getErrorString(),
+                        emailTextEdit.getText().toString(),
+                        usernameTextEdit.getText().toString());
             }
             if (loginResult.getSuccess() != null) {
                 updateUiWithUser(loginResult.getSuccess());
@@ -151,10 +156,12 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
+    private void showLoginFailed(String errorString, String email, String username) {
         Log.d(TAG, "Failed ");
         Intent intent = new Intent(this, RegisterActivity.class);
-        intent.putExtra("error", getString(errorString));
+        intent.putExtra("error", errorString);
+        intent.putExtra("email", email);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 

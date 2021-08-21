@@ -13,7 +13,6 @@ import ch.heigvd.digiback.business.api.auth.Login;
 import ch.heigvd.digiback.business.api.auth.Register;
 import ch.heigvd.digiback.business.api.auth.iOnTokenFetched;
 import ch.heigvd.digiback.ui.data.LoginRepository;
-import ch.heigvd.digiback.ui.data.model.LoggedInUser;
 
 public class LoginViewModel extends ViewModel {
     private final String TAG = "LoginViewModel";
@@ -48,19 +47,8 @@ public class LoginViewModel extends ViewModel {
             }
 
             @Override
-            public void setDataInPageWithResult(LoggedInUser loggedInUser) {
-                if (loggedInUser != null) {
-                    loginResult.setValue(
-                            new LoginResult(
-                                    new LoggedInUserView(
-                                            loggedInUser.getUsername(),
-                                            loggedInUser.getToken(),
-                                            loggedInUser.getUserId()))
-                    );
-                    loginRepository.setUser(loggedInUser);
-                } else {
-                    loginResult.setValue(new LoginResult(R.string.login_failed));
-                }
+            public void setDataInPageWithResult(LoginResult result) {
+                loginResult.setValue(result);
             }
         }));
     }
@@ -108,16 +96,16 @@ public class LoginViewModel extends ViewModel {
             }
 
             @Override
-            public void setDataInPageWithResult(LoggedInUser loggedInUser) {
-                if (loggedInUser != null) {
+            public void setDataInPageWithResult(LoginResult result) {
+                if (result.getSuccess() != null) {
                     try {
                         login(username, password, lifecycleOwner);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        loginResult.setValue(new LoginResult(R.string.register_failed));
+                        loginResult.setValue(new LoginResult(R.string.login_failed, e.getMessage() + " login"));
                     }
                 } else {
-                    loginResult.setValue(new LoginResult(R.string.register_failed));
+                    loginResult.setValue(result);
                 }
             }
         }));
