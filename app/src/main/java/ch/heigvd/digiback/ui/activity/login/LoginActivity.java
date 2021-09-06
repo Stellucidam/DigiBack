@@ -20,6 +20,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import ch.heigvd.digiback.MainActivity;
 import ch.heigvd.digiback.R;
+import ch.heigvd.digiback.ui.data.LoginDataSource;
+import ch.heigvd.digiback.ui.data.LoginRepository;
+import ch.heigvd.digiback.ui.data.model.LoggedInUser;
 
 public class LoginActivity extends AppCompatActivity {
     private final String TAG = "LoginActivity";
@@ -121,6 +124,9 @@ public class LoginActivity extends AppCompatActivity {
         // Initiate successful logged in experience
         String welcome = getString(R.string.welcome) + " " + model.getUsername();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_SHORT).show();
+
+        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+        loginRepository.setUser(new LoggedInUser(model.getId(), model.getUsername(), model.getToken()));
 
         // Go to MainActivty
         Intent intent = new Intent(this, MainActivity.class);

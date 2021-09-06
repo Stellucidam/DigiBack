@@ -3,6 +3,7 @@ package ch.heigvd.digiback.ui;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -42,7 +45,6 @@ public class BackStateFragment extends Fragment {
 
         private AnyChartView angleEvolutionChart;
     private MutableLiveData<Stat> stats = new MutableLiveData<>();
-    private Button evaluateMobility;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,38 +54,37 @@ public class BackStateFragment extends Fragment {
         angleEvolutionChart = root.findViewById(R.id.angle_evolution);
         angleEvolutionChart.setProgressBar(root.findViewById(R.id.progress_bar));
 
-        TaskRunner taskRunner = new TaskRunner();
-        taskRunner.executeAsync(new GetStat(new iOnStatFetched() {
-            @Override
-            public void showProgressBar() {
-
-            }
-
-            @Override
-            public void hideProgressBar() {
-
-            }
-
-            @Override
-            public void setDataInPageWithResult(Stat stat) {
-                stats.postValue(stat);
-            }
-        }));
-
+        getStats();
         stats.observe(getViewLifecycleOwner(), stat -> setChart());
 
-        evaluateMobility = root.findViewById(R.id.evaluate_mobility);
+        Button evaluateMobility = root.findViewById(R.id.evaluate_mobility);
         evaluateMobility.setOnClickListener(view -> {
             Intent i = new Intent(getContext(), MobilityActivity.class);
             this.getActivity().startActivity(i);
         });
 
+        // Swipe to refresh
+        Fragment frg = this;
+        final SwipeRefreshLayout pullToRefresh = root.findViewById(R.id.swipe_container_back_state);
+        pullToRefresh.setOnRefreshListener(() -> {
+            FragmentTransaction ft = frg.getParentFragmentManager().beginTransaction();
+            // Reload current fragment
+            ft.detach(frg);
+            ft.remove(frg);
+            ft.attach(frg);
+            getStats();
+            try {
+                ft.commit();
+            } catch (Exception e) {
+                Log.e(TAG, "Commit already called !");
+            }
+            pullToRefresh.setRefreshing(false);
+        });
+
         return root;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    private void getStats() {
         TaskRunner taskRunner = new TaskRunner();
         taskRunner.executeAsync(new GetStat(new iOnStatFetched() {
             @Override
@@ -101,6 +102,12 @@ public class BackStateFragment extends Fragment {
                 stats.postValue(stat);
             }
         }));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getStats();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
